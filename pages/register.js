@@ -49,16 +49,6 @@ export default function Register() {
             id="psw"
             required
           />
-
-          <b>Repeat Password</b>
-          <input
-            type="password"
-            placeholder="Repeat Password"
-            name="psw-repeat"
-            id="psw-repeat"
-            required
-          />
-
           <p>
             By creating an account you agree to our{" "}
             <a href="#">Terms & Privacy</a>.
