@@ -24,3 +24,9 @@ a {
     background: black;
   }
 }
+
+#buttonRegister {
+  float: right;
+  font-size: 150%;
+  margin-right: 38%;
+}

@@ -22,7 +22,7 @@ export default function Register() {
           <hr />
 
           <b>Username</b>
-          <input
+          <input className={styles.input}
             type="text"
             placeholder="Enter Username"
             name="username"
@@ -33,7 +33,7 @@ export default function Register() {
           <hr />
 
           <b>Email</b>
-          <input
+          <input className={styles.input}
             type="text"
             placeholder="Enter Email"
             name="email"
@@ -41,19 +41,35 @@ export default function Register() {
             required
           />
 
+          <hr />
+
           <b>Password</b>
-          <input
+          <input className={styles.input}
             type="password"
             placeholder="Enter Password"
             name="psw"
             id="psw"
             required
           />
+
+          <hr />
+
+          <b>Confirm Password</b>
+          <input className={styles.input}
+            type="password"
+            placeholder="Confirm Password"
+            name="pswConfirm"
+            id="pswConfirm"
+            required
+          />
+
+          <hr />
+
           <p>
             By creating an account you agree to our{" "}
             <a href="#">Terms & Privacy</a>.
           </p>
-          <button type="submit">Register</button>
+          <button type="submit" id="buttonRegister">Register</button>
         </form>
       </main>
 
