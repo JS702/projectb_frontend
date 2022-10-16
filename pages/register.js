@@ -1,8 +1,21 @@
 import Head from "next/head";
 import Image from "next/image";
 import styles from "../styles/Home.module.css";
+import { useForm } from "react-hook-form";
+import { makePostRequest } from "../helper/request-builder";
 
 export default function Register() {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+
+  const onSubmit = async (data) => {
+    console.log(data);
+    makePostRequest("/user/create", data);
+  };
+
   return (
     <div className={styles.container}>
       <Head>
@@ -12,65 +25,68 @@ export default function Register() {
       </Head>
 
       <main className={styles.main}>
-        <form
-          action={process.env.NEXT_PUBLIC_API_URL + "/user/create"}
-          method="post"
-        >
-          <h1>Register</h1>
-          <p>Please fill in this form to create an account.</p>
+        <div>
+          <div>
+            <form onSubmit={handleSubmit(onSubmit)}>
+              <div>
+                <label>Username</label>
+                <input
+                  type={"text"}
+                  {...register("username", {
+                    required: {
+                      value: true,
+                      message: "Username darf nicht leer sein!",
+                    },
+                    minLength: {
+                      value: 3,
+                      message:
+                        "Username muss mindestens 3 Buchstaben lang sein!",
+                    },
+                  })}
+                />
+                {errors.username && <p>{errors.username.message}</p>}
+              </div>
 
-          <hr />
+              <div>
+                <label>Email</label>
+                <input
+                  type={"text"}
+                  {...register("email", {
+                    required: {
+                      value: true,
+                      message: "Die Email darf nicht leer sein!",
+                    },
+                    pattern: {
+                      value: /^\S+@\S+$/i,
+                      message: "Die Email Adresse ist nicht valide",
+                    },
+                  })}
+                />
+                {errors.email && <p>{errors.email.message}</p>}
+              </div>
 
-          <b>Username</b>
-          <input className={styles.input}
-            type="text"
-            placeholder="Enter Username"
-            name="username"
-            id="username"
-            required
-          />
-
-          <hr />
-
-          <b>Email</b>
-          <input className={styles.input}
-            type="text"
-            placeholder="Enter Email"
-            name="email"
-            id="email"
-            required
-          />
-
-          <hr />
-
-          <b>Password</b>
-          <input className={styles.input}
-            type="password"
-            placeholder="Enter Password"
-            name="psw"
-            id="psw"
-            required
-          />
-
-          <hr />
-
-          <b>Confirm Password</b>
-          <input className={styles.input}
-            type="password"
-            placeholder="Confirm Password"
-            name="pswConfirm"
-            id="pswConfirm"
-            required
-          />
-
-          <hr />
-
-          <p>
-            By creating an account you agree to our{" "}
-            <a href="#">Terms & Privacy</a>.
-          </p>
-          <button type="submit" id="buttonRegister">Register</button>
-        </form>
+              <div>
+                <label>Passwort</label>
+                <input
+                  type={"password"}
+                  {...register("password", {
+                    required: {
+                      value: true,
+                      message: "Passwort darf nicht leer sein!",
+                    },
+                    minLength: {
+                      value: 4,
+                      message:
+                        "Passwort muss mindestens 4 Buchstaben lang sein!",
+                    },
+                  })}
+                />
+                {errors.password && <p>{errors.password.message}</p>}
+              </div>
+              <button type="submit">Submit</button>
+            </form>
+          </div>
+        </div>
       </main>
 
       <footer className={styles.footer}>
