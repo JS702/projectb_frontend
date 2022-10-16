@@ -12,8 +12,8 @@ export default function Register() {
   } = useForm();
 
   const onSubmit = async (data) => {
-    console.log(data);
-    makePostRequest("/user/create", data);
+    const response = await makePostRequest("/user/create", data);
+    console.log(response);
   };
 
   return (
