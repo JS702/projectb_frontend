@@ -2,7 +2,6 @@ import Head from "next/head";
 import Image from "next/image";
 import styles from "../styles/Home.module.css";
 import { useForm } from "react-hook-form";
-import { makePostRequest } from "../helper/request-builder";
 
 export default function Register() {
   const {
@@ -15,6 +14,14 @@ export default function Register() {
     const response = await makePostRequest("/user/create", data);
     console.log(response);
   };
+
+  function testPasswordEquality() {
+    console.log("Pw1: " + password1.value);
+    console.log("Pw2: " + password2.value);
+    if(password1.value !== password2.value) {
+      console.log("ungleiches Passwort");
+    }
+  }
 
   return (
     <div className={styles.container}>
@@ -67,8 +74,30 @@ export default function Register() {
 
               <div>
                 <label>Passwort</label>
-                <input
+                <input id="password1"
                   type={"password"}
+                  ref={input => (this.password1 = input)}
+                  {...register("password", {
+                    required: {
+                      value: true,
+                      message: "Passwort darf nicht leer sein!",
+                    },
+                    minLength: {
+                      value: 4,
+                      message:
+                        "Passwort muss mindestens 4 Buchstaben lang sein!",
+                    },
+                  })}
+                />
+                {errors.password && <p>{errors.password.message}</p>}
+              </div>
+
+              <div>
+                <label>Bestätige Passwort</label>
+                <input id="password2"
+                  onInput={testPasswordEquality}
+                  type={"password"}
+                  ref={input => (this.password2 = input)}
                   {...register("password", {
                     required: {
                       value: true,
