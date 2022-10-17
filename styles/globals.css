@@ -26,9 +26,9 @@ a {
 }
 
 #buttonRegister {
-  float: right;
+  margin-top: 1em;
   font-size: 150%;
-  margin-right: 38%;
+  width: 100%;
 }
 
 #passwordOutput {

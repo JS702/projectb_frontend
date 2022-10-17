@@ -15,17 +15,25 @@ export default function Register() {
     console.log(response);
   };
 
+  //@Jon ich dachte ein bool wäre nützlich, damit wir beim abschicken überprüfen können, ob die Passwörter übereinstimmen, aber ich weiß nicht wo die Abfrage hinkommt
+  let passwordsEqual = false;
+
   function testPasswordEquality() {
-    console.log("Pw1: " + password1.value);
-    console.log("Pw2: " + password2.value);
-    if(password1.value !== password2.value) {
-      console.log("ungleiches Passwort");
-      //document.querySelector("#passwordOutput").innerHTML = "ungleiches Passwort";
-      document.querySelector("#password2Label").style.color = "red";
+    //console.log("Pw1: " + password1.value);
+    //console.log("Pw2: " + password2.value);
+    if(password2.value !== "") {
+      if(password1.value !== password2.value) {
+        document.querySelector("#password2Label").style.color = "red";
+        passwordsEqual = false;
+      } else {
+        document.querySelector("#password2Label").style.color = "green";
+        passwordsEqual = true;
+      }
     } else {
-      //document.querySelector("#passwordOutput").innerHTML = "";
       document.querySelector("#password2Label").style.color = "white";
+      passwordsEqual = false;
     }
+    //console.log(passwordsEqual)
   }
 
   return (
@@ -87,6 +95,7 @@ export default function Register() {
                 <label>Passwort</label>
                 <input id="password1"
                 className={styles.input}
+                onInput={testPasswordEquality}
                   type={"password"}
                   ref={input => (this.password1 = input)}
                   {...register("password", {
@@ -131,12 +140,12 @@ export default function Register() {
 
               <hr></hr>
 
-              <button type="submit">Submit</button>
+              <button id="buttonRegister" type="submit">Register</button>
             </form>
           </div>
         </div>
       </main>
-
+      
       <footer className={styles.footer}>
         <a
           href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
