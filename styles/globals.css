@@ -30,3 +30,7 @@ a {
   font-size: 150%;
   margin-right: 38%;
 }
+
+#passwordOutput {
+  color: rgb(202, 82, 82);
+}

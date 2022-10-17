@@ -130,5 +130,20 @@
 
 .input {
   float: right;
-  margin-right: 2%;
+  margin-right: 0%;
+  width: 55%;
+}
+
+.register {
+  min-height: 100vh;
+  padding-left: 40%;
+  padding-right: 40%;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.inputContainer {
+  margin-top: 0.5em;
 }

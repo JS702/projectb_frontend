@@ -20,6 +20,11 @@ export default function Register() {
     console.log("Pw2: " + password2.value);
     if(password1.value !== password2.value) {
       console.log("ungleiches Passwort");
+      //document.querySelector("#passwordOutput").innerHTML = "ungleiches Passwort";
+      document.querySelector("#password2Label").style.color = "red";
+    } else {
+      //document.querySelector("#passwordOutput").innerHTML = "";
+      document.querySelector("#password2Label").style.color = "white";
     }
   }
 
@@ -31,13 +36,14 @@ export default function Register() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className={styles.main}>
+      <main className={styles.register}>
         <div>
           <div>
             <form onSubmit={handleSubmit(onSubmit)}>
-              <div>
+              <div className={styles.inputContainer}>
                 <label>Username</label>
                 <input
+                className={styles.input}
                   type={"text"}
                   {...register("username", {
                     required: {
@@ -54,9 +60,12 @@ export default function Register() {
                 {errors.username && <p>{errors.username.message}</p>}
               </div>
 
-              <div>
+              <hr></hr>
+
+              <div className={styles.inputContainer}>
                 <label>Email</label>
                 <input
+                className={styles.input}
                   type={"text"}
                   {...register("email", {
                     required: {
@@ -72,9 +81,12 @@ export default function Register() {
                 {errors.email && <p>{errors.email.message}</p>}
               </div>
 
-              <div>
+              <hr></hr>
+
+              <div className={styles.inputContainer}>
                 <label>Passwort</label>
                 <input id="password1"
+                className={styles.input}
                   type={"password"}
                   ref={input => (this.password1 = input)}
                   {...register("password", {
@@ -92,9 +104,12 @@ export default function Register() {
                 {errors.password && <p>{errors.password.message}</p>}
               </div>
 
-              <div>
-                <label>Bestätige Passwort</label>
+              <hr></hr>
+
+              <div className={styles.inputContainer}>
+                <label id="password2Label">Bestätige Passwort</label>
                 <input id="password2"
+                  className={styles.input}
                   onInput={testPasswordEquality}
                   type={"password"}
                   ref={input => (this.password2 = input)}
@@ -111,7 +126,11 @@ export default function Register() {
                   })}
                 />
                 {errors.password && <p>{errors.password.message}</p>}
+                <span id="passwordOutput"></span>
               </div>
+
+              <hr></hr>
+
               <button type="submit">Submit</button>
             </form>
           </div>
