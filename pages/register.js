@@ -2,6 +2,7 @@ import Head from "next/head";
 import Image from "next/image";
 import styles from "../styles/Home.module.css";
 import { useForm } from "react-hook-form";
+import { makePutRequest } from "../helper/request-builder";
 
 export default function Register() {
   const {
@@ -11,18 +12,15 @@ export default function Register() {
   } = useForm();
 
   const onSubmit = async (data) => {
-    const response = await makePostRequest("/user/create", data);
-    console.log(response);
+    const response = await makePutRequest("/user/create", data);
   };
 
   //@Jon ich dachte ein bool wäre nützlich, damit wir beim abschicken überprüfen können, ob die Passwörter übereinstimmen, aber ich weiß nicht wo die Abfrage hinkommt
   let passwordsEqual = false;
 
   function testPasswordEquality() {
-    //console.log("Pw1: " + password1.value);
-    //console.log("Pw2: " + password2.value);
-    if(password2.value !== "") {
-      if(password1.value !== password2.value) {
+    if (password2.value !== "") {
+      if (password1.value !== password2.value) {
         document.querySelector("#password2Label").style.color = "red";
         passwordsEqual = false;
       } else {
@@ -33,7 +31,6 @@ export default function Register() {
       document.querySelector("#password2Label").style.color = "white";
       passwordsEqual = false;
     }
-    //console.log(passwordsEqual)
   }
 
   return (
@@ -51,7 +48,7 @@ export default function Register() {
               <div className={styles.inputContainer}>
                 <label>Username</label>
                 <input
-                className={styles.input}
+                  className={styles.input}
                   type={"text"}
                   {...register("username", {
                     required: {
@@ -73,7 +70,7 @@ export default function Register() {
               <div className={styles.inputContainer}>
                 <label>Email</label>
                 <input
-                className={styles.input}
+                  className={styles.input}
                   type={"text"}
                   {...register("email", {
                     required: {
@@ -93,11 +90,12 @@ export default function Register() {
 
               <div className={styles.inputContainer}>
                 <label>Passwort</label>
-                <input id="password1"
-                className={styles.input}
-                onInput={testPasswordEquality}
+                <input
+                  id="password1"
+                  className={styles.input}
+                  onInput={testPasswordEquality}
                   type={"password"}
-                  ref={input => (this.password1 = input)}
+                  ref={(input) => (this.password1 = input)}
                   {...register("password", {
                     required: {
                       value: true,
@@ -117,11 +115,12 @@ export default function Register() {
 
               <div className={styles.inputContainer}>
                 <label id="password2Label">Bestätige Passwort</label>
-                <input id="password2"
+                <input
+                  id="password2"
                   className={styles.input}
                   onInput={testPasswordEquality}
                   type={"password"}
-                  ref={input => (this.password2 = input)}
+                  ref={(input) => (this.password2 = input)}
                   {...register("password", {
                     required: {
                       value: true,
@@ -140,12 +139,14 @@ export default function Register() {
 
               <hr></hr>
 
-              <button id="buttonRegister" type="submit">Register</button>
+              <button id="buttonRegister" type="submit">
+                Register
+              </button>
             </form>
           </div>
         </div>
       </main>
-      
+
       <footer className={styles.footer}>
         <a
           href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
