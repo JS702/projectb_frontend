@@ -20,7 +20,14 @@ export default function Home() {
         <div id="userContainer">
           <button id="logOutButton" className="UserData">Log out</button>
           <p id="username" className="userData">Username</p>
-          
+          <Image id="userImage"
+          style={{
+            borderTopRightRadius: 25,
+            borderBottomRightRadius: 25,
+            borderBottomLeftRadius: 25,
+            borderTopLeftRadius: 25,
+          }}
+          src="/pepe.jpg" alt="pepe" width={50} height={50} />
         </div>
         
       </div>
