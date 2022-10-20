@@ -6,24 +6,23 @@ import routes from "../common/routes";
 import { useEffect } from "react";
 
 export default function Register() {
+  useEffect(() => {
+    if (localStorage.getItem("jwt")) {
+      window.location.href = routes.home;
+    }
+  }, []);
 
-    useEffect(() => {
-        if(localStorage.getItem("jwt")){
-            window.location.href = routes.home;
-        }
-    },[])
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
 
-    const {
-      register,
-      handleSubmit,
-      formState: { errors },
-    } = useForm();
-
-    const onSubmit = async (data) => {
-      const response = await makePostRequest("/login", data);
-      localStorage.setItem("jwt", response);
-      window.location.href = routes.login;
-    };
+  const onSubmit = async (data) => {
+    const response = await makePostRequest("/login", data);
+    localStorage.setItem("jwt", response);
+    window.location.href = routes.home;
+  };
   return (
     <div className={styles.container}>
       <Head>
@@ -39,18 +38,19 @@ export default function Register() {
               <div className={styles.inputContainer}>
                 <label>Username / Email</label>
                 <input
-                className={styles.input}
-                  type={"text"}{...register("username", {
-                  required: {
-                    value: true,
-                    message: "Username darf nicht leer sein!",
-                  },
-                  minLength: {
-                    value: 3,
-                    message:
-                            "Username muss mindestens 3 Buchstaben lang sein!",
-                  },
-                })}
+                  className={styles.input}
+                  type={"text"}
+                  {...register("username", {
+                    required: {
+                      value: true,
+                      message: "Username darf nicht leer sein!",
+                    },
+                    minLength: {
+                      value: 3,
+                      message:
+                        "Username muss mindestens 3 Buchstaben lang sein!",
+                    },
+                  })}
                 />
                 {errors.username && <p>{errors.username.message}</p>}
               </div>
@@ -60,30 +60,32 @@ export default function Register() {
               <div className={styles.inputContainer}>
                 <label>Passwort</label>
                 <input
-                className={styles.input}
-                  type={"password"}{...register("password", {
-                  required: {
-                    value: true,
-                    message: "Passwort darf nicht leer sein!",
-                  },
-                  minLength: {
-                    value: 4,
-                    message:
-                            "Passwort muss mindestens 4 Buchstaben lang sein!",
-                  },
-                })}
+                  className={styles.input}
+                  type={"password"}
+                  {...register("password", {
+                    required: {
+                      value: true,
+                      message: "Passwort darf nicht leer sein!",
+                    },
+                    minLength: {
+                      value: 4,
+                      message:
+                        "Passwort muss mindestens 4 Buchstaben lang sein!",
+                    },
+                  })}
                 />
                 {errors.password && <p>{errors.password.message}</p>}
               </div>
 
               <hr></hr>
 
-              <button id="buttonRegister" type="submit">Log in</button>
+              <button id="buttonRegister" type="submit">
+                Log in
+              </button>
             </form>
           </div>
         </div>
       </main>
-
     </div>
   );
 }

@@ -3,6 +3,7 @@ import Image from "next/image";
 import styles from "../styles/Home.module.css";
 import { useForm } from "react-hook-form";
 import { makePutRequest } from "../helper/request-builder";
+import routes from "../common/routes";
 
 export default function Register() {
   const {
@@ -13,28 +14,28 @@ export default function Register() {
 
   const onSubmit = async (data) => {
     const response = await makePutRequest("/user/create", data);
+    window.location.href = routes.home;
   };
 
- function testPasswordEquality() {
-  if (password2.value !== "" && password1.value !== "") {
-    return (password1.value === password2.value);
-  } else {
-    return false;
-  }
- 
- }
-
- function setLabelColor() {
-  if (password2.value !== "") {
-    if (testPasswordEquality()) {
-      document.querySelector("#password2Label").style.color = "green";
+  function testPasswordEquality() {
+    if (password2.value !== "" && password1.value !== "") {
+      return password1.value === password2.value;
     } else {
-      document.querySelector("#password2Label").style.color = "red";
+      return false;
     }
-  } else {
-    document.querySelector("#password2Label").style.color = "white";
   }
- }
+
+  function setLabelColor() {
+    if (password2.value !== "") {
+      if (testPasswordEquality()) {
+        document.querySelector("#password2Label").style.color = "green";
+      } else {
+        document.querySelector("#password2Label").style.color = "red";
+      }
+    } else {
+      document.querySelector("#password2Label").style.color = "white";
+    }
+  }
 
   return (
     <div className={styles.container}>
