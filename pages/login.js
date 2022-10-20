@@ -2,8 +2,16 @@ import Head from "next/head";
 import styles from "../styles/Home.module.css";
 import { useForm } from "react-hook-form";
 import { makePostRequest } from "../helper/request-builder";
+import routes from "../common/routes";
+import { useEffect } from "react";
 
 export default function Register() {
+
+    useEffect(() => {
+        if(localStorage.getItem("jwt")){
+            window.location.href = routes.home;
+        }
+    },[])
 
     const {
       register,
@@ -14,6 +22,7 @@ export default function Register() {
     const onSubmit = async (data) => {
       const response = await makePostRequest("/login", data);
       localStorage.setItem("jwt", response);
+      window.location.href = routes.login;
     };
   return (
     <div className={styles.container}>
