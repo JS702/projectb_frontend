@@ -147,3 +147,9 @@
 .inputContainer {
   margin-top: 0.5em;
 }
+
+.homeButtons {
+  height: 40em;
+  width: 30%;
+  margin: 1%;
+}

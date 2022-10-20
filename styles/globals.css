@@ -34,3 +34,45 @@ a {
 #passwordOutput {
   color: rgb(202, 82, 82);
 }
+
+#buttonContainer {
+  width: 80%;
+  align-content: center;
+  text-align: center;
+}
+
+#searchUser {
+  font-size: 150%;
+  margin-right: 3%;
+  margin-left: 67%;
+  margin-bottom: 1%;
+  width: 30%;
+  position: absolute;
+  bottom: 0;
+}
+
+#headContainer {
+  width: 80%;
+  height: 10em;
+  position: relative;
+}
+
+#userContainer {
+  float: right;
+  text-align: center;
+  width: 30%;
+  margin-right: 3%;
+  position: relative;
+  margin-top: 1em;
+}
+
+#username {
+  float: right;
+  width: 50%;
+  margin-bottom: 0;
+  margin-top: 0;
+}
+
+#logOutButton {
+  float: right;
+}
