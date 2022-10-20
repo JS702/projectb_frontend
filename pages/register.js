@@ -15,23 +15,26 @@ export default function Register() {
     const response = await makePutRequest("/user/create", data);
   };
 
-  //@Jon ich dachte ein bool wäre nützlich, damit wir beim abschicken überprüfen können, ob die Passwörter übereinstimmen, aber ich weiß nicht wo die Abfrage hinkommt
-  let passwordsEqual = false;
-
-  function testPasswordEquality() {
-    if (password2.value !== "") {
-      if (password1.value !== password2.value) {
-        document.querySelector("#password2Label").style.color = "red";
-        passwordsEqual = false;
-      } else {
-        document.querySelector("#password2Label").style.color = "green";
-        passwordsEqual = true;
-      }
-    } else {
-      document.querySelector("#password2Label").style.color = "white";
-      passwordsEqual = false;
-    }
+ function testPasswordEquality() {
+  if (password2.value !== "" && password1.value !== "") {
+    return (password1.value === password2.value);
+  } else {
+    return false;
   }
+ 
+ }
+
+ function setLabelColor() {
+  if (password2.value !== "") {
+    if (testPasswordEquality()) {
+      document.querySelector("#password2Label").style.color = "green";
+    } else {
+      document.querySelector("#password2Label").style.color = "red";
+    }
+  } else {
+    document.querySelector("#password2Label").style.color = "white";
+  }
+ }
 
   return (
     <div className={styles.container}>
@@ -93,7 +96,7 @@ export default function Register() {
                 <input
                   id="password1"
                   className={styles.input}
-                  onInput={testPasswordEquality}
+                  onInput={setLabelColor}
                   type={"password"}
                   ref={(input) => (this.password1 = input)}
                   {...register("password", {
@@ -118,19 +121,19 @@ export default function Register() {
                 <input
                   id="password2"
                   className={styles.input}
-                  onInput={testPasswordEquality}
+                  onInput={setLabelColor}
                   type={"password"}
                   ref={(input) => (this.password2 = input)}
-                  {...register("password", {
+                  {...register("password2", {
                     required: {
                       value: true,
                       message: "Passwort darf nicht leer sein!",
                     },
-                    minLength: {
+                    /**minLength: {
                       value: 4,
                       message:
                         "Passwort muss mindestens 4 Buchstaben lang sein!",
-                    },
+                    },*/
                   })}
                 />
                 {errors.password && <p>{errors.password.message}</p>}
