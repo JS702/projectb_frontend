@@ -1,8 +1,20 @@
 import Head from "next/head";
 import styles from "../styles/Home.module.css";
+import { useForm } from "react-hook-form";
+import { makePostRequest } from "../helper/request-builder";
 
 export default function Register() {
 
+    const {
+      register,
+      handleSubmit,
+      formState: { errors },
+    } = useForm();
+
+    const onSubmit = async (data) => {
+      const response = await makePostRequest("/login", data);
+      localStorage.setItem("jwt", response);
+    };
   return (
     <div className={styles.container}>
       <Head>
@@ -14,13 +26,24 @@ export default function Register() {
       <main className={styles.register}>
         <div>
           <div>
-            <form>
+            <form onSubmit={handleSubmit(onSubmit)}>
               <div className={styles.inputContainer}>
                 <label>Username / Email</label>
                 <input
                 className={styles.input}
-                  type={"text"}
+                  type={"text"}{...register("username", {
+                  required: {
+                    value: true,
+                    message: "Username darf nicht leer sein!",
+                  },
+                  minLength: {
+                    value: 3,
+                    message:
+                            "Username muss mindestens 3 Buchstaben lang sein!",
+                  },
+                })}
                 />
+                {errors.username && <p>{errors.username.message}</p>}
               </div>
 
               <hr></hr>
@@ -29,8 +52,19 @@ export default function Register() {
                 <label>Passwort</label>
                 <input
                 className={styles.input}
-                  type={"password"}
+                  type={"password"}{...register("password", {
+                  required: {
+                    value: true,
+                    message: "Passwort darf nicht leer sein!",
+                  },
+                  minLength: {
+                    value: 4,
+                    message:
+                            "Passwort muss mindestens 4 Buchstaben lang sein!",
+                  },
+                })}
                 />
+                {errors.password && <p>{errors.password.message}</p>}
               </div>
 
               <hr></hr>
