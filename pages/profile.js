@@ -1,8 +1,17 @@
 import Head from "next/head";
 import Image from "next/image";
+import axiosInstance from "../helper/axios-instance";
 import styles from "../styles/Home.module.css";
 
-export default function Profile() {
+export async function getServerSideProps() {
+  const response = await axiosInstance.get(localStorage.get("user").id);
+
+  return {
+    props: { response }, // will be passed to the page component as props
+  };
+}
+
+function Profile({ data }) {
   return (
     <div className={styles.container}>
       <Head>
@@ -28,3 +37,5 @@ export default function Profile() {
     </div>
   );
 }
+
+export default Profile;

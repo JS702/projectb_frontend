@@ -1,6 +1,7 @@
 import Head from "next/head";
 import Image from "next/image";
 import styles from "../styles/Home.module.css";
+import LogoutButton from "../components/logoutButton";
 
 export default function Home() {
   return (
@@ -11,36 +12,39 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className={styles.main}>Moinsen
-      
-      <div id="headContainer">
-        
-        <input id="searchUser" placeholder="Search for user..."></input>
-        
-        <div id="userContainer">
-          <button id="logOutButton" className="UserData">Log out</button>
-          <p id="username" className="userData">Username</p>
-          <Image id="userImage"
-          style={{
-            borderTopRightRadius: 25,
-            borderBottomRightRadius: 25,
-            borderBottomLeftRadius: 25,
-            borderTopLeftRadius: 25,
-          }}
-          src="/pepe.jpg" alt="pepe" width={50} height={50} />
+      <main className={styles.main}>
+        Moinsen
+        <div id="headContainer">
+          <input id="searchUser" placeholder="Search for user..."></input>
+
+          <div id="userContainer">
+            <LogoutButton />
+            <p id="username" className="userData">
+              Username
+            </p>
+            <Image
+              id="userImage"
+              style={{
+                borderTopRightRadius: 25,
+                borderBottomRightRadius: 25,
+                borderBottomLeftRadius: 25,
+                borderTopLeftRadius: 25,
+              }}
+              src="/pepe.jpg"
+              alt="pepe"
+              width={50}
+              height={50}
+            />
+          </div>
         </div>
-        
-      </div>
-      
-      <div id="buttonContainer">
-        <hr></hr>
-        <button className={styles.homeButtons}></button>
-        <button className={styles.homeButtons}></button>
-        <button className={styles.homeButtons}></button>
-      </div>
-      
+        <div id="buttonContainer">
+          <hr></hr>
+          <button className={styles.homeButtons}></button>
+          <button className={styles.homeButtons}></button>
+          <button className={styles.homeButtons}></button>
+        </div>
       </main>
-      
+
       <footer className={styles.footer}>
         <a
           href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"

@@ -1,13 +1,13 @@
 import Head from "next/head";
 import styles from "../styles/Home.module.css";
 import { useForm } from "react-hook-form";
-import { makePostRequest } from "../helper/request-builder";
+import axiosInstance from "../helper/axios-instance";
 import routes from "../common/routes";
 import { useEffect } from "react";
 
 export default function Register() {
   useEffect(() => {
-    if (localStorage.getItem("jwt")) {
+    if (sessionStorage.getItem("jwt")) {
       window.location.href = routes.home;
     }
   }, []);
@@ -19,8 +19,8 @@ export default function Register() {
   } = useForm();
 
   const onSubmit = async (data) => {
-    const response = await makePostRequest("/login", data);
-    localStorage.setItem("jwt", response);
+    const response = await axiosInstance.post("/login", data);
+    sessionStorage.setItem("jwt", response);
     window.location.href = routes.home;
   };
   return (

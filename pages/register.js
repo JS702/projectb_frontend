@@ -2,7 +2,7 @@ import Head from "next/head";
 import Image from "next/image";
 import styles from "../styles/Home.module.css";
 import { useForm } from "react-hook-form";
-import { makePutRequest } from "../helper/request-builder";
+import axiosInstance from "../helper/axios-instance";
 import routes from "../common/routes";
 
 export default function Register() {
@@ -12,8 +12,14 @@ export default function Register() {
     formState: { errors },
   } = useForm();
 
+  useEffect(() => {
+    if (sessionStorage.getItem("jwt")) {
+      window.location.href = routes.home;
+    }
+  }, []);
+
   const onSubmit = async (data) => {
-    const response = await makePutRequest("/user/create", data);
+    const response = await axiosInstance.put("/user/create", data);
     window.location.href = routes.home;
   };
 
