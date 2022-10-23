@@ -43,6 +43,10 @@ export default function Home() {
           <button className={styles.homeButtons}></button>
           <button className={styles.homeButtons}></button>
         </div>
+
+        <div id="sliderContainer">
+              <input type={"range"} min={"0"} max={"20"} defaultValue={10} id="sliderRounds" />
+        </div>
       </main>
 
       <footer className={styles.footer}>
