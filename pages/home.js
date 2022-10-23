@@ -4,6 +4,16 @@ import styles from "../styles/Home.module.css";
 import LogoutButton from "../components/logoutButton";
 
 export default function Home() {
+
+  let rounds = 10;
+
+  function handleChange(event) {
+    rounds = event.target.value;
+    console.log("change", rounds);
+    document.getElementById("outputRounds").innerHTML = "Rounds: " + rounds;
+    
+  }
+
   return (
     <div className={styles.container}>
       <Head>
@@ -45,8 +55,10 @@ export default function Home() {
         </div>
 
         <div id="sliderContainer">
-              <input type={"range"} min={"0"} max={"20"} defaultValue={10} id="sliderRounds" />
+              <input type={"range"} min={"0"} max={"20"} defaultValue={10} id="sliderRounds" 
+              onChange={handleChange} />
         </div>
+        <span id="outputRounds">Rounds: 10</span>
       </main>
 
       <footer className={styles.footer}>
