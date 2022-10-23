@@ -55,7 +55,7 @@ export default function Home() {
         </div>
 
         <div id="sliderContainer">
-              <input type={"range"} min={"0"} max={"20"} defaultValue={10} id="sliderRounds" 
+              <input type={"range"} min={"1"} max={"21"} defaultValue={11} id="sliderRounds" 
               onChange={handleChange} />
         </div>
         <span id="outputRounds">Rounds: 10</span>
