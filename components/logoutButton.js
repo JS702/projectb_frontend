@@ -9,8 +9,8 @@ const logout = () => {
 
 export default function LogoutButton() {
   return (
-    <div>
-      <button onClick={logout}>Abmelden</button>
-    </div>
+    //<div>
+      <button onClick={logout} id="logOutButton">Abmelden</button>
+    //</div>
   );
 }

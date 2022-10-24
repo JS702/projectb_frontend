@@ -32,19 +32,21 @@ export default function Home() {
             <p id="username" className="userData">
               Username
             </p>
-            <Image
-              id="userImage"
-              style={{
-                borderTopRightRadius: 25,
-                borderBottomRightRadius: 25,
-                borderBottomLeftRadius: 25,
-                borderTopLeftRadius: 25,
-              }}
-              src="/pepe.jpg"
-              alt="pepe"
-              width={50}
-              height={50}
+            <div id="userImageContainer">
+              <Image
+                id="userImage"
+                style={{
+                  borderTopRightRadius: 25,
+                  borderBottomRightRadius: 25,
+                  borderBottomLeftRadius: 25,
+                  borderTopLeftRadius: 25,
+                }}
+                src="/pepe.jpg"
+                alt="pepe"
+                width={50}
+                height={50}
             />
+            </div>
           </div>
         </div>
         <div id="buttonContainer">
