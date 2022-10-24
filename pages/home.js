@@ -2,6 +2,8 @@ import Head from "next/head";
 import Image from "next/image";
 import styles from "../styles/Home.module.css";
 import LogoutButton from "../components/logoutButton";
+import Link from "next/link";
+import { useRouter } from "next/router";
 
 export default function Home() {
   return (
@@ -15,8 +17,11 @@ export default function Home() {
       <main className={styles.main}>
         Moinsen
         <div id="headContainer">
-          <input id="searchUser" placeholder="Search for user..."></input>
+          <input id="searchUser" placeholder="Search for user..." />
 
+          <Link href="/profile">
+            <a>Profil</a>
+          </Link>
           <div id="userContainer">
             <LogoutButton />
             <p id="username" className="userData">

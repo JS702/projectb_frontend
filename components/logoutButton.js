@@ -1,13 +1,15 @@
 import Head from "next/head";
 import styles from "../styles/Home.module.css";
 import routes from "../common/routes";
-
-const logout = () => {
-  sessionStorage.removeItem("jwt");
-  window.location.href = routes.login;
-};
+import { useRouter } from "next/router";
 
 export default function LogoutButton() {
+  const router = useRouter();
+
+  const logout = () => {
+    sessionStorage.removeItem("User");
+    router.push("/login");
+  };
   return (
     <div>
       <button onClick={logout}>Abmelden</button>

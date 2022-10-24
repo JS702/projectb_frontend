@@ -4,7 +4,7 @@ import routes from "../common/routes";
 const checkHeaders = () => {
   return localStorage.getItem("jwt")
     ? {
-        Authorization: "Bearer " + localStorage.getItem("jwt"),
+        Authorization: "Bearer " + localStorage.getItem("User").jwt,
       }
     : null;
 };

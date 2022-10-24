@@ -1,17 +1,14 @@
 import Head from "next/head";
 import Image from "next/image";
+import { useEffect } from "react";
 import axiosInstance from "../helper/axios-instance";
 import styles from "../styles/Home.module.css";
 
-export async function getServerSideProps() {
-  const response = await axiosInstance.get(localStorage.get("user").id);
-
-  return {
-    props: { response }, // will be passed to the page component as props
-  };
-}
-
-function Profile({ data }) {
+function Profile() {
+  useEffect(() => {
+    const id = JSON.parse(sessionStorage.getItem("User"))?.id;
+    const response = axiosInstance.get(`/${id}`).then(console.log(response));
+  }, []);
   return (
     <div className={styles.container}>
       <Head>

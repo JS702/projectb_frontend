@@ -2,13 +2,15 @@ import Head from "next/head";
 import styles from "../styles/Home.module.css";
 import { useForm } from "react-hook-form";
 import axiosInstance from "../helper/axios-instance";
-import routes from "../common/routes";
 import { useEffect } from "react";
+import { useRouter } from "next/router";
 
 export default function Register() {
+  const router = useRouter();
+
   useEffect(() => {
-    if (sessionStorage.getItem("jwt")) {
-      window.location.href = routes.home;
+    if (sessionStorage.getItem("User")) {
+      router.push("/home");
     }
   }, []);
 
@@ -19,9 +21,14 @@ export default function Register() {
   } = useForm();
 
   const onSubmit = async (data) => {
-    const response = await axiosInstance.post("/login", data);
-    sessionStorage.setItem("jwt", response);
-    window.location.href = routes.home;
+    try {
+      const response = await axiosInstance.post("/login", data);
+
+      sessionStorage.setItem("User", JSON.stringify(response.data));
+      router.push("/home");
+    } catch (error) {
+      //Error-Handling
+    }
   };
   return (
     <div className={styles.container}>
