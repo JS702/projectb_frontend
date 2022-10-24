@@ -35,6 +35,8 @@ a {
   color: rgb(202, 82, 82);
 }
 
+/**Home*/
+
 #buttonContainer {
   width: 80%;
   align-content: center;
@@ -53,7 +55,7 @@ a {
 
 #headContainer {
   width: 80%;
-  height: 10em;
+  height: 15em;
   position: relative;
 }
 
@@ -61,9 +63,12 @@ a {
   float: right;
   width: 30%;
   margin-right: 3%;
-  position: relative;
+  margin-left: 67%;
+  margin-bottom: 4em;
+  position: absolute;
   margin-top: 1%;
   border: 3px solid #d3d3d3;
+  bottom: 0;
 }
 
 #userImageContainer {
@@ -133,4 +138,35 @@ a {
   width: 80%;
   text-align: center;
   font-size: 250%;
+}
+
+/**Profile*/
+
+#profileHeadContainer {
+  /*border: 3px solid #d3d3d3;*/
+  margin-left: 3%;
+  margin-top: 1.5em;
+  width: 62%;
+  position: absolute;
+}
+
+#profileUsernameContainer {
+  position: absolute;
+  top: 45%;
+  left: 205px;
+}
+
+#profileUsername {
+  font-size: 400%;
+  margin: 0;
+}
+
+#regInfoContainer {
+  position: absolute;
+  bottom: 4%;
+  left: 210px;
+}
+
+#regInfo {
+  margin: 0;
 }

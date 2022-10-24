@@ -29,7 +29,7 @@ export default function Home() {
 
           <div id="userContainer">
             <LogoutButton />
-            <p id="username" className="userData">
+            <p id="username">
               Username
             </p>
             <div id="userImageContainer">
