@@ -170,3 +170,23 @@ a {
 #regInfo {
   margin: 0;
 }
+
+#deleteButton {
+  position: absolute;
+  bottom: 4%;
+  right: 10%;
+}
+
+#profileBodyContainer {
+  width: 80%;
+}
+
+#descriptionContainer {
+  margin-left: 3%;
+  margin-top: 1.5%;
+  height:120px;
+  width:56%;
+  border:3px solid #d3d3d3;
+  font:16px/26px Georgia, Garamond, Serif;
+  overflow:auto;
+}

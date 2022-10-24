@@ -46,6 +46,7 @@ function Profile({ data }) {
             <div id="regInfoContainer">
               <p id="regInfo">Registered since: 09.11.2001</p>
             </div>
+            <button id="deleteButton">Delete Account</button>
             
           </div>
           <input id="searchUser" placeholder="Search for user..."></input>
@@ -72,11 +73,16 @@ function Profile({ data }) {
             </div>
           </div>
         </div>
-        <div id="buttonContainer">
+        <div id="profileBodyContainer">
           <hr></hr>
-          <button className={styles.homeButtons}></button>
-          <button className={styles.homeButtons}></button>
-          <button className={styles.homeButtons}></button>
+          <div id="descriptionContainer" >
+          As you can see, once there is enough text in this box, the box will grow scroll bars... that is why we call it a scroll box! You could also place an image into the scroll box. 
+          As you can see, once there is enough text in this box, the box will grow scroll bars... that is why we call it a scroll box! You could also place an image into the scroll box. 
+          As you can see, once there is enough text in this box, the box will grow scroll bars... that is why we call it a scroll box! You could also place an image into the scroll box. 
+          As you can see, once there is enough text in this box, the box will grow scroll bars... that is why we call it a scroll box! You could also place an image into the scroll box. 
+          As you can see, once there is enough text in this box, the box will grow scroll bars... that is why we call it a scroll box! You could also place an image into the scroll box. 
+
+          </div>
         </div>
       </main>
 
