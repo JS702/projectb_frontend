@@ -22,8 +22,12 @@ export default function Register() {
   }, []);
 
   const onSubmit = async (data) => {
-    const response = await axiosInstance.put("/user/create", data);
-    router.push("/home");
+    try {
+      const response = await axiosInstance.put("/user/create", data);
+      router.push("/login");
+    } catch {
+      //Todo error anzeigen
+    }
   };
 
   function testPasswordEquality() {

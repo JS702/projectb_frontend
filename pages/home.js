@@ -3,8 +3,30 @@ import Image from "next/image";
 import styles from "../styles/Home.module.css";
 import LogoutButton from "../components/logoutButton";
 import Link from "next/link";
+import { useState, useEffect } from "react";
+import LoadingIndicator from "../components/loading-indicator";
+import axiosInstance from "../helper/axios-instance";
 
 export default function Home() {
+  const [user, setUser] = useState();
+
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const id = JSON.parse(sessionStorage.getItem("User"))?.id;
+    axiosInstance.get(`/user/${id}`).then((response) => setUser(response.data));
+  }, []);
+
+  useEffect(() => {
+    if (user) {
+      setIsLoading(false);
+    }
+  }, [user]);
+
+  if (isLoading) {
+    return <LoadingIndicator />;
+  }
+
   let rounds = 10;
 
   function handleChange(event) {
@@ -22,7 +44,6 @@ export default function Home() {
       </Head>
 
       <main className={styles.main}>
-        Moinsen
         <div id="headContainer">
           <input id="searchUser" placeholder="Search for user..." />
 
@@ -31,7 +52,7 @@ export default function Home() {
           </Link>
           <div id="userContainer">
             <LogoutButton />
-            <p id="username">Username</p>
+            <p id="username">{user.username}</p>
             <div id="userImageContainer">
               <Image
                 id="userImage"

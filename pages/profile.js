@@ -1,17 +1,30 @@
 import Head from "next/head";
 import Image from "next/image";
-import { useEffect } from "react";
 import axiosInstance from "../helper/axios-instance";
 import styles from "../styles/Home.module.css";
 import LogoutButton from "../components/logoutButton";
+import { useState, useEffect } from "react";
+import LoadingIndicator from "../components/loading-indicator";
 
 function Profile() {
+  const [user, setUser] = useState();
+
+  const [isLoading, setIsLoading] = useState(true);
+
   useEffect(() => {
     const id = JSON.parse(sessionStorage.getItem("User"))?.id;
-    const response = axiosInstance
-      .get(`/user/${id}`)
-      .then(console.log(response));
+    axiosInstance.get(`/user/${id}`).then((response) => setUser(response.data));
   }, []);
+
+  useEffect(() => {
+    if (user) {
+      setIsLoading(false);
+    }
+  }, [user]);
+
+  if (isLoading) {
+    return <LoadingIndicator />;
+  }
 
   return (
     <div className={styles.container}>
@@ -39,18 +52,17 @@ function Profile() {
             />
 
             <div id="profileUsernameContainer">
-              <p id="profileUsername">Username</p>
+              <p id="profileUsername">{user.username}</p>
             </div>
             <div id="regInfoContainer">
               <p id="regInfo">Registered since: 09.11.2001</p>
             </div>
             <button id="deleteButton">Delete Account</button>
           </div>
-          <input id="searchUser" placeholder="Search for user..."></input>
 
           <div id="userContainer">
             <LogoutButton />
-            <p id="username">Username</p>
+            <p id="username">{user.username}</p>
             <div id="userImageContainer">
               <Image
                 id="userImage"
@@ -70,21 +82,7 @@ function Profile() {
         </div>
         <div id="profileBodyContainer">
           <hr></hr>
-          <div id="descriptionContainer">
-            As you can see, once there is enough text in this box, the box will
-            grow scroll bars... that is why we call it a scroll box! You could
-            also place an image into the scroll box. As you can see, once there
-            is enough text in this box, the box will grow scroll bars... that is
-            why we call it a scroll box! You could also place an image into the
-            scroll box. As you can see, once there is enough text in this box,
-            the box will grow scroll bars... that is why we call it a scroll
-            box! You could also place an image into the scroll box. As you can
-            see, once there is enough text in this box, the box will grow scroll
-            bars... that is why we call it a scroll box! You could also place an
-            image into the scroll box. As you can see, once there is enough text
-            in this box, the box will grow scroll bars... that is why we call it
-            a scroll box! You could also place an image into the scroll box.
-          </div>
+          <div id="descriptionContainer">{user.description}</div>
         </div>
       </main>
 
