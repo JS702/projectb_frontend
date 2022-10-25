@@ -3,9 +3,16 @@ import Image from "next/image";
 import styles from "../styles/Home.module.css";
 import LogoutButton from "../components/logoutButton";
 import Link from "next/link";
-import { useRouter } from "next/router";
 
 export default function Home() {
+  let rounds = 10;
+
+  function handleChange(event) {
+    rounds = event.target.value;
+    console.log("change", rounds);
+    document.getElementById("outputRounds").innerHTML = "Rounds: " + rounds;
+  }
+
   return (
     <div className={styles.container}>
       <Head>
@@ -24,22 +31,22 @@ export default function Home() {
           </Link>
           <div id="userContainer">
             <LogoutButton />
-            <p id="username" className="userData">
-              Username
-            </p>
-            <Image
-              id="userImage"
-              style={{
-                borderTopRightRadius: 25,
-                borderBottomRightRadius: 25,
-                borderBottomLeftRadius: 25,
-                borderTopLeftRadius: 25,
-              }}
-              src="/pepe.jpg"
-              alt="pepe"
-              width={50}
-              height={50}
-            />
+            <p id="username">Username</p>
+            <div id="userImageContainer">
+              <Image
+                id="userImage"
+                style={{
+                  borderTopRightRadius: 25,
+                  borderBottomRightRadius: 25,
+                  borderBottomLeftRadius: 25,
+                  borderTopLeftRadius: 25,
+                }}
+                src="/pepe.jpg"
+                alt="pepe"
+                width={50}
+                height={50}
+              />
+            </div>
           </div>
         </div>
         <div id="buttonContainer">
@@ -48,6 +55,17 @@ export default function Home() {
           <button className={styles.homeButtons}></button>
           <button className={styles.homeButtons}></button>
         </div>
+        <div id="sliderContainer">
+          <input
+            type={"range"}
+            min={"1"}
+            max={"21"}
+            defaultValue={11}
+            id="sliderRounds"
+            onChange={handleChange}
+          />
+        </div>
+        <span id="outputRounds">Rounds: 10</span>
       </main>
 
       <footer className={styles.footer}>

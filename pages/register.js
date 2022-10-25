@@ -3,7 +3,6 @@ import Image from "next/image";
 import styles from "../styles/Home.module.css";
 import { useForm } from "react-hook-form";
 import axiosInstance from "../helper/axios-instance";
-import routes from "../common/routes";
 
 export default function Register() {
   const {
@@ -13,14 +12,14 @@ export default function Register() {
   } = useForm();
 
   useEffect(() => {
-    if (sessionStorage.getItem("jwt")) {
-      window.location.href = routes.home;
+    if (sessionStorage.getItem("User")) {
+      router.push("/home");
     }
   }, []);
 
   const onSubmit = async (data) => {
     const response = await axiosInstance.put("/user/create", data);
-    window.location.href = routes.home;
+    router.push("/home");
   };
 
   function testPasswordEquality() {

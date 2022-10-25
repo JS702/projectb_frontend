@@ -35,6 +35,8 @@ a {
   color: rgb(202, 82, 82);
 }
 
+/**Home*/
+
 #buttonContainer {
   width: 80%;
   align-content: center;
@@ -53,26 +55,138 @@ a {
 
 #headContainer {
   width: 80%;
-  height: 10em;
+  height: 15em;
   position: relative;
 }
 
 #userContainer {
   float: right;
-  text-align: center;
   width: 30%;
   margin-right: 3%;
-  position: relative;
-  margin-top: 1em;
+  margin-left: 67%;
+  margin-bottom: 4em;
+  position: absolute;
+  margin-top: 1%;
+  border: 3px solid #d3d3d3;
+  bottom: 0;
+}
+
+#userImageContainer {
+  margin-left: 3%;
+  margin-top: 1.5%;
+  margin-bottom: 1.5%;
 }
 
 #username {
   float: right;
-  width: 50%;
-  margin-bottom: 0;
-  margin-top: 0;
+  margin-top: 1.2em;
+  width: 40%;
 }
 
 #logOutButton {
   float: right;
+  margin-top: 1.5em;
+  margin-right: 10px;
+}
+
+#sliderContainer {
+  margin-top: 2%;
+  width: 80%;
+  height: 10%;
+}
+
+#sliderRounds {
+  margin: 0;
+  appearance: none;
+  width: 100%;
+  height: 0.25em;
+  background: #d3d3d3;
+  outline: none;
+  opacity: 0.7;
+  -moz-transition: .2s;
+  transition: opacity .2s;
+  margin-top: 2em;
+  margin-bottom: 2em;
+}
+
+#sliderRounds:hover {
+  opacity: 1;
+}
+
+#sliderRounds::-moz-range-thumb {
+  -moz-appearance: none;
+  appearance: none;
+  width: 75px;
+  height: 75px;
+  background: url('../public/helmet.png');
+  cursor: pointer;
+  border: none;
+}
+
+#sliderRounds::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 75px;
+  height: 75px;
+  background: url('../public/helmet.png');
+  cursor: pointer;
+  border: none;
+}
+
+#outputRounds {
+  margin-top: 1%;
+  width: 80%;
+  text-align: center;
+  font-size: 250%;
+}
+
+/**Profile*/
+
+#profileHeadContainer {
+  /*border: 3px solid #d3d3d3;*/
+  margin-left: 3%;
+  margin-top: 1.5em;
+  width: 62%;
+  position: absolute;
+}
+
+#profileUsernameContainer {
+  position: absolute;
+  top: 45%;
+  left: 205px;
+}
+
+#profileUsername {
+  font-size: 400%;
+  margin: 0;
+}
+
+#regInfoContainer {
+  position: absolute;
+  bottom: 4%;
+  left: 210px;
+}
+
+#regInfo {
+  margin: 0;
+}
+
+#deleteButton {
+  position: absolute;
+  bottom: 4%;
+  right: 10%;
+}
+
+#profileBodyContainer {
+  width: 80%;
+}
+
+#descriptionContainer {
+  margin-left: 3%;
+  margin-top: 1.5%;
+  height:120px;
+  width:56%;
+  border:3px solid #d3d3d3;
+  font:16px/26px Georgia, Garamond, Serif;
+  overflow:auto;
 }
