@@ -85,6 +85,40 @@ function Profile() {
             in this box, the box will grow scroll bars... that is why we call it
             a scroll box! You could also place an image into the scroll box.
           </div>
+          <div id="listContainer">
+            <li className={styles.profileList}>
+              Best score (Modus 1):
+            </li>
+            <li className={styles.profileList}>
+              Best score (Modus 2):
+            </li>
+            <li className={styles.profileList}>
+              Best score (Modus 3):
+            </li>
+            <br></br>
+            <li className={styles.profileList}>
+              Games played (Modus 1):
+            </li>
+            <li className={styles.profileList}>
+              Games played (Modus 2):
+            </li>
+            <li className={styles.profileList}>
+              Games played (Modus 3):
+            </li>
+            <li className={styles.profileList}>
+              Games played (total):
+            </li>
+          </div>
+          <div id="listValueContainer">
+            <p className={styles.listValues}>1234</p>
+            <p className={styles.listValues}>1234</p>
+            <p className={styles.listValues}>1234</p>
+            <br></br>
+            <p className={styles.listValues}>1234</p>
+            <p className={styles.listValues}>1234</p>
+            <p className={styles.listValues}>1234</p>
+            <p className={styles.listValues}>1234</p>
+          </div>
         </div>
       </main>
 

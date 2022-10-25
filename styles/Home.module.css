@@ -155,3 +155,11 @@
   background: url('../public/Selection\ Erangel.jpg') center no-repeat;
   background-size: 100% 100%;
 }
+
+.profileList {
+  list-style-position: inside;
+}
+
+.listValues {
+  margin: 0;
+}
