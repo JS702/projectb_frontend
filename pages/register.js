@@ -3,8 +3,12 @@ import Image from "next/image";
 import styles from "../styles/Home.module.css";
 import { useForm } from "react-hook-form";
 import axiosInstance from "../helper/axios-instance";
+import { useEffect } from "react";
+import { useRouter } from "next/router";
 
 export default function Register() {
+  const router = useRouter();
+
   const {
     register,
     handleSubmit,
