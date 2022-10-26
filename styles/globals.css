@@ -202,3 +202,21 @@ a {
   float: center;
   margin-top: 4%;
 }
+
+/**Game*/
+
+#gameContainer {
+  width: 80%;
+}
+
+#mapContainer {
+  float: right;
+  width: 60%;
+  
+}
+
+#infoContainer {
+  float: left;
+  width: 38%;
+  height: max-content;
+}
