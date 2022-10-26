@@ -27,6 +27,21 @@ export default function Game() {
     return <LoadingIndicator />;
   }
 
+  function handleClick(event) {
+    calculateCoordinates(event);
+  }
+
+  function calculateCoordinates(event) {
+    let mouseX = event.clientX;
+    let mouseY = event.clientY;
+    let rect = document.querySelector("#mapImage").getBoundingClientRect();
+
+    let x = (mouseX - rect.left) / rect.width * 8;
+    let y = 8 - ((mouseY - rect.top) / rect.height * 8);
+
+    console.log(x, y);
+  }
+
   return (
     <div className={styles.container}>
       <Head>
@@ -71,6 +86,7 @@ export default function Game() {
               alt="map"
               width={1384}
               height={1384}
+              onClick={handleClick}
             />
           </div>
           <div id="infoContainer">
