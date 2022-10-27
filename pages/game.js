@@ -23,11 +23,14 @@ export default function Game() {
       setIsLoading(false);
     }
   }, [user]);
+  /*
 
   useEffect(() => {
-    axiosInstance.get(`/game`).then((response) => setGame(response.data));
-    //console.log(response.data);
+    axiosInstance
+      .get("/game", { params: { rounds: 5 } })
+      .then((response) => setGame(response.data));
   }, []);
+  */
 
   function handleClick(event) {
     calculateCoordinates(event);
@@ -38,8 +41,8 @@ export default function Game() {
     let mouseY = event.clientY;
     let rect = document.querySelector("#mapImage").getBoundingClientRect();
 
-    let x = (mouseX - rect.left) / rect.width * 8;
-    let y = 8 - ((mouseY - rect.top) / rect.height * 8);
+    let x = ((mouseX - rect.left) / rect.width) * 8;
+    let y = 8 - ((mouseY - rect.top) / rect.height) * 8;
 
     console.log(x, y);
   }
@@ -106,7 +109,6 @@ export default function Game() {
                 height={1440}
               />
             </div>
-
           </div>
         </div>
       </main>
