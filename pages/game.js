@@ -9,6 +9,7 @@ import axiosInstance from "../helper/axios-instance";
 
 export default function Game() {
   const [user, setUser] = useState();
+  const [game, setGame] = useState();
 
   const [isLoading, setIsLoading] = useState(true);
 
@@ -23,9 +24,10 @@ export default function Game() {
     }
   }, [user]);
 
-  if (isLoading) {
-    return <LoadingIndicator />;
-  }
+  useEffect(() => {
+    axiosInstance.get(`/game`).then((response) => setGame(response.data));
+    //console.log(response.data);
+  }, []);
 
   function handleClick(event) {
     calculateCoordinates(event);
@@ -40,6 +42,10 @@ export default function Game() {
     let y = 8 - ((mouseY - rect.top) / rect.height * 8);
 
     console.log(x, y);
+  }
+
+  if (isLoading) {
+    return <LoadingIndicator />;
   }
 
   return (
