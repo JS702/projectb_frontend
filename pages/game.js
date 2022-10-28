@@ -26,10 +26,9 @@ export default function Game() {
 
   useEffect(() => {
     axiosInstance
-      .post("/game", { params: 5 })
+      .get("/game", { params: { rounds: 5 } })
       .then((response) => setGame(response.data));
   }, []);
-  
 
   function handleClick(event) {
     calculateCoordinates(event);
