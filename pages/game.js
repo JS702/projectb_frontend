@@ -23,10 +23,10 @@ export default function Game() {
   }, []);
 
   useEffect(() => {
-    if (user) {
+    if (user && game) {
       setIsLoading(false);
     }
-  }, [user]);
+  }, [user, game]);
 
   useEffect(() => {
     axiosInstance
@@ -46,6 +46,7 @@ export default function Game() {
       let userPosition = calculateCoordinates(event);
       let distance = calculateDistance(userPosition[0], userPosition[1], game[round].position.x, game[round].position.y);
       console.log(distance);
+      document.querySelector("#roundOutput").innerHTML = "Round " + (round + 2) + " / " + game.length;
       setImagePath("/images/" + game[round + 1].pictureName + ".png");
     } else if (!gameOver) {
       let userPosition = calculateCoordinates(event);
@@ -122,12 +123,12 @@ export default function Game() {
             />
           </div>
           <div id="infoContainer">
-            <p>Round 12/21</p>
+            <p id="roundOutput">Round 1 / {game.length}</p>
             <div>
               <Image
                 id="locationImage"
-                src={imagePath}
-                alt="map"
+                src= {imagePath}
+                alt="location"
                 width={2560}
                 height={1440}
               />
