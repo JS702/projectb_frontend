@@ -4,6 +4,7 @@ import styles from "../styles/Home.module.css";
 import { useState, useEffect } from "react";
 import LoadingIndicator from "../components/loading-indicator";
 import axiosInstance from "../helper/axios-instance";
+import ProfileBar from "../components/profile-bar";
 
 export default function Game() {
   const [user, setUser] = useState();
@@ -27,16 +28,11 @@ export default function Game() {
   }, [user, game]);
 
   useEffect(() => {
-    axiosInstance
-      .get("/game", { params: { rounds: 5 } })
-      .then((response) => setGame(response.data));
+    axiosInstance.get("/game", { params: { rounds: 5 } }).then((response) => {
+      setGame(response.data);
+      setImagePath("/images/" + response.data[0].pictureName + ".png");
+    });
   }, []);
-
-  useEffect(() => {
-    if (game) {
-      setImagePath("/images/" + game[0].pictureName + ".png");
-    }
-  }, [game]);
 
   function handleClick(event) {
     if (round + 1 < game.length) {
@@ -48,7 +44,6 @@ export default function Game() {
         game[round].position.x,
         game[round].position.y
       );
-      //console.log(distance);
       document.querySelector("#roundOutput").innerHTML =
         "Round " + (round + 2) + " / " + game.length;
       document.querySelector("#distanceOutput").innerHTML =
