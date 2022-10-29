@@ -1,8 +1,6 @@
 import Head from "next/head";
 import Image from "next/image";
 import styles from "../styles/Home.module.css";
-import LogoutButton from "../components/logoutButton";
-import Link from "next/link";
 import { useState, useEffect } from "react";
 import LoadingIndicator from "../components/loading-indicator";
 import axiosInstance from "../helper/axios-instance";
@@ -14,8 +12,8 @@ export default function Game() {
 
   const [isLoading, setIsLoading] = useState(true);
 
-  const[round, setRound] = useState(0);
-  const[gameOver, setGameOver] = useState(false);
+  const [round, setRound] = useState(0);
+  const [gameOver, setGameOver] = useState(false);
 
   useEffect(() => {
     const id = JSON.parse(sessionStorage.getItem("User"))?.id;
@@ -44,13 +42,24 @@ export default function Game() {
     if (round + 1 < game.length) {
       setRound(round + 1);
       let userPosition = calculateCoordinates(event);
-      let distance = calculateDistance(userPosition[0], userPosition[1], game[round].position.x, game[round].position.y);
+      let distance = calculateDistance(
+        userPosition[0],
+        userPosition[1],
+        game[round].position.x,
+        game[round].position.y
+      );
       console.log(distance);
-      document.querySelector("#roundOutput").innerHTML = "Round " + (round + 2) + " / " + game.length;
+      document.querySelector("#roundOutput").innerHTML =
+        "Round " + (round + 2) + " / " + game.length;
       setImagePath("/images/" + game[round + 1].pictureName + ".png");
     } else if (!gameOver) {
       let userPosition = calculateCoordinates(event);
-      let distance = calculateDistance(userPosition[0], userPosition[1], game[round].position.x, game[round].position.y);
+      let distance = calculateDistance(
+        userPosition[0],
+        userPosition[1],
+        game[round].position.x,
+        game[round].position.y
+      );
       console.log(distance);
       setGameOver(true);
     }
@@ -84,32 +93,8 @@ export default function Game() {
       </Head>
 
       <main className={styles.main}>
-        <div id="headContainer">
-          <input id="searchUser" placeholder="Search for user..." />
+        <ProfileBar user={user} />
 
-          <Link href="/profile">
-            <a>Profil</a>
-          </Link>
-          <div id="userContainer">
-            <LogoutButton />
-            <p id="username">{user.username}</p>
-            <div id="userImageContainer">
-              <Image
-                id="userImage"
-                style={{
-                  borderTopRightRadius: 25,
-                  borderBottomRightRadius: 25,
-                  borderBottomLeftRadius: 25,
-                  borderTopLeftRadius: 25,
-                }}
-                src="/pepe.jpg"
-                alt="pepe"
-                width={50}
-                height={50}
-              />
-            </div>
-          </div>
-        </div>
         <div id="gameContainer">
           <hr></hr>
           <div id="mapContainer">
@@ -127,7 +112,7 @@ export default function Game() {
             <div>
               <Image
                 id="locationImage"
-                src= {imagePath}
+                src={imagePath}
                 alt="location"
                 width={2560}
                 height={1440}

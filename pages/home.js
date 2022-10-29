@@ -1,11 +1,10 @@
 import Head from "next/head";
 import Image from "next/image";
 import styles from "../styles/Home.module.css";
-import LogoutButton from "../components/logoutButton";
-import Link from "next/link";
 import { useState, useEffect } from "react";
 import LoadingIndicator from "../components/loading-indicator";
 import axiosInstance from "../helper/axios-instance";
+import ProfileBar from "../components/profile-bar";
 
 export default function Home() {
   const [user, setUser] = useState();
@@ -23,16 +22,16 @@ export default function Home() {
     }
   }, [user]);
 
-  if (isLoading) {
-    return <LoadingIndicator />;
-  }
-
   let rounds = 10;
 
   function handleChange(event) {
     rounds = event.target.value;
     console.log("change", rounds);
     document.getElementById("outputRounds").innerHTML = "Rounds: " + rounds;
+  }
+
+  if (isLoading) {
+    return <LoadingIndicator />;
   }
 
   return (
@@ -44,32 +43,8 @@ export default function Home() {
       </Head>
 
       <main className={styles.main}>
-        <div id="headContainer">
-          <input id="searchUser" placeholder="Search for user..." />
+        <ProfileBar user={user} />
 
-          <Link href="/profile">
-            <a>Profil</a>
-          </Link>
-          <div id="userContainer">
-            <LogoutButton />
-            <p id="username">{user.username}</p>
-            <div id="userImageContainer">
-              <Image
-                id="userImage"
-                style={{
-                  borderTopRightRadius: 25,
-                  borderBottomRightRadius: 25,
-                  borderBottomLeftRadius: 25,
-                  borderTopLeftRadius: 25,
-                }}
-                src="/pepe.jpg"
-                alt="pepe"
-                width={50}
-                height={50}
-              />
-            </div>
-          </div>
-        </div>
         <div id="buttonContainer">
           <hr></hr>
           <button className={styles.homeButtons}></button>
@@ -88,7 +63,6 @@ export default function Home() {
         </div>
         <span id="outputRounds">Rounds: 10</span>
       </main>
-
       <footer className={styles.footer}>
         <a
           href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
