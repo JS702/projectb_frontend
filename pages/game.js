@@ -10,8 +10,11 @@ import axiosInstance from "../helper/axios-instance";
 export default function Game() {
   const [user, setUser] = useState();
   const [game, setGame] = useState();
+  const [imagePath, setImagePath] = useState();
 
   const [isLoading, setIsLoading] = useState(true);
+
+  const[round, setRound] = useState();
 
   useEffect(() => {
     const id = JSON.parse(sessionStorage.getItem("User"))?.id;
@@ -30,9 +33,21 @@ export default function Game() {
       .then((response) => setGame(response.data));
   }, []);
 
+  useEffect(() => {
+    if (game) {
+      setRound(1);
+      setImagePath("/images/" + game[0].pictureName + ".png");
+    }
+  }, [game]);
+
   function handleClick(event) {
     calculateCoordinates(event);
-    console.log(game);
+    //console.log(game);
+    if (round + 1 <= game.length) {
+      setRound(round + 1);
+      setImagePath("/images/" + game[round].pictureName + ".png");
+    }
+    //console.log(round);
   }
 
   function calculateCoordinates(event) {
@@ -102,7 +117,7 @@ export default function Game() {
             <div>
               <Image
                 id="locationImage"
-                src={"/test_location.jpg"}
+                src={imagePath}
                 alt="map"
                 width={2560}
                 height={1440}
