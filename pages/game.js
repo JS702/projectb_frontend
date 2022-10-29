@@ -45,19 +45,21 @@ export default function Game() {
       setRound(round + 1);
       let userPosition = calculateCoordinates(event);
       let distance = calculateDistance(userPosition[0], userPosition[1], game[round].position.x, game[round].position.y);
-      console.log(distance);
+      //console.log(distance);
       document.querySelector("#roundOutput").innerHTML = "Round " + (round + 2) + " / " + game.length;
+      document.querySelector("#distanceOutput").innerHTML = "Distance: " + distance + "m";
       setImagePath("/images/" + game[round + 1].pictureName + ".png");
     } else if (!gameOver) {
       let userPosition = calculateCoordinates(event);
       let distance = calculateDistance(userPosition[0], userPosition[1], game[round].position.x, game[round].position.y);
-      console.log(distance);
+      //console.log(distance);
+      document.querySelector("#distanceOutput").innerHTML = "Distance: " + distance + "m";
       setGameOver(true);
     }
   }
 
   function calculateDistance(x1, y1, x2, y2) {
-    return Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
+    return Math.round(Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2)) * 1000);
   }
 
   function calculateCoordinates(event) {
@@ -124,6 +126,7 @@ export default function Game() {
           </div>
           <div id="infoContainer">
             <p id="roundOutput">Round 1 / {game.length}</p>
+            <p id="distanceOutput">Distance: 0m</p>
             <div>
               <Image
                 id="locationImage"
