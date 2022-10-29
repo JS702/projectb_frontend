@@ -14,7 +14,8 @@ export default function Game() {
 
   const [isLoading, setIsLoading] = useState(true);
 
-  const[round, setRound] = useState();
+  const[round, setRound] = useState(0);
+  const[gameOver, setGameOver] = useState(false);
 
   useEffect(() => {
     const id = JSON.parse(sessionStorage.getItem("User"))?.id;
@@ -35,19 +36,27 @@ export default function Game() {
 
   useEffect(() => {
     if (game) {
-      setRound(1);
       setImagePath("/images/" + game[0].pictureName + ".png");
     }
   }, [game]);
 
   function handleClick(event) {
-    calculateCoordinates(event);
-    //console.log(game);
-    if (round + 1 <= game.length) {
+    if (round + 1 < game.length) {
       setRound(round + 1);
-      setImagePath("/images/" + game[round].pictureName + ".png");
+      let userPosition = calculateCoordinates(event);
+      let distance = calculateDistance(userPosition[0], userPosition[1], game[round].position.x, game[round].position.y);
+      console.log(distance);
+      setImagePath("/images/" + game[round + 1].pictureName + ".png");
+    } else if (!gameOver) {
+      let userPosition = calculateCoordinates(event);
+      let distance = calculateDistance(userPosition[0], userPosition[1], game[round].position.x, game[round].position.y);
+      console.log(distance);
+      setGameOver(true);
     }
-    //console.log(round);
+  }
+
+  function calculateDistance(x1, y1, x2, y2) {
+    return Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
   }
 
   function calculateCoordinates(event) {
@@ -58,7 +67,7 @@ export default function Game() {
     let x = ((mouseX - rect.left) / rect.width) * 8;
     let y = 8 - ((mouseY - rect.top) / rect.height) * 8;
 
-    console.log(x, y);
+    return [x, y];
   }
 
   if (isLoading) {
