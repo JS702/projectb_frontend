@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 import LoadingIndicator from "../components/loading-indicator";
 import axiosInstance from "../helper/axios-instance";
 import ProfileBar from "../components/profile-bar";
+import Footer from "../components/footer";
 
 export default function Home() {
   const [user, setUser] = useState();
@@ -63,18 +64,7 @@ export default function Home() {
         </div>
         <span id="outputRounds">Rounds: 10</span>
       </main>
-      <footer className={styles.footer}>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{" "}
-          <span className={styles.logo}>
-            <Image src="/vercel.svg" alt="Vercel Logo" width={72} height={16} />
-          </span>
-        </a>
-      </footer>
+      <Footer></Footer>
     </div>
   );
 }

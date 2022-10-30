@@ -2,7 +2,7 @@ import Head from "next/head";
 import Image from "next/image";
 import axiosInstance from "../helper/axios-instance";
 import styles from "../styles/Home.module.css";
-import LogoutButton from "../components/logoutButton";
+import Footer from "../components/footer";
 import { useState, useEffect } from "react";
 import LoadingIndicator from "../components/loading-indicator";
 import ProfileBar from "../components/profile-bar";
@@ -62,10 +62,9 @@ function Profile() {
           </div>
 
           <ProfileBar user={user} />
-
         </div>
         <div id="profileBodyContainer">
-          <hr></hr>
+          <hr />
           <div id="descriptionContainer">{user.description}</div>
           <div id="listContainer">
             <li className={styles.profileList}>Best score (Modus 1):</li>
@@ -90,18 +89,7 @@ function Profile() {
         </div>
       </main>
 
-      <footer className={styles.footer}>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{" "}
-          <span className={styles.logo}>
-            <Image src="/vercel.svg" alt="Vercel Logo" width={72} height={16} />
-          </span>
-        </a>
-      </footer>
+      <Footer></Footer>
     </div>
   );
 }

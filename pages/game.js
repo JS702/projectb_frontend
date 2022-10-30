@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 import LoadingIndicator from "../components/loading-indicator";
 import axiosInstance from "../helper/axios-instance";
 import ProfileBar from "../components/profile-bar";
+import Footer from "../components/footer";
 
 export default function Game() {
   const [user, setUser] = useState();
@@ -37,25 +38,26 @@ export default function Game() {
   useEffect(() => {
     if (round > 0 && round < game.length) {
       setImagePath("/images/" + game[round].pictureName + ".png");
-      document.querySelector("#roundOutput").innerHTML = 
+      document.querySelector("#roundOutput").innerHTML =
         "Round " + (round + 1) + " / " + game.length;
     }
   }, [round, game]);
 
   function handleClick(event) {
-    if(round < game.length) {
+    if (round < game.length) {
       setRound(round + 1);
       let userPosition = calculateCoordinates(event);
       let distance = calculateDistance(
         userPosition[0],
         userPosition[1],
         game[round].position.x,
-        game[round].position.y);
+        game[round].position.y
+      );
       setTotalDistance(totalDistance + distance);
       console.log("distance: " + distance);
       document.querySelector("#distanceOutput").innerHTML =
         "Distance: " + distance + "m";
-    } 
+    }
   }
 
   function calculateDistance(x1, y1, x2, y2) {
@@ -119,18 +121,7 @@ export default function Game() {
         </div>
       </main>
 
-      <footer className={styles.footer}>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{" "}
-          <span className={styles.logo}>
-            <Image src="/vercel.svg" alt="Vercel Logo" width={72} height={16} />
-          </span>
-        </a>
-      </footer>
+      <Footer></Footer>
     </div>
   );
 }
