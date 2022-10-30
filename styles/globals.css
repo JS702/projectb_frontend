@@ -60,33 +60,38 @@ a {
 }
 
 #userContainer {
+  display: table;
   float: right;
-  width: 30%;
-  margin-right: 3%;
-  margin-left: 67%;
-  margin-bottom: 4em;
-  position: absolute;
-  margin-top: 1%;
+  width: 24%;
+  margin-left: 51%;
+  position: relative;
+  margin-bottom: 1%;
   border: 3px solid #d3d3d3;
   bottom: 0;
 }
 
 #userImageContainer {
-  margin-left: 3%;
-  margin-top: 1.5%;
-  margin-bottom: 1.5%;
+  padding-top: 2%;
+  text-align: center;
+  min-width: 17%;
+  display: table-cell;
 }
 
 #username {
-  float: right;
-  margin-top: 1.2em;
-  width: 40%;
+  text-align: center;
+  transform: translateY(-35%);
+  display: table-cell;
+}
+
+#logOutButtonContainer {
+  width: 20%;
+  text-align: center;
+  transform: translateY(-35%);
+  display: table-cell;
 }
 
 #logOutButton {
-  float: right;
-  margin-top: 1.5em;
-  margin-right: 10px;
+  margin-right: 10%;
 }
 
 #sliderContainer {

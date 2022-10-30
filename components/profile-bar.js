@@ -5,10 +5,6 @@ import Image from "next/image";
 export default function ProfileBar({ user }) {
   return (
     <div id="userContainer">
-      <LogoutButton />
-      <Link id="username" href="/profile">
-        <a>{user.username}</a>
-      </Link>
       <div id="userImageContainer">
         <Image
           id="userImage"
@@ -24,6 +20,10 @@ export default function ProfileBar({ user }) {
           height={50}
         />
       </div>
+      <Link href="/profile">
+        <a id="username">{user.username}</a>
+      </Link>
+      <LogoutButton />
     </div>
   );
 }

@@ -5,6 +5,7 @@ import styles from "../styles/Home.module.css";
 import LogoutButton from "../components/logoutButton";
 import { useState, useEffect } from "react";
 import LoadingIndicator from "../components/loading-indicator";
+import ProfileBar from "../components/profile-bar";
 
 function Profile() {
   const [user, setUser] = useState();
@@ -60,25 +61,8 @@ function Profile() {
             <button id="deleteButton">Delete Account</button>
           </div>
 
-          <div id="userContainer">
-            <LogoutButton />
-            <p id="username">{user.username}</p>
-            <div id="userImageContainer">
-              <Image
-                id="userImage"
-                style={{
-                  borderTopRightRadius: 25,
-                  borderBottomRightRadius: 25,
-                  borderBottomLeftRadius: 25,
-                  borderTopLeftRadius: 25,
-                }}
-                src="/pepe.jpg"
-                alt="pepe"
-                width={50}
-                height={50}
-              />
-            </div>
-          </div>
+          <ProfileBar user={user} />
+
         </div>
         <div id="profileBodyContainer">
           <hr></hr>
