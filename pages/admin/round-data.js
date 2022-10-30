@@ -3,9 +3,18 @@ import Image from "next/image";
 import styles from "../../styles/Home.module.css";
 import { useForm } from "react-hook-form";
 import axiosInstance from "../../helper/axios-instance";
+import { useEffect, useState } from "react";
 
-export default function RoundData() {
+const RoundData = () => {
   const { handleSubmit, register } = useForm();
+
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+  useEffect(() => {
+    if (JSON.parse(sessionStorage.getItem("User")).type === "ADMIN") {
+      setIsAuthenticated(true);
+    }
+  }, []);
 
   const onSubmit = async (data) => {
     try {
@@ -15,6 +24,9 @@ export default function RoundData() {
       //Todo error anzeigen
     }
   };
+  if (!isAuthenticated) {
+    return <div>Keine Berechtigung</div>; //TODO Komponente
+  }
   return (
     <div className={styles.container}>
       <Head>
@@ -73,4 +85,5 @@ export default function RoundData() {
       </footer>
     </div>
   );
-}
+};
+export default RoundData;
