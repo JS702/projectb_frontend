@@ -14,7 +14,7 @@ export default function Game() {
   const [isLoading, setIsLoading] = useState(true);
 
   const [round, setRound] = useState(0);
-  const [gameOver, setGameOver] = useState(false);
+  const [totalDistance, setTotalDistance] = useState(0);
 
   useEffect(() => {
     const id = JSON.parse(sessionStorage.getItem("User"))?.id;
@@ -34,34 +34,28 @@ export default function Game() {
     });
   }, []);
 
+  useEffect(() => {
+    if (round > 0 && round < game.length) {
+      setImagePath("/images/" + game[round].pictureName + ".png");
+      document.querySelector("#roundOutput").innerHTML = 
+        "Round " + (round + 1) + " / " + game.length;
+    }
+  }, [round, game]);
+
   function handleClick(event) {
-    if (round + 1 < game.length) {
+    if(round < game.length) {
       setRound(round + 1);
       let userPosition = calculateCoordinates(event);
       let distance = calculateDistance(
         userPosition[0],
         userPosition[1],
         game[round].position.x,
-        game[round].position.y
-      );
-      document.querySelector("#roundOutput").innerHTML =
-        "Round " + (round + 2) + " / " + game.length;
+        game[round].position.y);
+      setTotalDistance(totalDistance + distance);
+      console.log("distance: " + distance);
       document.querySelector("#distanceOutput").innerHTML =
         "Distance: " + distance + "m";
-      setImagePath("/images/" + game[round + 1].pictureName + ".png");
-    } else if (!gameOver) {
-      let userPosition = calculateCoordinates(event);
-      let distance = calculateDistance(
-        userPosition[0],
-        userPosition[1],
-        game[round].position.x,
-        game[round].position.y
-      );
-      //console.log(distance);
-      document.querySelector("#distanceOutput").innerHTML =
-        "Distance: " + distance + "m";
-      setGameOver(true);
-    }
+    } 
   }
 
   function calculateDistance(x1, y1, x2, y2) {
@@ -111,6 +105,7 @@ export default function Game() {
           <div id="infoContainer">
             <p id="roundOutput">Round 1 / {game.length}</p>
             <p id="distanceOutput">Distance: 0m</p>
+            <p id="totalDistanceOutput">Total Distance: {totalDistance}m</p>
             <div>
               <Image
                 id="locationImage"
