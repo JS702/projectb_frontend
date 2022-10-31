@@ -16,6 +16,7 @@ export default function Game() {
 
   const [round, setRound] = useState(0);
   const [totalDistance, setTotalDistance] = useState(0);
+  const [mousePosition, setMousePosition] = useState([0, 0]);
 
   useEffect(() => {
     const id = JSON.parse(sessionStorage.getItem("User"))?.id;
@@ -57,6 +58,7 @@ export default function Game() {
       console.log("distance: " + distance);
       document.querySelector("#distanceOutput").innerHTML =
         "Distance: " + distance + "m";
+      setMousePosition([event.clientX, event.clientY]);
     }
   }
 
@@ -91,6 +93,19 @@ export default function Game() {
 
       <main className={styles.main}>
         <ProfileBar user={user} />
+
+        <div id="yellowMarkerContainer"
+          className={styles.markerContainer}
+          style={{
+            left: mousePosition[0] - 9,
+            top: mousePosition[1] - 43 + window.scrollY}}>
+          <Image
+            src={"/MarkerYellow.png"}
+            alt="map"
+            width={19}
+            height={85}
+          />
+        </div>
 
         <div id="gameContainer">
           <hr></hr>
