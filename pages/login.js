@@ -25,7 +25,7 @@ export default function Register() {
       const response = await axiosInstance.post("/login", data);
 
       sessionStorage.setItem("User", JSON.stringify(response.data));
-      router.push("/home");
+      location.href = "/home";
     } catch (error) {
       //Error-Handling
     }
