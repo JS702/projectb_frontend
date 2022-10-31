@@ -17,7 +17,7 @@ export default function Register() {
 
   useEffect(() => {
     if (sessionStorage.getItem("User")) {
-      router.push("/home");
+      location.href = "/home";
     }
   }, []);
 
