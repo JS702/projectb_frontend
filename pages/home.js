@@ -1,9 +1,8 @@
 import Head from "next/head";
-import Image from "next/image";
 import styles from "../styles/Home.module.css";
 import { useState, useEffect } from "react";
 import LoadingIndicator from "../components/loading-indicator";
-import axiosInstance from "../helper/axios-instance";
+import axiosInstance from "../common/axios-instance";
 import ProfileBar from "../components/profile-bar";
 import Footer from "../components/footer";
 

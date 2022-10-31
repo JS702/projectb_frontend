@@ -1,6 +1,5 @@
 import Head from "next/head";
-import Image from "next/image";
-import axiosInstance from "../helper/axios-instance";
+import axiosInstance from "../common/axios-instance";
 import styles from "../styles/Home.module.css";
 import Footer from "../components/footer";
 import { useState, useEffect } from "react";
@@ -36,33 +35,8 @@ function Profile() {
       </Head>
 
       <main className={styles.main}>
-        <div id="headContainer">
-          <div id="profileHeadContainer">
-            <Image
-              id="profileUserImage"
-              style={{
-                borderTopRightRadius: 10,
-                borderBottomRightRadius: 10,
-                borderBottomLeftRadius: 10,
-                borderTopLeftRadius: 10,
-              }}
-              src="/pepe.jpg"
-              alt="pepe"
-              width={200}
-              height={200}
-            />
+        <ProfileBar user={user} />
 
-            <div id="profileUsernameContainer">
-              <p id="profileUsername">{user.username}</p>
-            </div>
-            <div id="regInfoContainer">
-              <p id="regInfo">Registered since: 09.11.2001</p>
-            </div>
-            <button id="deleteButton">Delete Account</button>
-          </div>
-
-          <ProfileBar user={user} />
-        </div>
         <div id="profileBodyContainer">
           <hr />
           <div id="descriptionContainer">{user.description}</div>

@@ -3,7 +3,7 @@ import Image from "next/image";
 import styles from "../styles/Home.module.css";
 import { useState, useEffect } from "react";
 import LoadingIndicator from "../components/loading-indicator";
-import axiosInstance from "../helper/axios-instance";
+import axiosInstance from "../common/axios-instance";
 import ProfileBar from "../components/profile-bar";
 import Footer from "../components/footer";
 
@@ -23,12 +23,6 @@ export default function Game() {
   }, []);
 
   useEffect(() => {
-    if (user && game) {
-      setIsLoading(false);
-    }
-  }, [user, game]);
-
-  useEffect(() => {
     axiosInstance.get("/game", { params: { rounds: 5 } }).then((response) => {
       setGame(response.data);
       setImagePath("/images/" + response.data[0].pictureName + ".png");
@@ -42,6 +36,12 @@ export default function Game() {
         "Round " + (round + 1) + " / " + game.length;
     }
   }, [round, game]);
+
+  useEffect(() => {
+    if (user && game) {
+      setIsLoading(false);
+    }
+  }, [user, game]);
 
   function handleClick(event) {
     if (round < game.length) {

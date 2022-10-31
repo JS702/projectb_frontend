@@ -1,7 +1,7 @@
 import Head from "next/head";
 import styles from "../styles/Home.module.css";
 import { useForm } from "react-hook-form";
-import axiosInstance from "../helper/axios-instance";
+import axiosInstance from "../common/axios-instance";
 import { useEffect } from "react";
 import { useRouter } from "next/router";
 import Footer from "../components/footer";
@@ -143,11 +143,11 @@ export default function Register() {
                       value: true,
                       message: "Passwort darf nicht leer sein!",
                     },
-                    /**minLength: {
+                    minLength: {
                       value: 4,
                       message:
                         "Passwort muss mindestens 4 Buchstaben lang sein!",
-                    },*/
+                    },
                   })}
                 />
                 {errors.password && <p>{errors.password.message}</p>}

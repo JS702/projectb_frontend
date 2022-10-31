@@ -1,8 +1,7 @@
 import Head from "next/head";
-import Image from "next/image";
 import styles from "../../styles/Home.module.css";
 import { useForm } from "react-hook-form";
-import axiosInstance from "../../helper/axios-instance";
+import axiosInstance from "../../common/axios-instance";
 import { useEffect, useState } from "react";
 import Footer from "../../components/footer";
 
