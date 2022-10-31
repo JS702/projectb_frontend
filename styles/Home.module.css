@@ -163,8 +163,3 @@
 .listValues {
   margin: 0;
 }
-
-.markerContainer {
-  z-index: 1;
-  position: absolute;
-}
