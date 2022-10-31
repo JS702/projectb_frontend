@@ -17,6 +17,7 @@ export default function Game() {
   const [round, setRound] = useState(0);
   const [totalDistance, setTotalDistance] = useState(0);
   const [mousePosition, setMousePosition] = useState([0, 0]);
+  const [locationPosition, setLocationPosition] = useState([0, 0]);
 
   useEffect(() => {
     const id = JSON.parse(sessionStorage.getItem("User"))?.id;
@@ -47,18 +48,22 @@ export default function Game() {
   function handleClick(event) {
     if (round < game.length) {
       setRound(round + 1);
-      let userPosition = calculateCoordinates(event);
+      let userPosition = calculateUserCoordinates(event);
       let distance = calculateDistance(
         userPosition[0],
         userPosition[1],
         game[round].position.x,
         game[round].position.y
       );
+
       setTotalDistance(totalDistance + distance);
       console.log("distance: " + distance);
       document.querySelector("#distanceOutput").innerHTML =
         "Distance: " + distance + "m";
+
       setMousePosition([event.clientX, event.clientY]);
+      let locationPosition = calculateLocationCoordinates();
+      setLocationPosition(locationPosition);
     }
   }
 
@@ -68,13 +73,22 @@ export default function Game() {
     );
   }
 
-  function calculateCoordinates(event) {
+  function calculateUserCoordinates(event) {
     let mouseX = event.clientX;
     let mouseY = event.clientY;
     let rect = document.querySelector("#mapImage").getBoundingClientRect();
 
     let x = ((mouseX - rect.left) / rect.width) * 8;
     let y = 8 - ((mouseY - rect.top) / rect.height) * 8;
+
+    return [x, y];
+  }
+
+  function calculateLocationCoordinates() {
+    let rect = document.querySelector("#mapImage").getBoundingClientRect();
+
+    let x = rect.left + rect.width / 8 * game[round].position.x;
+    let y = rect.bottom - rect.width / 8 * game[round].position.y;
 
     return [x, y];
   }
@@ -101,7 +115,20 @@ export default function Game() {
             top: mousePosition[1] - 43 + window.scrollY}}>
           <Image
             src={"/MarkerYellow.png"}
-            alt="map"
+            alt="markerYellow"
+            width={19}
+            height={85}
+          />
+        </div>
+
+        <div id="orangeMarkerContainer"
+          className={styles.markerContainer}
+          style={{
+            left: locationPosition[0] - 9,
+            top: locationPosition[1] - 43 + window.scrollY}}>
+          <Image
+            src={"/MarkerOrange.png"}
+            alt="markerOrange"
             width={19}
             height={85}
           />
