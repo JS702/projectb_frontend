@@ -18,6 +18,9 @@ export default function Game() {
   const [totalDistance, setTotalDistance] = useState(0);
   const [mousePosition, setMousePosition] = useState([0, 0]);
   const [locationPosition, setLocationPosition] = useState([0, 0]);
+  const [endScreenSize, setEndScreenSize] = useState(0);
+  const [endScreenLeft, setEndScreenLeft] = useState(-900);
+  const [gameOver, setGameOver] = useState(false);
 
   useEffect(() => {
     const id = JSON.parse(sessionStorage.getItem("User"))?.id;
@@ -46,24 +49,32 @@ export default function Game() {
   }, [user, game]);
 
   function handleClick(event) {
-    if (round < game.length) {
-      setRound(round + 1);
-      let userPosition = calculateUserCoordinates(event);
-      let distance = calculateDistance(
-        userPosition[0],
-        userPosition[1],
-        game[round].position.x,
-        game[round].position.y
-      );
+    if(!gameOver) {
+      if (round < game.length) {
+        setRound(round + 1);
+        let userPosition = calculateUserCoordinates(event);
+        let distance = calculateDistance(
+          userPosition[0],
+          userPosition[1],
+          game[round].position.x,
+          game[round].position.y
+        );
 
-      setTotalDistance(totalDistance + distance);
-      console.log("distance: " + distance);
-      document.querySelector("#distanceOutput").innerHTML =
-        "Distance: " + distance + "m";
+        setTotalDistance(totalDistance + distance);
+        console.log("distance: " + distance);
+        document.querySelector("#distanceOutput").innerHTML =
+          "Distance: " + distance + "m";
 
-      setMousePosition([event.clientX, event.clientY]);
-      let locationPosition = calculateLocationCoordinates();
-      setLocationPosition(locationPosition);
+        setMousePosition([event.clientX, event.clientY]);
+        let locationPosition = calculateLocationCoordinates();
+        setLocationPosition(locationPosition);
+      }
+      if(round + 1 === game.length){
+        setGameOver(true);
+        setEndScreenSize(document.querySelector("#mapImage").getBoundingClientRect().right - 
+          document.querySelector("#mapImage").getBoundingClientRect().left);
+        setEndScreenLeft(document.querySelector("#mapImage").getBoundingClientRect().left);
+      }
     }
   }
 
@@ -92,6 +103,19 @@ export default function Game() {
 
     return [x, y];
   }
+
+  useEffect(() => {
+    function handleResize() {
+      if (gameOver) {
+        setEndScreenSize(document.querySelector("#mapImage").getBoundingClientRect().right - 
+          document.querySelector("#mapImage").getBoundingClientRect().left);
+        setEndScreenLeft(document.querySelector("#mapImage").getBoundingClientRect().left);
+      }
+    }
+    window.addEventListener('resize', handleResize)
+  })
+
+  
 
   if (isLoading) {
     return <LoadingIndicator />;
@@ -136,6 +160,18 @@ export default function Game() {
 
         <div id="gameContainer">
           <hr></hr>
+
+          <div id="gameOverScreen"
+            style={{
+              width: endScreenSize,
+              left: endScreenLeft,
+            }}>
+            <p id="gameOverMessage">Winner<br></br>Winner<br></br>Chicken<br></br>Dinner!</p>
+            <p id="averageDistanceOutput">
+              Average Distance: {Math.round(totalDistance / game.length)}m
+            </p>
+          </div>
+
           <div id="mapContainer">
             <Image
               id="mapImage"
