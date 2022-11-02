@@ -22,6 +22,15 @@ function Profile() {
     }
   }, [user]);
 
+  const uploadPicture = async () => {
+    var file = document.querySelector("#profilePicture");
+    const formData = new FormData();
+
+    formData.append("file", file.files[0]);
+    const id = JSON.parse(sessionStorage.getItem("User"))?.id;
+    await axiosInstance.post(`/mediafile/profilepicture/${id}`, formData);
+  };
+
   if (isLoading) {
     return <LoadingIndicator />;
   }
@@ -36,6 +45,13 @@ function Profile() {
 
       <main className={styles.main}>
         <ProfileBar user={user} />
+
+        <input
+          type={"file"}
+          id="profilePicture"
+          onInput={uploadPicture}
+          name="profilePicture"
+        />
 
         <div id="profileBodyContainer">
           <hr />

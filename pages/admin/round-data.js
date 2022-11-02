@@ -19,6 +19,7 @@ const RoundData = () => {
   const onSubmit = async (data) => {
     try {
       console.log(data);
+      data.picture = { path: "", type: "ROUND", fileExtension: "JPG"};
       await axiosInstance.put("/admin/round_data", data);
     } catch {
       //Todo error anzeigen
