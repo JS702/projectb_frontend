@@ -24,7 +24,7 @@ const RoundData = () => {
 
       formData.append("file", file.files[0]);
       const response = await axiosInstance.put("/admin/round_file", formData);
-      data.round.picture = response.data;
+      data.round.mediaFileId = response.data.id;
       data.round.name = file.files[0].name;
       await axiosInstance.put("/admin/round_data", data.round);
     } catch {
@@ -46,10 +46,10 @@ const RoundData = () => {
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className={styles.inputContainer}>
             <input
-                    type={"file"}
-                    id="roundPicture"
-                    name="roundPicture"
-                    {...register("file")}
+              type={"file"}
+              id="roundPicture"
+              name="roundPicture"
+              {...register("file")}
             />
           </div>
 
@@ -76,12 +76,15 @@ const RoundData = () => {
           <hr />
 
           <div className={styles.inputContainer}>
-
-          <label> Typ</label>
-          <select name="type" className={styles.input} {...register("round.type")}>
-            <option value="PUBG">PUBG</option>
-            <option value="APEX_LEGENDS">APEX LEGENDS</option>
-          </select>
+            <label> Typ</label>
+            <select
+              name="type"
+              className={styles.input}
+              {...register("round.type")}
+            >
+              <option value="PUBG">PUBG</option>
+              <option value="APEX_LEGENDS">APEX LEGENDS</option>
+            </select>
           </div>
 
           <hr />
