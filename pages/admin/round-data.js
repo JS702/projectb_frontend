@@ -18,8 +18,8 @@ const RoundData = () => {
 
   const onSubmit = async (data) => {
     try {
-      console.log(data);
-      data.picture = { path: "", type: "ROUND", fileExtension: "JPG"};
+      data.picture.type = "ROUND";
+      data.picture.fileExtension = data.picture.name.split(".")[1].toUpperCase();
       await axiosInstance.put("/admin/round_data", data);
     } catch {
       //Todo error anzeigen
@@ -66,6 +66,19 @@ const RoundData = () => {
               {...register("position.y")}
             />
           </div>
+            <hr />
+
+
+            <div className={styles.inputContainer}>
+                <label> Dateiname</label>
+                <input
+                        type="text"
+                        className={styles.input}
+                        {...register("picture.name")}
+                />
+            </div>
+
+
           <button id="buttonRegister" type="submit">
             Abschicken
           </button>
