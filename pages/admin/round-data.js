@@ -18,9 +18,15 @@ const RoundData = () => {
 
   const onSubmit = async (data) => {
     try {
-      data.picture.type = "ROUND";
-      data.picture.fileExtension = data.picture.name.split(".")[1].toUpperCase();
-      await axiosInstance.put("/admin/round_data", data);
+      var file = document.querySelector("#roundPicture");
+      console.log(file.files[0]);
+      const formData = new FormData();
+
+      formData.append("file", file.files[0]);
+      const response = await axiosInstance.put("/admin/round_file", formData);
+      data.round.picture = response.data;
+      data.round.name = file.files[0].name;
+      await axiosInstance.put("/admin/round_data", data.round);
     } catch {
       //Todo error anzeigen
     }
@@ -39,11 +45,11 @@ const RoundData = () => {
       <main className={styles.register}>
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className={styles.inputContainer}>
-            <label>Bildname</label>
             <input
-              type="text"
-              className={styles.input}
-              {...register("pictureName")}
+                    type={"file"}
+                    id="roundPicture"
+                    name="roundPicture"
+                    {...register("file")}
             />
           </div>
 
@@ -53,7 +59,7 @@ const RoundData = () => {
             <input
               type="text"
               className={styles.input}
-              {...register("position.x")}
+              {...register("round.position.x")}
             />
           </div>
           <hr />
@@ -63,21 +69,22 @@ const RoundData = () => {
             <input
               type="text"
               className={styles.input}
-              {...register("position.y")}
+              {...register("round.position.y")}
             />
           </div>
-            <hr />
 
+          <hr />
 
-            <div className={styles.inputContainer}>
-                <label> Dateiname</label>
-                <input
-                        type="text"
-                        className={styles.input}
-                        {...register("picture.name")}
-                />
-            </div>
+          <div className={styles.inputContainer}>
 
+          <label> Typ</label>
+          <select name="type" className={styles.input} {...register("round.type")}>
+            <option value="PUBG">PUBG</option>
+            <option value="APEX_LEGENDS">APEX LEGENDS</option>
+          </select>
+          </div>
+
+          <hr />
 
           <button id="buttonRegister" type="submit">
             Abschicken
