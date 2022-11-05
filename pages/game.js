@@ -28,15 +28,15 @@ export default function Game() {
   }, []);
 
   useEffect(() => {
-    axiosInstance.get("/game", { params: { rounds: 5 } }).then((response) => {
+    axiosInstance.get("/game", { params: { rounds: 2 } }).then((response) => {
       setGame(response.data);
-      setImagePath("/images/" + response.data[0].pictureName + ".png");
+      setImagePath("/images/" + response.data[0].mediaFile.name);
     });
   }, []);
 
   useEffect(() => {
     if (round > 0 && round < game.length) {
-      setImagePath("/images/" + game[round].pictureName + ".png");
+      setImagePath("/images/" + game[round].mediaFile.name);
       document.querySelector("#roundOutput").innerHTML =
         "Round " + (round + 1) + " / " + game.length;
     }
@@ -49,6 +49,7 @@ export default function Game() {
   }, [user, game]);
 
   function handleClick(event) {
+    console.log(game);
     if(!gameOver) {
       if (round < game.length) {
         setRound(round + 1);
@@ -56,8 +57,8 @@ export default function Game() {
         let distance = calculateDistance(
           userPosition[0],
           userPosition[1],
-          game[round].position.x,
-          game[round].position.y
+          game[round].roundData.position.x,
+          game[round].roundData.position.y
         );
 
         setTotalDistance(totalDistance + distance);
@@ -98,8 +99,8 @@ export default function Game() {
   function calculateLocationCoordinates() {
     let rect = document.querySelector("#mapImage").getBoundingClientRect();
 
-    let x = rect.left + rect.width / 8 * game[round].position.x;
-    let y = rect.bottom - rect.width / 8 * game[round].position.y;
+    let x = rect.left + rect.width / 8 * game[round].roundData.position.x;
+    let y = rect.bottom - rect.width / 8 * game[round].roundData.position.y;
 
     return [x, y];
   }
