@@ -30,13 +30,13 @@ export default function Game() {
   useEffect(() => {
     axiosInstance.get("/game", { params: { rounds: 2 } }).then((response) => {
       setGame(response.data);
-      setImagePath("/images/" + response.data[0].mediaFile.name);
+      setImagePath("/images/rounds/" + response.data[0].mediaFile.name);
     });
   }, []);
 
   useEffect(() => {
     if (round > 0 && round < game.length) {
-      setImagePath("/images/" + game[round].mediaFile.name);
+      setImagePath("/images/rounds/" + game[round].mediaFile.name);
       document.querySelector("#roundOutput").innerHTML =
         "Round " + (round + 1) + " / " + game.length;
     }
