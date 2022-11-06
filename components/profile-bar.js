@@ -1,9 +1,36 @@
 import LogoutButton from "./logout-button";
 import Link from "next/link";
 import Image from "next/image";
+import axiosInstance from "../common/axios-instance";
+import { useState, useEffect } from "react";
+import LoadingIndicator from "./loading-indicator";
 
-export default function ProfileBar({ user }) {
-  return (
+
+export default function ProfileBar() {
+
+    const [ user, setUser ] = useState();
+
+    const [ picture, setPicture ] = useState( {path: "/pepe.jpg" });
+
+    useEffect( () => {
+        const id = JSON.parse( sessionStorage.getItem( "User" ) )?.id;
+        axiosInstance.get( `/user/${ id }` ).then( ( response ) => setUser( response.data ) );
+    }, [] );
+
+    useEffect( () => {
+        if(user?.profilePictureId){
+            axiosInstance.get( `/mediafile/${ user.profilePictureId }` )
+                    .then( ( response ) => {
+                        setPicture( response.data );console.log(response.data)
+                    } );
+        }
+    }, [user] );
+
+    if(!user){
+        return <LoadingIndicator/>;
+    }
+
+    return (
     <div id="userContainer">
       <div id="userImageContainer">
         <Image
@@ -14,8 +41,7 @@ export default function ProfileBar({ user }) {
             borderBottomLeftRadius: 25,
             borderTopLeftRadius: 25,
           }}
-          src="/pepe.jpg"
-          alt="pepe"
+          src={picture.path}
           width={50}
           height={50}
         />
