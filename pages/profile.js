@@ -20,7 +20,8 @@ function Profile() {
         formData.append( "file", file );
         const id = JSON.parse( sessionStorage.getItem( "User" ) )?.id;
         try {
-            await axiosInstance.post( `/mediafile/profilepicture/${ id }`, formData );
+            const response = await axiosInstance.post( `/mediafile/profilepicture/${ id }`, formData );
+            setUser(response.data);
         } catch {
 
         }

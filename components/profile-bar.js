@@ -10,7 +10,7 @@ export default function ProfileBar() {
 
     const [ user, setUser ] = useState();
 
-    const [ picture, setPicture ] = useState( {path: "/pepe.jpg" });
+    const [ picture, setPicture ] = useState( { path: "/pepe.jpg" } );
 
     useEffect( () => {
         const id = JSON.parse( sessionStorage.getItem( "User" ) )?.id;
@@ -18,38 +18,36 @@ export default function ProfileBar() {
     }, [] );
 
     useEffect( () => {
-        if(user?.profilePictureId){
+        if ( user?.profilePictureId ) {
             axiosInstance.get( `/mediafile/${ user.profilePictureId }` )
-                    .then( ( response ) => {
-                        setPicture( response.data );console.log(response.data)
-                    } );
+                    .then( ( response ) => setPicture( response.data ) );
         }
-    }, [user] );
+    }, [ user ] );
 
-    if(!user){
+    if ( !user ) {
         return <LoadingIndicator/>;
     }
 
     return (
-    <div id="userContainer">
-      <div id="userImageContainer">
-        <Image
-          id="userImage"
-          style={{
-            borderTopRightRadius: 25,
-            borderBottomRightRadius: 25,
-            borderBottomLeftRadius: 25,
-            borderTopLeftRadius: 25,
-          }}
-          src={picture.path}
-          width={50}
-          height={50}
-        />
-      </div>
-      <Link href="/profile">
-        <a id="username">{user.username}</a>
-      </Link>
-      <LogoutButton />
-    </div>
-  );
+            <div id="userContainer">
+                <div id="userImageContainer">
+                    <Image
+                            id="userImage"
+                            style={ {
+                                borderTopRightRadius: 25,
+                                borderBottomRightRadius: 25,
+                                borderBottomLeftRadius: 25,
+                                borderTopLeftRadius: 25
+                            } }
+                            src={ picture.path }
+                            width={ 50 }
+                            height={ 50 }
+                    />
+                </div>
+                <Link href="/profile">
+                    <a id="username">{ user.username }</a>
+                </Link>
+                <LogoutButton/>
+            </div>
+    );
 }
