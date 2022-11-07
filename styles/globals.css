@@ -243,3 +243,13 @@ a {
   font-size: 2vw;
   margin: 0;
 }
+
+#preview {
+  height: 300px;
+  background-repeat: no-repeat;
+  /*
+  background-image: url('../public/map.png');
+  background-size: 500%;
+  background-position-x: -400px;
+  */
+}

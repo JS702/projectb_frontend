@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import LoadingIndicator from "../components/loading-indicator";
 import axiosInstance from "../common/axios-instance";
 import DefaultLayout from "../layouts/default-layout";
+import bg from '../public/map.png';
 
 export default function Game() {
   const [user, setUser] = useState();
@@ -114,6 +115,29 @@ export default function Game() {
     window.addEventListener('resize', handleResize)
   })
 
+  function handleMove(event) {
+    let preview = document.querySelector("#preview");
+
+    preview.style.backgroundImage = `url(${bg.src})`;
+
+    preview.style.backgroundSize = "1000%";
+
+    let rect = document.querySelector("#mapImage").getBoundingClientRect();
+
+    let x = ((event.clientX - rect.left) / rect.width) * 100;
+    let y = ((event.clientY - rect.top) / rect.height) * 100;
+
+    preview.style.backgroundPositionX = x  + "%";
+    preview.style.backgroundPositionY = y + "%";
+    
+  }
+
+  function handleMouseOut(event) {
+    let preview = document.querySelector("#preview");
+
+    preview.style.background = null;
+  }
+
 
 
   if (isLoading) {
@@ -170,6 +194,8 @@ export default function Game() {
                             width={1384}
                             height={1384}
                             onClick={handleClick}
+                            onMouseMove={handleMove}
+                            onMouseOut={handleMouseOut}
                     />
                   </div>
                   <div id="infoContainer">
@@ -184,6 +210,9 @@ export default function Game() {
                               width={2560}
                               height={1440}
                       />
+                    </div>
+                    <div id="preview">
+
                     </div>
                   </div>
                 </div>
