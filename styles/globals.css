@@ -253,3 +253,18 @@ a {
   background-position-x: -400px;
   */
 }
+
+/**Home*/
+#playButton {
+  height: 40em;
+  width: 30%;
+  margin: 1%;
+  background: url('../public/Selection\ Erangel.jpg') center no-repeat;
+  background-size: 100% 100%;
+  float: left;
+}
+
+#playButtonText {
+  color: yellow;
+  font-size: 200px;
+}

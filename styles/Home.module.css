@@ -168,3 +168,17 @@
   z-index: 1;
   position: absolute;
 }
+
+.scoreTable {
+  border: 1px solid;
+  width: 100%;
+  height: 32em;
+}
+
+.tableContainer {
+  float: left;
+  width: 30%;
+  margin: 1%;
+  margin-left: 2%;
+  margin-right: 2%;
+}

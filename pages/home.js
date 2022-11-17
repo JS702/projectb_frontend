@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import LoadingIndicator from "../components/loading-indicator";
 import axiosInstance from "../common/axios-instance";
 import DefaultLayout from "../layouts/default-layout";
+import Link from "next/link";
 
 export default function Home() {
   const [user, setUser] = useState();
@@ -20,14 +21,6 @@ export default function Home() {
     }
   }, [user]);
 
-  let rounds = 10;
-
-  function handleChange(event) {
-    rounds = event.target.value;
-    console.log("change", rounds);
-    document.getElementById("outputRounds").innerHTML = "Rounds: " + rounds;
-  }
-
   if (isLoading) {
     return <LoadingIndicator />;
   }
@@ -36,21 +29,87 @@ export default function Home() {
           <>
             <div id="buttonContainer">
               <hr></hr>
-              <button className={styles.homeButtons}></button>
-              <button className={styles.homeButtons}></button>
-              <button className={styles.homeButtons}></button>
-            </div>
-            <div id="sliderContainer">
-              <input
-                      type={"range"}
-                      min={"1"}
-                      max={"21"}
-                      defaultValue={11}
-                      id="sliderRounds"
-                      onChange={handleChange}
-              />
-            </div>
-            <span id="outputRounds">Rounds: 10</span>
+              <div className={styles.tableContainer}>
+              <table className={styles.scoreTable}>
+                <caption>Normale Mode</caption>
+                <tr>
+                  <th>Place</th>
+                  <th>Player</th>
+                  <th>Score</th>
+                </tr>
+                <tr>
+                  <td>1st</td>
+                  <td>Hugh G. Rection</td>
+                  <td>20010911</td>
+                </tr>
+                <tr>
+                  <td>2nd</td>
+                  <td>Ryan Stekken</td>
+                  <td>4206988</td>
+                </tr>
+                <tr>
+                  <td>3rd</td>
+                  <td>Ben Dover</td>
+                  <td>573701</td>
+                </tr>
+                <tr>
+                  <td>4th</td>
+                  <td>Hugh Jass</td>
+                  <td>125561</td>
+                </tr>
+                <tr>
+                  <td>5th</td>
+                  <td>Suq Maddiq</td>
+                  <td>90054</td>
+                </tr>
+              </table>
+              </div>
+
+              <Link href={"/settings"}>
+                <button id="playButton">
+                  <div>
+                    <span id="playButtonText">Play</span>
+                  </div>
+                </button>
+              </Link>
+
+              <div className={styles.tableContainer}>
+              <table className={styles.scoreTable}>
+                <caption>Normale Mode</caption>
+                <tr>
+                  <th>Place</th>
+                  <th>Player</th>
+                  <th>Score</th>
+                </tr>
+                <tr>
+                  <td>1st</td>
+                  <td>Hugh G. Rection</td>
+                  <td>20010911</td>
+                </tr>
+                <tr>
+                  <td>2nd</td>
+                  <td>Ryan Stekken</td>
+                  <td>4206988</td>
+                </tr>
+                <tr>
+                  <td>3rd</td>
+                  <td>Ben Dover</td>
+                  <td>573701</td>
+                </tr>
+                <tr>
+                  <td>4th</td>
+                  <td>Hugh Jass</td>
+                  <td>125561</td>
+                </tr>
+                <tr>
+                  <td>5th</td>
+                  <td>Suq Maddiq</td>
+                  <td>90054</td>
+                </tr>
+              </table>
+              </div>
+
+              </div>
           </>
   );
 }
