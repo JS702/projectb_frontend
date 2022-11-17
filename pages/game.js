@@ -5,6 +5,7 @@ import LoadingIndicator from "../components/loading-indicator";
 import axiosInstance from "../common/axios-instance";
 import DefaultLayout from "../layouts/default-layout";
 import bg from '../public/map.png';
+import Router, { useRouter } from "next/router";
 
 export default function Game() {
   const [user, setUser] = useState();
@@ -20,6 +21,16 @@ export default function Game() {
   const [endScreenSize, setEndScreenSize] = useState(0);
   const [endScreenLeft, setEndScreenLeft] = useState(-900);
   const [gameOver, setGameOver] = useState(false);
+
+  const router = useRouter();
+
+  const {
+    query: {mode, rounds},
+  } = router
+
+  const props = {
+    mode, rounds
+  }
 
   useEffect(() => {
     const id = JSON.parse(sessionStorage.getItem("User"))?.id;
@@ -49,6 +60,7 @@ export default function Game() {
 
   function handleClick(event) {
     console.log(game);
+    console.log(props.mode, props.rounds);
     if(!gameOver) {
       if (round < game.length) {
         setRound(round + 1);

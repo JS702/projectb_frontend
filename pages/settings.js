@@ -3,11 +3,14 @@ import { useState, useEffect } from "react";
 import LoadingIndicator from "../components/loading-indicator";
 import axiosInstance from "../common/axios-instance";
 import DefaultLayout from "../layouts/default-layout";
+import Router from "next/router";
 
 export default function Settings() {
   const [user, setUser] = useState();
 
   const [isLoading, setIsLoading] = useState(true);
+
+  const [rounds, setRounds] = useState(11);
 
   useEffect(() => {
     const id = JSON.parse(sessionStorage.getItem("User"))?.id;
@@ -20,12 +23,20 @@ export default function Settings() {
     }
   }, [user]);
 
-  let rounds = 10;
-
   function handleChange(event) {
-    rounds = event.target.value;
-    console.log("change", rounds);
+    let rounds = event.target.value;
     document.getElementById("outputRounds").innerHTML = "Rounds: " + rounds;
+    setRounds(rounds);
+  }
+
+  function sendProps(mode) {
+    Router.push({
+      pathname: "/game",
+      query: {
+        mode,
+        rounds
+      }
+    })
   }
 
   if (isLoading) {
@@ -36,9 +47,22 @@ export default function Settings() {
           <>
             <div id="buttonContainer">
               <hr></hr>
-              <button className={styles.homeButtons}></button>
-              <button className={styles.homeButtons}></button>
-              <button className={styles.homeButtons}></button>
+              
+              <button
+                className={styles.homeButtons}
+                onClick={() => sendProps("casual")}>
+              </button>
+
+              <button
+                className={styles.homeButtons}
+                onClick={() => sendProps("roundTime")}>
+              </button>
+
+              <button
+                className={styles.homeButtons}
+                onClick={() => sendProps("totalTime")}>
+              </button>
+              
             </div>
             <div id="sliderContainer">
               <input
@@ -50,7 +74,7 @@ export default function Settings() {
                       onChange={handleChange}
               />
             </div>
-            <span id="outputRounds">Rounds: 10</span>
+            <span id="outputRounds">Rounds: 11</span>
           </>
   );
 }
