@@ -35,7 +35,7 @@ a {
   color: rgb(202, 82, 82);
 }
 
-/**Home*/
+/**Settings*/
 
 #buttonContainer {
   width: 80%;
@@ -256,15 +256,37 @@ a {
 
 /**Home*/
 #playButton {
+  float: middle;
   height: 40em;
   width: 30%;
   margin: 1%;
   background: url('../public/Selection\ Erangel.jpg') center no-repeat;
   background-size: 100% 100%;
-  float: left;
 }
 
 #playButtonText {
   color: yellow;
-  font-size: 200px;
+  font-size: 500%;
+}
+
+th, td {
+  border: 1px solid;
+}
+
+#tableContainerLeft {
+  float: left;
+  width: 30%;
+  margin: 1%;
+  margin-left: 3%;
+}
+
+#tableContainerRight {
+  float: right;
+  width: 30%;
+  margin: 1%;
+  margin-right: 3%;
+}
+
+#tableHeadRight {
+  font-size: 150%;
 }
