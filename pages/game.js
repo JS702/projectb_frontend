@@ -152,6 +152,9 @@ export default function Game() {
             setRound(round + 1);
             setTime(10);
           }
+          if(time === 0) {
+            setTotalDistance(totalDistance + 10000);
+          }
         }, 1000);
       }
     }
@@ -160,6 +163,12 @@ export default function Game() {
         timeout = setTimeout(() => {
           if (totalTime > 0) {
             setTotalTime(totalTime - 1);
+          } else if (totalTime === 0) {
+            setTotalDistance(totalDistance + ((game.length - round) * 10000));
+            setGameOver(true);
+            setEndScreenSize(document.querySelector("#mapImage").getBoundingClientRect().right -
+              document.querySelector("#mapImage").getBoundingClientRect().left);
+            setEndScreenLeft(document.querySelector("#mapImage").getBoundingClientRect().left);
           }
         }, 1000);
       }
@@ -253,15 +262,15 @@ export default function Game() {
                     <p id="roundOutput">Round 1 / {game.length}</p>
                     <p id="distanceOutput">Distance: 0m</p>
                     <p id="totalDistanceOutput">Total Distance: {totalDistance}m</p>
-                    <p id="timeOutput">Remaining Time: {(() => {
-        if (props.mode === "roundTime") {
-          return time;
-        } else if (props.mode === "totalTime") {
-          return totalTime;
-        } else {
-          return "infinite";
-        }
-      })()} Seconds</p>
+                    <p id="timeOutput">Remaining time {(() => {
+                      if (props.mode === "roundTime") {
+                        return "(round): " + time;
+                      } else if (props.mode === "totalTime") {
+                        return "(total): " + totalTime;
+                      } else {
+                        return "infinite";
+                      }
+                    })()} seconds</p>
                     <div>
                       <Image
                               id="locationImage"
