@@ -21,12 +21,16 @@ export default function Game() {
   const [endScreenSize, setEndScreenSize] = useState(0);
   const [endScreenLeft, setEndScreenLeft] = useState(-900);
   const [gameOver, setGameOver] = useState(false);
+  const [time, setTime] = useState(10);
+  const [totalTime, setTotalTime] = useState();
 
   const router = useRouter();
 
   const {
     query: {mode, rounds},
   } = router
+
+  let timeout = null;
 
   const props = {
     mode, rounds
@@ -38,9 +42,14 @@ export default function Game() {
   }, []);
 
   useEffect(() => {
-    axiosInstance.get("/game", { params: { rounds: 2 } }).then((response) => {
+    axiosInstance.get("/game", { params: { rounds: props.rounds - 1 } }).then((response) => {
       setGame(response.data);
       setImagePath(response.data[0].mediaFile.path);
+      
+      if (props.mode === "totalTime") {
+        setTotalTime(time * props.rounds);
+      }
+      
     });
   }, []);
 
@@ -59,9 +68,14 @@ export default function Game() {
   }, [user, game]);
 
   function handleClick(event) {
-    console.log(game);
-    console.log(props.mode, props.rounds);
+    //console.log(game);
     if(!gameOver) {
+      
+      if(props.mode === "roundTime") {
+        clearTimeout(timeout);
+        setTime(10);
+      }
+
       if (round < game.length) {
         setRound(round + 1);
         let userPosition = calculateUserCoordinates(event);
@@ -126,6 +140,31 @@ export default function Game() {
     }
     window.addEventListener('resize', handleResize)
   })
+
+  useEffect(() => {
+    
+    if (props.mode === "roundTime") {
+      if (!gameOver) {
+        timeout = setTimeout(() => {
+          if (time > 0) {
+            setTime(time - 1);
+          } else if (round < game.length - 1){
+            setRound(round + 1);
+            setTime(10);
+          }
+        }, 1000);
+      }
+    }
+    else if (props.mode === "totalTime") {
+      if (!gameOver) {
+        timeout = setTimeout(() => {
+          if (totalTime > 0) {
+            setTotalTime(totalTime - 1);
+          }
+        }, 1000);
+      }
+    }
+  }, [time, round, game, props]);
 
   function handleMove(event) {
     let preview = document.querySelector("#preview");
@@ -214,6 +253,15 @@ export default function Game() {
                     <p id="roundOutput">Round 1 / {game.length}</p>
                     <p id="distanceOutput">Distance: 0m</p>
                     <p id="totalDistanceOutput">Total Distance: {totalDistance}m</p>
+                    <p id="timeOutput">Remaining Time: {(() => {
+        if (props.mode === "roundTime") {
+          return time;
+        } else if (props.mode === "totalTime") {
+          return totalTime;
+        } else {
+          return "infinite";
+        }
+      })()} Seconds</p>
                     <div>
                       <Image
                               id="locationImage"
