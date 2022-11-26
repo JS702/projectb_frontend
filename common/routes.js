@@ -6,7 +6,7 @@ const HOME = "/home";
 const HOME_PATH = BASE_PATH + HOME;
 
 export default {
-  baseApiPath: BASE_API_PATH,
-  login: LOGIN_PATH,
-  home: HOME_PATH,
+    baseApiPath: BASE_API_PATH,
+    login: LOGIN_PATH,
+    home: HOME_PATH
 };

@@ -3,7 +3,7 @@ import ProfileBar from "../components/profile-bar";
 import Footer from "../components/footer";
 import styles from "../styles/Home.module.css";
 
-export default function DefaultLayout({ children }) {
+export default function DefaultLayout( { children } ) {
     return (
             <>
                 <Head>
@@ -12,12 +12,12 @@ export default function DefaultLayout({ children }) {
                     <link rel="icon" href="/favicon.ico"/>
                 </Head>
 
-                <main className={styles.main}>
+                <main className={ styles.main }>
                     <ProfileBar/>
-                    {children}
+                    { children }
                 </main>
 
                 <Footer/>
             </>
-    )
+    );
 }

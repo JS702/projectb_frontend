@@ -2,7 +2,7 @@ import LogoutButton from "./logout-button";
 import Link from "next/link";
 import Image from "next/image";
 import axiosInstance from "../common/axios-instance";
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import LoadingIndicator from "./loading-indicator";
 
 

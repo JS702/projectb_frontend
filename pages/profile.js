@@ -1,6 +1,6 @@
 import axiosInstance from "../common/axios-instance";
 import styles from "../styles/Home.module.css";
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import LoadingIndicator from "../components/loading-indicator";
 import DefaultLayout from "../layouts/default-layout";
 
@@ -21,7 +21,7 @@ function Profile() {
         const id = JSON.parse( sessionStorage.getItem( "User" ) )?.id;
         try {
             const response = await axiosInstance.post( `/mediafile/profilepicture/${ id }`, formData );
-            setUser(response.data);
+            setUser( response.data );
         } catch {
 
         }
