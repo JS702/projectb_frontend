@@ -8,13 +8,10 @@ import bg from "../public/map.png";
 import { useRouter } from "next/router";
 
 export default function Game() {
-    const [ user, setUser ] = useState();
     const [ game, setGame ] = useState();
     const [ imagePath, setImagePath ] = useState();
-
-    const [ isLoading, setIsLoading ] = useState( true );
-
     const [ round, setRound ] = useState( 0 );
+    const [ mediaFiles, setMediaFiles ] = useState();
     const [ totalDistance, setTotalDistance ] = useState( 0 );
     const [ mousePosition, setMousePosition ] = useState( [ 0, 0 ] );
     const [ locationPosition, setLocationPosition ] = useState( [ 0, 0 ] );
@@ -26,121 +23,37 @@ export default function Game() {
 
     const router = useRouter();
 
-    const {
-        query: { mode, rounds }
-    } = router;
+    const { query: { mode, rounds } } = router;
 
     let timeout = null;
 
-    const props = {
-        mode, rounds
-    };
+    const props = { mode, rounds };
 
     useEffect( () => {
-        const id = JSON.parse( sessionStorage.getItem( "User" ) )?.id;
-        axiosInstance.get( `/user/${ id }` ).then( ( response ) => setUser( response.data ) );
+        axiosInstance.get( "/game", { params: { rounds: props.rounds - 1 } } ).then( ( response ) =>
+                setGame( response.data ) );
     }, [] );
 
     useEffect( () => {
-        axiosInstance.get( "/game", { params: { rounds: props.rounds - 1 } } ).then( ( response ) => {
-            setGame( response.data );
-            setImagePath( response.data[ 0 ].mediaFile.path );
-
-            if ( props.mode === "totalTime" ) {
-                setTotalTime( time * props.rounds );
-            }
-
-        } );
-    }, [] );
+        if ( game ) {
+            axiosInstance.post( "/mediafile/list", game.roundIds ).then( ( response ) => {
+                setMediaFiles( response.data );
+                console.log( response.data );
+                setImagePath( response.data[ 0 ].path );
+                if ( props.mode === "totalTime" ) {
+                    setTotalTime( time * props.rounds );
+                }
+            } );
+        }
+    }, [ game ] );
 
     useEffect( () => {
         if ( round > 0 && round < game.length ) {
-            setImagePath( game[ round ].mediaFile.path );
-            document.querySelector( "#roundOutput" ).innerHTML =
-                    "Round " + ( round + 1 ) + " / " + game.length;
+            setImagePath( mediaFiles[ round ].path );
+            document.querySelector( "#roundOutput" ).innerHTML = "Round " + ( round + 1 ) + " / " + game.length;
         }
     }, [ round, game ] );
 
-    useEffect( () => {
-        if ( user && game ) {
-            setIsLoading( false );
-        }
-    }, [ user, game ] );
-
-    function handleClick( event ) {
-        //console.log(game);
-        if ( !gameOver ) {
-
-            if ( props.mode === "roundTime" ) {
-                clearTimeout( timeout );
-                setTime( 10 );
-            }
-
-            if ( round < game.length ) {
-                setRound( round + 1 );
-                let userPosition = calculateUserCoordinates( event );
-                let distance = calculateDistance(
-                        userPosition[ 0 ],
-                        userPosition[ 1 ],
-                        game[ round ].roundData.position.x,
-                        game[ round ].roundData.position.y
-                );
-
-                setTotalDistance( totalDistance + distance );
-                console.log( "distance: " + distance );
-                document.querySelector( "#distanceOutput" ).innerHTML =
-                        "Distance: " + distance + "m";
-
-                setMousePosition( [ event.clientX, event.clientY ] );
-                let locationPosition = calculateLocationCoordinates();
-                setLocationPosition( locationPosition );
-            }
-            if ( round + 1 === game.length ) {
-                setGameOver( true );
-                setEndScreenSize( document.querySelector( "#mapImage" ).getBoundingClientRect().right -
-                        document.querySelector( "#mapImage" ).getBoundingClientRect().left );
-                setEndScreenLeft( document.querySelector( "#mapImage" ).getBoundingClientRect().left );
-            }
-        }
-    }
-
-    function calculateDistance( x1, y1, x2, y2 ) {
-        return Math.round(
-                Math.sqrt( Math.pow( x2 - x1, 2 ) + Math.pow( y2 - y1, 2 ) ) * 1000
-        );
-    }
-
-    function calculateUserCoordinates( event ) {
-        let mouseX = event.clientX;
-        let mouseY = event.clientY;
-        let rect = document.querySelector( "#mapImage" ).getBoundingClientRect();
-
-        let x = ( ( mouseX - rect.left ) / rect.width ) * 8;
-        let y = 8 - ( ( mouseY - rect.top ) / rect.height ) * 8;
-
-        return [ x, y ];
-    }
-
-    function calculateLocationCoordinates() {
-        let rect = document.querySelector( "#mapImage" ).getBoundingClientRect();
-
-        let x = rect.left + rect.width / 8 * game[ round ].roundData.position.x;
-        let y = rect.bottom - rect.width / 8 * game[ round ].roundData.position.y;
-
-        return [ x, y ];
-    }
-
-    useEffect( () => {
-        function handleResize() {
-            if ( gameOver ) {
-                setEndScreenSize( document.querySelector( "#mapImage" ).getBoundingClientRect().right -
-                        document.querySelector( "#mapImage" ).getBoundingClientRect().left );
-                setEndScreenLeft( document.querySelector( "#mapImage" ).getBoundingClientRect().left );
-            }
-        }
-
-        window.addEventListener( "resize", handleResize );
-    } );
 
     useEffect( () => {
 
@@ -175,6 +88,82 @@ export default function Game() {
         }
     }, [ time, round, game, props ] );
 
+
+    function handleClick( event ) {
+        //console.log(game);
+        if ( !gameOver ) {
+
+            if ( props.mode === "roundTime" ) {
+                clearTimeout( timeout );
+                setTime( 10 );
+            }
+
+            if ( round < game.length ) {
+                setRound( round + 1 );
+                let userPosition = calculateUserCoordinates( event );
+                let distance = calculateDistance(
+                        userPosition[ 0 ],
+                        userPosition[ 1 ],
+                        game[ round ].roundData.position.x,
+                        game[ round ].roundData.position.y
+                );
+
+                setTotalDistance( totalDistance + distance );
+                console.log( "distance: " + distance );
+                document.querySelector( "#distanceOutput" ).innerHTML =
+                        "Distance: " + distance + "m";
+
+                setMousePosition( [ event.clientX, event.clientY ] );
+                let locationPosition = calculateLocationCoordinates();
+                setLocationPosition( locationPosition );
+            }
+            if ( round + 1 === game.length ) {
+                setGameOver( true );
+                axiosInstance.post( `/game` ).then();//TODO Game an backend schicken und dann kp
+
+                setEndScreenSize( document.querySelector( "#mapImage" ).getBoundingClientRect().right -
+                        document.querySelector( "#mapImage" ).getBoundingClientRect().left );
+                setEndScreenLeft( document.querySelector( "#mapImage" ).getBoundingClientRect().left );
+            }
+        }
+    }
+
+    function calculateDistance( x1, y1, x2, y2 ) {
+        return Math.round(
+                Math.sqrt( Math.pow( x2 - x1, 2 ) + Math.pow( y2 - y1, 2 ) ) * 1000
+        );
+    }
+
+    function calculateUserCoordinates( event ) {
+        let mouseX = event.clientX;
+        let mouseY = event.clientY;
+        let rect = document.querySelector( "#mapImage" ).getBoundingClientRect();
+
+        let x = ( ( mouseX - rect.left ) / rect.width ) * 8;
+        let y = 8 - ( ( mouseY - rect.top ) / rect.height ) * 8;
+
+        return [ x, y ];
+    }
+
+    function calculateLocationCoordinates() {
+        let rect = document.querySelector( "#mapImage" ).getBoundingClientRect();
+
+        let x = rect.left + rect.width / 8 * game[ round ].roundData.position.x;
+        let y = rect.bottom - rect.width / 8 * game[ round ].roundData.position.y;
+
+        return [ x, y ];
+    }
+
+    function handleResize() {
+        if ( gameOver ) {
+            setEndScreenSize( document.querySelector( "#mapImage" ).getBoundingClientRect().right -
+                    document.querySelector( "#mapImage" ).getBoundingClientRect().left );
+            setEndScreenLeft( document.querySelector( "#mapImage" ).getBoundingClientRect().left );
+        }
+    }
+
+    window.addEventListener( "resize", handleResize );
+
     function handleMove( event ) {
         let preview = document.querySelector( "#preview" );
 
@@ -192,6 +181,12 @@ export default function Game() {
 
     }
 
+    function calculateScore() {
+        //Todo calculate score
+        return 1000;
+    }
+
+
     function handleMouseOut( event ) {
         let preview = document.querySelector( "#preview" );
 
@@ -199,7 +194,7 @@ export default function Game() {
     }
 
 
-    if ( isLoading ) {
+    if ( !( game && mediaFiles && imagePath ) ) {
         return <LoadingIndicator/>;
     }
 

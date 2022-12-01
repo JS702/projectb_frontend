@@ -1,30 +1,8 @@
 import styles from "../styles/Home.module.css";
-import { useEffect, useState } from "react";
-import LoadingIndicator from "../components/loading-indicator";
-import axiosInstance from "../common/axios-instance";
 import DefaultLayout from "../layouts/default-layout";
 import Link from "next/link";
 
 export default function Home() {
-    const [ user, setUser ] = useState();
-
-    const [ isLoading, setIsLoading ] = useState( true );
-
-    useEffect( () => {
-        const id = JSON.parse( sessionStorage.getItem( "User" ) )?.id;
-        axiosInstance.get( `/user/${ id }` ).then( ( response ) => setUser( response.data ) );
-    }, [] );
-
-    useEffect( () => {
-        if ( user ) {
-            setIsLoading( false );
-        }
-    }, [ user ] );
-
-    if ( isLoading ) {
-        return <LoadingIndicator/>;
-    }
-
     return (
             <>
                 <div id="buttonContainer">
