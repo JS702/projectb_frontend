@@ -35,16 +35,17 @@ export default function Game() {
 
     useEffect( () => {
         if ( game ) {
-                setImagePath( /*response.data[ 0 ].path*/ "/map.png" ); //sollte gehen, aber Backend ist kaputt
-                if ( props.mode === "totalTime" ) {
-                    setTotalTime( time * props.rounds );
-                };
+            setImagePath( game.mediaFiles[ 0 ].path );
+            if ( props.mode === "totalTime" ) {
+                setTotalTime( time * props.rounds );
+            }
+            ;
         }
     }, [ game ] );
 
     useEffect( () => {
         if ( round > 0 && round < game.rounds.length ) {
-            setImagePath( /*game.mediaFiles[ round ].path*/ "/map.png"); //sollte gehen, aber Backend ist kaputt
+            setImagePath( game.mediaFiles[ round ].path );
             document.querySelector( "#roundOutput" ).innerHTML = "Round " + ( round + 1 ) + " / " + game.rounds.length;
         }
     }, [ round, game ] );
@@ -85,7 +86,7 @@ export default function Game() {
 
 
     function handleClick( event ) {
-        console.log(game);
+        console.log( game );
         if ( !gameOver ) {
 
             if ( props.mode === "roundTime" ) {
