@@ -1,16 +1,32 @@
 import axiosInstance from "../common/axios-instance";
 import styles from "../styles/Home.module.css";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import LoadingIndicator from "../components/loading-indicator";
 import DefaultLayout from "../layouts/default-layout";
+import Image from "next/image";
 
 function Profile() {
     const [ user, setUser ] = useState();
+
+    const [ picture, setPicture ] = useState( { path: "/pepe.jpg" } );
+
+    const inputRef = useRef();
 
     useEffect( () => {
         const id = JSON.parse( sessionStorage.getItem( "User" ) )?.id;
         axiosInstance.get( `/user/${ id }` ).then( ( response ) => setUser( response.data ) );
     }, [] );
+
+    useEffect( () => {
+        if ( user?.profilePictureId ) {
+            axiosInstance.get( `/mediafile/${ user.profilePictureId }` )
+                    .then( ( response ) => setPicture( response.data ) );
+        }
+    }, [ user ] );
+
+    const handleProfilePictureClick = () => {
+        inputRef.current.click();
+    };
 
 
     const uploadPicture = async ( data ) => {
@@ -18,9 +34,8 @@ function Profile() {
         const formData = new FormData();
 
         formData.append( "file", file );
-        const id = JSON.parse( sessionStorage.getItem( "User" ) )?.id;
         try {
-            const response = await axiosInstance.post( `/mediafile/profilepicture/${ id }`, formData );
+            const response = await axiosInstance.post( `/mediafile/profilepicture/${ user.id }`, formData );
             setUser( response.data );
         } catch {
 
@@ -33,11 +48,27 @@ function Profile() {
 
     return (
             <>
+                <div id="userImageContainer">
+                    <Image
+                            id="userImage"
+                            style={ {
+                                borderTopRightRadius: 25,
+                                borderBottomRightRadius: 25,
+                                borderBottomLeftRadius: 25,
+                                borderTopLeftRadius: 25
+                            } }
+                            src={ picture.path }
+                            width={ 100 }
+                            height={ 100 }
+                            onClick={ handleProfilePictureClick }
+                    />
+                </div>
                 <input
                         type={ "file" }
-                        id="profilePicture"
+                        id="profilePicture" //TODO style="display: none"
                         onInput={ uploadPicture }
                         name="profilePicture"
+                        ref={ inputRef }
                 />
 
                 <div id="profileBodyContainer">

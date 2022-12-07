@@ -4,10 +4,7 @@ import routes from "../common/routes";
 const headers = () => {
     if ( typeof window !== "undefined" ) {
         return sessionStorage.getItem( "User" )
-                ? {
-                    Authorization:
-                            "Bearer " + JSON.parse( sessionStorage.getItem( "User" ) )?.jwtToken
-                }
+                ? { Authorization: "Bearer " + JSON.parse( sessionStorage.getItem( "User" ) )?.jwtToken }
                 : null;
     }
 };

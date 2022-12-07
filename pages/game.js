@@ -39,7 +39,6 @@ export default function Game() {
             if ( props.mode === "totalTime" ) {
                 setTotalTime( time * props.rounds );
             }
-            ;
         }
     }, [ game ] );
 
