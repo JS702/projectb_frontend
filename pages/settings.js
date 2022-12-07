@@ -50,17 +50,17 @@ export default function Settings() {
 
                     <button
                             className={ styles.homeButtons }
-                            onClick={ () => sendProps( "casual" ) }>
+                            onClick={ () => sendProps( "CASUAL" ) }>
                     </button>
 
                     <button
                             className={ styles.homeButtons }
-                            onClick={ () => sendProps( "roundTime" ) }>
+                            onClick={ () => sendProps( "ROUNDTIME" ) }>
                     </button>
 
                     <button
                             className={ styles.homeButtons }
-                            onClick={ () => sendProps( "totalTime" ) }>
+                            onClick={ () => sendProps( "TOTALTIME" ) }>
                     </button>
 
                 </div>
