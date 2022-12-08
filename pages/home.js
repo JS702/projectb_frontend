@@ -1,8 +1,20 @@
 import styles from "../styles/Home.module.css";
 import DefaultLayout from "../layouts/default-layout";
 import Link from "next/link";
+import { useEffect, useState } from "react";
+import axiosInstance from "../common/axios-instance";
 
 export default function Home() {
+
+    const [ gameMode, setGameMode ] = useState( "CASUAL" );
+
+    const [ tableData, setTableData ] = useState( [] );
+
+    useEffect( () => {
+        axiosInstance.get( "/game/leaderboard", { params: { gamemode: gameMode } } ).then( ( response ) => {
+            setTableData( response.data );
+        } );
+    }, [] );
     return (
             <>
                 <div id="buttonContainer">
@@ -13,10 +25,10 @@ export default function Home() {
                             <tbody>
                             <tr>
                                 <td colSpan={ "3" }>
-                                    <select className={ styles.tableSelect }>
-                                        <option>Best Player First Mode</option>
-                                        <option>Best Player Second Mode</option>
-                                        <option>Best Player Third Mode</option>
+                                    <select className={ styles.tableSelect } onChange={ e => setGameMode( e.target.value ) }>
+                                        <option>CASUAL</option>
+                                        <option>ROUNDTIME</option>
+                                        <option>TOTALTIME</option>
                                     </select>
                                 </td>
                             </tr>
@@ -25,31 +37,15 @@ export default function Home() {
                                 <th>Player</th>
                                 <th>Score</th>
                             </tr>
-                            <tr>
-                                <td>1st</td>
-                                <td>Hugh G. Rection</td>
-                                <td>20010911</td>
-                            </tr>
-                            <tr>
-                                <td>2nd</td>
-                                <td>Ryan Stekken</td>
-                                <td>4206988</td>
-                            </tr>
-                            <tr>
-                                <td>3rd</td>
-                                <td>Ben Dover</td>
-                                <td>573701</td>
-                            </tr>
-                            <tr>
-                                <td>4th</td>
-                                <td>Hugh Jass</td>
-                                <td>125561</td>
-                            </tr>
-                            <tr>
-                                <td>5th</td>
-                                <td>Suq Maddiq</td>
-                                <td>90054</td>
-                            </tr>
+                            { tableData.map( ( user, idx ) => {
+                                return (
+                                        <tr key={ idx }>
+                                            <td>{ idx }</td>
+                                            <td>{ user.username }</td>
+                                            <td>{ user.score }</td>
+                                        </tr>
+                                );
+                            } ) }
                             </tbody>
                         </table>
                     </div>
@@ -74,31 +70,15 @@ export default function Home() {
                                 <th>Player</th>
                                 <th>Games</th>
                             </tr>
-                            <tr>
-                                <td>1st</td>
-                                <td>Hugh G. Rection</td>
-                                <td>200</td>
-                            </tr>
-                            <tr>
-                                <td>2nd</td>
-                                <td>Ryan Stekken</td>
-                                <td>42</td>
-                            </tr>
-                            <tr>
-                                <td>3rd</td>
-                                <td>Ben Dover</td>
-                                <td>41</td>
-                            </tr>
-                            <tr>
-                                <td>4th</td>
-                                <td>Hugh Jass</td>
-                                <td>12</td>
-                            </tr>
-                            <tr>
-                                <td>5th</td>
-                                <td>Suq Maddiq</td>
-                                <td>7</td>
-                            </tr>
+                            { tableData.map( ( user, idx ) => {
+                                return (
+                                        <tr key={ idx }>
+                                            <td>{ idx }</td>
+                                            <td>{ user.username }</td>
+                                            <td>{ user.gamesPlayed }</td>
+                                        </tr>
+                                );
+                            } ) }
                             </tbody>
                         </table>
                     </div>
