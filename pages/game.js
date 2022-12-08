@@ -6,7 +6,6 @@ import axiosInstance from "../common/axios-instance";
 import DefaultLayout from "../layouts/default-layout";
 import bg from "../public/map.png";
 import { useRouter } from "next/router";
-import axios from "axios";
 
 export default function Game() {
     const [ game, setGame ] = useState();
@@ -20,8 +19,8 @@ export default function Game() {
     const [ gameOver, setGameOver ] = useState( false );
     const [ time, setTime ] = useState( 10 );
     const [ totalTime, setTotalTime ] = useState();
-    const [ skippedRounds, setSkippedRounds ] = useState(0);
-    const [ minimalDistance , setMinimalDistance ] = useState(100000);
+    const [ skippedRounds, setSkippedRounds ] = useState( 0 );
+    const [ minimalDistance, setMinimalDistance ] = useState( 100000 );
 
     const router = useRouter();
 
@@ -64,15 +63,15 @@ export default function Game() {
                         setRound( round + 1 );
                         setTime( 10 );
                     }
-                    if ( time === 0 && !gameOver) {
+                    if ( time === 0 && !gameOver ) {
                         setTotalDistance( totalDistance + 10000 );
-                        setSkippedRounds(skippedRounds + 1);
+                        setSkippedRounds( skippedRounds + 1 );
 
-                        if (round === game.rounds.length - 1) {
-                            setGameOver(true);
-                            clearTimeout(timeout);
+                        if ( round === game.rounds.length - 1 ) {
+                            setGameOver( true );
+                            clearTimeout( timeout );
 
-                            sendGame(getGame());
+                            sendGame( getGame() );
 
                             setEndScreenSize( document.querySelector( "#mapImage" ).getBoundingClientRect().right -
                                     document.querySelector( "#mapImage" ).getBoundingClientRect().left );
@@ -91,7 +90,7 @@ export default function Game() {
                         setTotalDistance( totalDistance + ( ( game.rounds.length - round ) * 10000 ) );
                         setGameOver( true );
 
-                        sendGame(getGame());
+                        sendGame( getGame() );
 
                         setEndScreenSize( document.querySelector( "#mapImage" ).getBoundingClientRect().right -
                                 document.querySelector( "#mapImage" ).getBoundingClientRect().left );
@@ -122,8 +121,8 @@ export default function Game() {
                         game.rounds[ round ].position.y
                 );
 
-                if (distance < minimalDistance) {
-                    setMinimalDistance(distance);
+                if ( distance < minimalDistance ) {
+                    setMinimalDistance( distance );
                 }
 
                 setTotalDistance( totalDistance + distance );
@@ -137,28 +136,32 @@ export default function Game() {
             }
             if ( round + 1 === game.rounds.length ) {
                 setGameOver( true );
-                
-                sendGame(getGame());
+
+                sendGame( getGame() );
 
                 setEndScreenSize( document.querySelector( "#mapImage" ).getBoundingClientRect().right -
                         document.querySelector( "#mapImage" ).getBoundingClientRect().left );
                 setEndScreenLeft( document.querySelector( "#mapImage" ).getBoundingClientRect().left );
             }
         }
-        console.log(round, game.rounds.length);
+        console.log( round, game.rounds.length );
     }
 
-    function sendGame(game) {
+    function sendGame( game ) {
         axiosInstance.post( `/game`, game );
     }
 
     function getGame() {
         let roundIds = [];
-        for (let i = 0; i < game.rounds.length; i++) {
-            roundIds.push(game.rounds[i].id);
+        for ( let i = 0; i < game.rounds.length; i++ ) {
+            roundIds.push( game.rounds[ i ].id );
         }
 
-        let Score = { score: totalDistance, averageDistance: Math.round( (totalDistance - (skippedRounds * 10000)) / game.rounds.length), minimalDistance: minimalDistance };
+        let Score = {
+            score: totalDistance,
+            averageDistance: Math.round( ( totalDistance - ( skippedRounds * 10000 ) ) / game.rounds.length ),
+            minimalDistance: minimalDistance
+        };
 
         let userId = JSON.parse( sessionStorage.getItem( "User" ) )?.id;
 
@@ -269,7 +272,7 @@ export default function Game() {
                          } }>
                         <p id="gameOverMessage">Winner<br></br>Winner<br></br>Chicken<br></br>Dinner!</p>
                         <p id="averageDistanceOutput">
-                            Average Distance: { Math.round( (totalDistance - (skippedRounds * 10000)) / game.rounds.length) }m
+                            Average Distance: { Math.round( ( totalDistance - ( skippedRounds * 10000 ) ) / game.rounds.length ) }m
                         </p>
                     </div>
 

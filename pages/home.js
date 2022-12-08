@@ -11,10 +11,10 @@ export default function Home() {
     const [ tableData, setTableData ] = useState( [] );
 
     useEffect( () => {
-        axiosInstance.get( "/game/leaderboard", { params: { gamemode: gameMode } } ).then( ( response ) => {
+        axiosInstance.get( "/game/leaderboard", { params: { gameMode: gameMode } } ).then( ( response ) => {
             setTableData( response.data );
         } );
-    }, [] );
+    }, [ gameMode ] );
     return (
             <>
                 <div id="buttonContainer">
@@ -40,7 +40,7 @@ export default function Home() {
                             { tableData.map( ( user, idx ) => {
                                 return (
                                         <tr key={ idx }>
-                                            <td>{ idx }</td>
+                                            <td>{ idx + 1 }</td>
                                             <td>{ user.username }</td>
                                             <td>{ user.score }</td>
                                         </tr>
@@ -73,7 +73,7 @@ export default function Home() {
                             { tableData.map( ( user, idx ) => {
                                 return (
                                         <tr key={ idx }>
-                                            <td>{ idx }</td>
+                                            <td>{ idx + 1 }</td>
                                             <td>{ user.username }</td>
                                             <td>{ user.gamesPlayed }</td>
                                         </tr>
