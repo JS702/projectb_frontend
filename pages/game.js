@@ -6,6 +6,7 @@ import axiosInstance from "../common/axios-instance";
 import DefaultLayout from "../layouts/default-layout";
 import bg from "../public/map.png";
 import { useRouter } from "next/router";
+import axios from "axios";
 
 export default function Game() {
     const [ game, setGame ] = useState();
@@ -19,6 +20,8 @@ export default function Game() {
     const [ gameOver, setGameOver ] = useState( false );
     const [ time, setTime ] = useState( 10 );
     const [ totalTime, setTotalTime ] = useState();
+    const [ skippedRounds, setSkippedRounds ] = useState(0);
+    const [ minimalDistance , setMinimalDistance ] = useState(100000);
 
     const router = useRouter();
 
@@ -36,7 +39,7 @@ export default function Game() {
     useEffect( () => {
         if ( game ) {
             setImagePath( game.mediaFiles[ 0 ].path );
-            if ( props.mode === "totalTime" ) {
+            if ( props.mode === "TOTALTIME" ) {
                 setTotalTime( time * props.rounds );
             }
         }
@@ -52,7 +55,7 @@ export default function Game() {
 
     useEffect( () => {
 
-        if ( props.mode === "roundTime" ) {
+        if ( props.mode === "ROUNDTIME" ) {
             if ( !gameOver ) {
                 timeout = setTimeout( () => {
                     if ( time > 0 ) {
@@ -61,19 +64,35 @@ export default function Game() {
                         setRound( round + 1 );
                         setTime( 10 );
                     }
-                    if ( time === 0 ) {
+                    if ( time === 0 && !gameOver) {
                         setTotalDistance( totalDistance + 10000 );
+                        setSkippedRounds(skippedRounds + 1);
+
+                        if (round === game.rounds.length - 1) {
+                            setGameOver(true);
+                            clearTimeout(timeout);
+
+                            sendGame(getGame());
+
+                            setEndScreenSize( document.querySelector( "#mapImage" ).getBoundingClientRect().right -
+                                    document.querySelector( "#mapImage" ).getBoundingClientRect().left );
+                            setEndScreenLeft( document.querySelector( "#mapImage" ).getBoundingClientRect().left );
+                        }
                     }
                 }, 1000 );
             }
-        } else if ( props.mode === "totalTime" ) {
+        } else if ( props.mode === "TOTALTIME" ) {
             if ( !gameOver ) {
                 timeout = setTimeout( () => {
                     if ( totalTime > 0 ) {
                         setTotalTime( totalTime - 1 );
                     } else if ( totalTime === 0 ) {
+                        setSkippedRounds( game.rounds.length - round );
                         setTotalDistance( totalDistance + ( ( game.rounds.length - round ) * 10000 ) );
                         setGameOver( true );
+
+                        sendGame(getGame());
+
                         setEndScreenSize( document.querySelector( "#mapImage" ).getBoundingClientRect().right -
                                 document.querySelector( "#mapImage" ).getBoundingClientRect().left );
                         setEndScreenLeft( document.querySelector( "#mapImage" ).getBoundingClientRect().left );
@@ -88,7 +107,7 @@ export default function Game() {
         console.log( game );
         if ( !gameOver ) {
 
-            if ( props.mode === "roundTime" ) {
+            if ( props.mode === "ROUNDTIME" ) {
                 clearTimeout( timeout );
                 setTime( 10 );
             }
@@ -103,6 +122,10 @@ export default function Game() {
                         game.rounds[ round ].position.y
                 );
 
+                if (distance < minimalDistance) {
+                    setMinimalDistance(distance);
+                }
+
                 setTotalDistance( totalDistance + distance );
                 console.log( "distance: " + distance );
                 document.querySelector( "#distanceOutput" ).innerHTML =
@@ -114,13 +137,32 @@ export default function Game() {
             }
             if ( round + 1 === game.rounds.length ) {
                 setGameOver( true );
-                axiosInstance.post( `/game` ).then();//TODO Game an backend schicken und dann kp
+                
+                sendGame(getGame());
 
                 setEndScreenSize( document.querySelector( "#mapImage" ).getBoundingClientRect().right -
                         document.querySelector( "#mapImage" ).getBoundingClientRect().left );
                 setEndScreenLeft( document.querySelector( "#mapImage" ).getBoundingClientRect().left );
             }
         }
+        console.log(round, game.rounds.length);
+    }
+
+    function sendGame(game) {
+        axiosInstance.post( `/game`, game );
+    }
+
+    function getGame() {
+        let roundIds = [];
+        for (let i = 0; i < game.rounds.length; i++) {
+            roundIds.push(game.rounds[i].id);
+        }
+
+        let Score = { score: totalDistance, averageDistance: Math.round( (totalDistance - (skippedRounds * 10000)) / game.rounds.length), minimalDistance: minimalDistance };
+
+        let userId = JSON.parse( sessionStorage.getItem( "User" ) )?.id;
+
+        return { gameMode: props.mode, roundIds: roundIds, score: Score, userId: userId };
     }
 
     function calculateDistance( x1, y1, x2, y2 ) {
@@ -176,12 +218,6 @@ export default function Game() {
 
     }
 
-    function calculateScore() {
-        //Todo calculate score
-        return 1000;
-    }
-
-
     function handleMouseOut( event ) {
         let preview = document.querySelector( "#preview" );
 
@@ -233,7 +269,7 @@ export default function Game() {
                          } }>
                         <p id="gameOverMessage">Winner<br></br>Winner<br></br>Chicken<br></br>Dinner!</p>
                         <p id="averageDistanceOutput">
-                            Average Distance: { Math.round( totalDistance / game.rounds.length ) }m
+                            Average Distance: { Math.round( (totalDistance - (skippedRounds * 10000)) / game.rounds.length) }m
                         </p>
                     </div>
 
@@ -254,9 +290,9 @@ export default function Game() {
                         <p id="distanceOutput">Distance: 0m</p>
                         <p id="totalDistanceOutput">Total Distance: { totalDistance }m</p>
                         <p id="timeOutput">Remaining time { ( () => {
-                            if ( props.mode === "roundTime" ) {
+                            if ( props.mode === "ROUNDTIME" ) {
                                 return "(round): " + time;
-                            } else if ( props.mode === "totalTime" ) {
+                            } else if ( props.mode === "TOTALTIME" ) {
                                 return "(total): " + totalTime;
                             } else {
                                 return "infinite";
