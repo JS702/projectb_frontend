@@ -2,11 +2,13 @@ import axiosInstance from "../common/axios-instance";
 import styles from "../styles/Home.module.css";
 import { useEffect, useRef, useState } from "react";
 import LoadingIndicator from "../components/loading-indicator";
-import DefaultLayout from "../layouts/default-layout";
 import Image from "next/image";
+import DefaultLayout from "../layouts/default-layout";
 
 function Profile() {
     const [ user, setUser ] = useState();
+
+    const [ profileData, setProfileData ] = useState();
 
     const [ picture, setPicture ] = useState( { path: "/pepe.jpg" } );
 
@@ -14,7 +16,11 @@ function Profile() {
 
     useEffect( () => {
         const id = JSON.parse( sessionStorage.getItem( "User" ) )?.id;
-        axiosInstance.get( `/user/${ id }` ).then( ( response ) => setUser( response.data ) );
+        Promise.all( [ axiosInstance.get( `/user/${ id }` ), axiosInstance.get( `/user/profile/${ id }` ) ] )
+                .then( ( response ) => {
+                    setUser( response[ 0 ].data );
+                    setProfileData( response[ 1 ].data );
+                } );
     }, [] );
 
     useEffect( () => {
@@ -75,24 +81,19 @@ function Profile() {
                     <hr/>
                     <div id="descriptionContainer">{ user.description }</div>
                     <div id="listContainer">
-                        <li className={ styles.profileList }>Best score (Modus 1):</li>
-                        <li className={ styles.profileList }>Best score (Modus 2):</li>
-                        <li className={ styles.profileList }>Best score (Modus 3):</li>
-                        <br></br>
-                        <li className={ styles.profileList }>Games played (Modus 1):</li>
-                        <li className={ styles.profileList }>Games played (Modus 2):</li>
-                        <li className={ styles.profileList }>Games played (Modus 3):</li>
-                        <li className={ styles.profileList }>Games played (total):</li>
+                        { Object.keys( profileData ).map( ( key, idx ) => {
+                            return (
+                                    <li className={ styles.profileList } key={ idx }>{ key }</li>
+                            );
+                        } ) }
+                        <br/>
                     </div>
                     <div id="listValueContainer">
-                        <p className={ styles.listValues }>1234</p>
-                        <p className={ styles.listValues }>1234</p>
-                        <p className={ styles.listValues }>1234</p>
-                        <br></br>
-                        <p className={ styles.listValues }>1234</p>
-                        <p className={ styles.listValues }>1234</p>
-                        <p className={ styles.listValues }>1234</p>
-                        <p className={ styles.listValues }>1234</p>
+                        { Object.values( profileData ).map( ( value, idx ) => {
+                            return (
+                                    <li className={ styles.profileList } key={ idx }>{ value }</li>
+                            );
+                        } ) }
                     </div>
                 </div>
             </>
