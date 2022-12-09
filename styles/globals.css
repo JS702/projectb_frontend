@@ -255,6 +255,12 @@ a {
     */
 }
 
+#crosshairContainer {
+    width: 55%;
+    margin-left: 22.5%;
+    
+}
+
 /**Home*/
 #playButton {
     float: middle;

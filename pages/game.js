@@ -210,14 +210,22 @@ export default function Game() {
         preview.style.backgroundImage = `url(${ bg.src })`;
 
         preview.style.backgroundSize = "1000%";
-
+        
         let rect = document.querySelector( "#mapImage" ).getBoundingClientRect();
 
-        let x = ( ( event.clientX - rect.left ) / rect.width ) * 100;
-        let y = ( ( event.clientY - rect.top ) / rect.height ) * 100;
+        let x = ( ( event.clientX - rect.left ) / rect.width ) * 111.5;
+        let y = ( ( event.clientY - rect.top ) / rect.height ) * 106;
+
+        x = x - 5.75; //Range der Breite: -5.75% bis 105.75%
+        y = y - 3; //Range der Höhe: -3% bis 103%
 
         preview.style.backgroundPositionX = x + "%";
         preview.style.backgroundPositionY = y + "%";
+
+        //preview.style.backgroundPositionX = "-5.5%";
+        //preview.style.backgroundPositionY = "-3.5%";
+
+        console.log(x, y);
 
     }
 
@@ -311,7 +319,15 @@ export default function Game() {
                             />
                         </div>
                         <div id="preview">
-
+                            <div id="crosshairContainer">
+                            <Image
+                                id="crosshairImage"
+                                src={ "/crosshair.png" }
+                                alt="crosshair"
+                                width={ 300 }
+                                height={ 300 }
+                            />
+                            </div>
                         </div>
                     </div>
                 </div>
