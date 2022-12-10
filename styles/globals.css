@@ -46,11 +46,27 @@ a {
 
 #searchUser {
     font-size: 150%;
-    margin-right: 3%;
-    margin-left: 67%;
-    margin-bottom: 1%;
-    width: 30%;
+    width: 100%;
+    margin-top: 1%;
+}
+
+#searchButton {
     position: absolute;
+    right: 1%;
+    bottom: 1%;
+    width: 32px;
+    height: 32px;
+    background: url("../public/search.png") center no-repeat;
+    background-size: 100% 100%;
+    border: none;
+}
+
+#profileBar {
+    float: right;
+    width: 24%;
+    margin-left: 51%;
+    position: relative;
+    margin-bottom: 1%;
     bottom: 0;
 }
 
@@ -63,9 +79,7 @@ a {
 #userContainer {
     display: table;
     float: right;
-    width: 24%;
-    margin-left: 51%;
-    position: relative;
+    width: 100%;
     margin-bottom: 1%;
     border: 3px solid #d3d3d3;
     bottom: 0;

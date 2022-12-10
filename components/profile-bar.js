@@ -29,10 +29,12 @@ export default function ProfileBar() {
     }
 
     return (
-            <div id="userContainer">
-                <div id="userImageContainer">
-                    <Image
+            <div id="profileBar">
+                <div id="userContainer">
+                    <div id="userImageContainer">
+                        <Image
                             id="userImage"
+                            alt="user Image"
                             style={ {
                                 borderTopRightRadius: 25,
                                 borderBottomRightRadius: 25,
@@ -42,12 +44,19 @@ export default function ProfileBar() {
                             src={ picture.path }
                             width={ 50 }
                             height={ 50 }
-                    />
+                        />
+                    </div>
+                    <Link href="/profile">
+                        <a id="username">{ user.username }</a>
+                    </Link>
+                    <LogoutButton/>
                 </div>
-                <Link href="/profile">
-                    <a id="username">{ user.username }</a>
-                </Link>
-                <LogoutButton/>
+                <div>
+                    <input id="searchUser" type={ "text" } placeholder="Find user" ></input>
+                </div>
+                <button id="searchButton"></button>
             </div>
+            
+            
     );
 }
