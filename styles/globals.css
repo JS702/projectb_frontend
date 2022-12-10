@@ -165,6 +165,7 @@ a {
 #profileUsername {
     font-size: 400%;
     margin: 0;
+    text-align: center;
 }
 
 #regInfoContainer {
@@ -199,7 +200,7 @@ a {
 
 #listContainer {
     width: 25%;
-    margin-left: 3%;
+    margin-left: 0%;
     margin-top: 4%;
     float: left;
 }
@@ -207,6 +208,33 @@ a {
 #listValueContainer {
     float: center;
     margin-top: 4%;
+}
+
+#profilePictureInput {
+    display: none;
+}
+
+#profilePictureContainer {
+    margin-top: 1%;
+    /*margin-left: -69%;*/
+}
+
+#profilePictureText {
+    color: gray;
+    margin-left: 11%;
+}
+
+#description {
+    resize: none;
+    /*font ändern?*/
+}
+
+#descriptionLabel {
+    border: none;
+}
+
+#profileDescriptionContainer {
+    height: 85px;
 }
 
 /**Game*/

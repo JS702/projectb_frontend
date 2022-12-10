@@ -72,27 +72,34 @@ function Profile() {
 
     return (
             <>
-                <div id="userImageContainer">
+                <div id="profilePictureContainer">
                     <Image
                             id="userImage"
                             style={ {
-                                borderTopRightRadius: 25,
-                                borderBottomRightRadius: 25,
-                                borderBottomLeftRadius: 25,
-                                borderTopLeftRadius: 25
+                                borderTopRightRadius: 35,
+                                borderBottomRightRadius: 35,
+                                borderBottomLeftRadius: 35,
+                                borderTopLeftRadius: 35
                             } }
+                            alt="profile Picture"
                             src={ picture.path }
-                            width={ 100 }
-                            height={ 100 }
+                            width={ 200 }
+                            height={ 200 }
                             onClick={ handleProfilePictureClick }
                     />
+                    <div id="profilePictureText">
+                        Click to change image
+                    </div>
+                    <div id="profileUsername">
+                        {user.username}
+                    </div>
                 </div>
                 <input
                         type={ "file" }
-                        id="profilePicture" //TODO style="display: none"
+                        id="profilePictureInput" //DONE style="display: none"
                         onInput={ uploadPicture }
-                        name="profilePicture"
-                        ref={ inputRef }
+                        name="profilePictureInput"
+                        ref={ inputRef }   
                 />
 
                 <div id="profileBodyContainer">
@@ -143,8 +150,8 @@ function Profile() {
 
                         <hr></hr>
 
-                        <div className={ styles.inputContainer }>
-                            <label>Beschreibung</label>
+                        <div id="profileDescriptionContainer">
+                            <label id="descriptionLabel">Beschreibung</label>
                             <textarea
                                     id="description"
                                     className={ styles.input }
@@ -157,7 +164,7 @@ function Profile() {
                         <hr></hr>
 
                         <button id="buttonRegister" type="submit">
-                            Register
+                            Save
                         </button>
                     </form>
 
