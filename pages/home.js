@@ -10,6 +10,20 @@ export default function Home() {
 
     const [ tableData, setTableData ] = useState( [] );
 
+    const getGamesBoard = () => {
+        return tableData.sort( compare );
+    };
+
+    function compare( a, b ) {
+        if ( a.gamesPlayed < b.gamesPlayed ) {
+            return 1;
+        }
+        if ( a.gamesPlayed > b.gamesPlayed ) {
+            return -1;
+        }
+        return 0;
+    }
+
     useEffect( () => {
         axiosInstance.get( "/game/leaderboard", { params: { gameMode: gameMode } } ).then( ( response ) => {
             setTableData( response.data );
@@ -70,7 +84,7 @@ export default function Home() {
                                 <th>Player</th>
                                 <th>Games</th>
                             </tr>
-                            { tableData.map( ( user, idx ) => {
+                            { getGamesBoard().map( ( user, idx ) => {
                                 return (
                                         <tr key={ idx }>
                                             <td>{ idx + 1 }</td>
