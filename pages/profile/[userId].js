@@ -1,6 +1,6 @@
 import axiosInstance from "../../common/axios-instance";
 import styles from "../../styles/Home.module.css";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import LoadingIndicator from "../../components/loading-indicator";
 import Image from "next/image";
 import DefaultLayout from "../../layouts/default-layout";
@@ -9,26 +9,34 @@ import { useRouter } from "next/router";
 export default function ProfileView() {
     const [ user, setUser ] = useState();
 
+    const [ userId, setUserId ] = useState();
+
     const [ profileData, setProfileData ] = useState();
 
     const [ picture, setPicture ] = useState( { path: "/pepe.jpg" } );
 
     const router = useRouter();
 
-    const { userId } = router.query;
+
+    useEffect( () => {
+        if ( router.isReady ) {
+            setUserId( router.query );
+        }
+    }, [ router.isReady ] );
+
 
     const keys = [ "Casual Score: ", "Roundtime Score: ", "Totaltime Score: ", "Casual Games Played: ", "Roundtime Games Played: ",
         "Totaltime Games Played: " ];
 
-    const inputRef = useRef();
-
     useEffect( () => {
-        Promise.all( [ axiosInstance.get( `/user/${ userId }` ), axiosInstance.get( `/user/profile/${ userId }` ) ] )
-                .then( ( response ) => {
-                    setUser( response[ 0 ].data );
-                    setProfileData( response[ 1 ].data );
-                } );
-    }, [] );
+        if ( userId ) {
+            Promise.all( [ axiosInstance.get( `/user/${ userId }` ), axiosInstance.get( `/user/profile/${ userId }` ) ] )
+                    .then( ( response ) => {
+                        setUser( response[ 0 ].data );
+                        setProfileData( response[ 1 ].data );
+                    } );
+        }
+    }, [ userId ] );
 
     useEffect( () => {
         if ( user?.profilePictureId ) {
