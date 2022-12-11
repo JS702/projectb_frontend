@@ -44,6 +44,21 @@ a {
     text-align: center;
 }
 
+#buttonCasual {
+    background: url("../public/Casual.png") center no-repeat;
+    background-size: 100% 100%;
+}
+
+#buttonRoundTime {
+    background: url("../public/RoundTime.png") center no-repeat;
+    background-size: 100% 100%;
+}
+
+#buttonTotalTime {
+    background: url("../public/TotalTime.png") center no-repeat;
+    background-size: 100% 100%;
+}
+
 #searchUser {
     font-size: 150%;
     width: 100%;
