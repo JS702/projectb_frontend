@@ -21,25 +21,35 @@ export default function Game() {
     const [ totalTime, setTotalTime ] = useState();
     const [ skippedRounds, setSkippedRounds ] = useState( 0 );
     const [ minimalDistance, setMinimalDistance ] = useState( 100000 );
+    const [ mode, setMode ] = useState();
+    const [ rounds, setRounds ] = useState();
+
 
     const router = useRouter();
 
-    const { query: { mode, rounds } } = router;
 
     let timeout = null;
 
-    const props = { mode, rounds };
+    useEffect( () => {
+        if ( router.isReady ) {
+            setMode( router.query.mode );
+            setRounds( router.query.rounds );
+
+        }
+    }, [ router.isReady ] );
 
     useEffect( () => {
-        axiosInstance.get( "/game", { params: { rounds: props.rounds } } ).then( ( response ) =>
-                setGame( response.data ) );
-    }, [] );
+        if ( rounds ) {
+            axiosInstance.get( "/game", { params: { rounds: rounds } } )
+                    .then( ( response ) => setGame( response.data ) );
+        }
+    }, [ rounds ] );
 
     useEffect( () => {
         if ( game ) {
             setImagePath( game.mediaFiles[ 0 ].path );
-            if ( props.mode === "TOTALTIME" ) {
-                setTotalTime( time * props.rounds );
+            if ( mode === "TOTALTIME" ) {
+                setTotalTime( time * rounds );
             }
         }
     }, [ game ] );
@@ -53,8 +63,7 @@ export default function Game() {
 
 
     useEffect( () => {
-
-        if ( props.mode === "ROUNDTIME" ) {
+        if ( mode === "ROUNDTIME" ) {
             if ( !gameOver ) {
                 timeout = setTimeout( () => {
                     if ( time > 0 ) {
@@ -80,7 +89,7 @@ export default function Game() {
                     }
                 }, 1000 );
             }
-        } else if ( props.mode === "TOTALTIME" ) {
+        } else if ( mode === "TOTALTIME" ) {
             if ( !gameOver ) {
                 timeout = setTimeout( () => {
                     if ( totalTime > 0 ) {
@@ -99,14 +108,13 @@ export default function Game() {
                 }, 1000 );
             }
         }
-    }, [ time, round, game, props ] );
+    }, [ time, round, game ] );
 
 
     function handleClick( event ) {
-        console.log( game );
         if ( !gameOver ) {
 
-            if ( props.mode === "ROUNDTIME" ) {
+            if ( mode === "ROUNDTIME" ) {
                 clearTimeout( timeout );
                 setTime( 10 );
             }
@@ -126,7 +134,6 @@ export default function Game() {
                 }
 
                 setTotalDistance( totalDistance + distance );
-                console.log( "distance: " + distance );
                 document.querySelector( "#distanceOutput" ).innerHTML =
                         "Distance: " + distance + "m";
 
@@ -144,7 +151,6 @@ export default function Game() {
                 setEndScreenLeft( document.querySelector( "#mapImage" ).getBoundingClientRect().left );
             }
         }
-        console.log( round, game.rounds.length );
     }
 
     function sendGame( game ) {
@@ -165,7 +171,7 @@ export default function Game() {
 
         let userId = JSON.parse( sessionStorage.getItem( "User" ) )?.id;
 
-        return { gameMode: props.mode, roundIds: roundIds, score: Score, userId: userId };
+        return { gameMode: mode, roundIds: roundIds, score: Score, userId: userId };
     }
 
     function calculateDistance( x1, y1, x2, y2 ) {
@@ -202,7 +208,7 @@ export default function Game() {
         }
     }
 
-    window.addEventListener( "resize", handleResize );
+    //window.addEventListener( "resize", handleResize );
 
     function handleMove( event ) {
         let preview = document.querySelector( "#preview" );
@@ -210,7 +216,7 @@ export default function Game() {
         preview.style.backgroundImage = `url(${ bg.src })`;
 
         preview.style.backgroundSize = "1000%";
-        
+
         let rect = document.querySelector( "#mapImage" ).getBoundingClientRect();
 
         let x = ( ( event.clientX - rect.left ) / rect.width ) * 111.5;
@@ -225,7 +231,6 @@ export default function Game() {
         //preview.style.backgroundPositionX = "-5.5%";
         //preview.style.backgroundPositionY = "-3.5%";
 
-        console.log(x, y);
 
     }
 
@@ -236,7 +241,7 @@ export default function Game() {
     }
 
 
-    if ( !( game && imagePath ) ) {
+    if ( !( game && imagePath && mode ) ) {
         return <LoadingIndicator/>;
     }
 
@@ -301,9 +306,9 @@ export default function Game() {
                         <p id="distanceOutput">Distance: 0m</p>
                         <p id="totalDistanceOutput">Total Distance: { totalDistance }m</p>
                         <p id="timeOutput">Remaining time { ( () => {
-                            if ( props.mode === "ROUNDTIME" ) {
+                            if ( mode === "ROUNDTIME" ) {
                                 return "(round): " + time;
-                            } else if ( props.mode === "TOTALTIME" ) {
+                            } else if ( mode === "TOTALTIME" ) {
                                 return "(total): " + totalTime;
                             } else {
                                 return "infinite";
@@ -320,13 +325,13 @@ export default function Game() {
                         </div>
                         <div id="preview">
                             <div id="crosshairContainer">
-                            <Image
-                                id="crosshairImage"
-                                src={ "/crosshair.png" }
-                                alt="crosshair"
-                                width={ 300 }
-                                height={ 300 }
-                            />
+                                <Image
+                                        id="crosshairImage"
+                                        src={ "/crosshair.png" }
+                                        alt="crosshair"
+                                        width={ 300 }
+                                        height={ 300 }
+                                />
                             </div>
                         </div>
                     </div>

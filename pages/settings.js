@@ -1,27 +1,13 @@
 import styles from "../styles/Home.module.css";
-import { useEffect, useState } from "react";
-import LoadingIndicator from "../components/loading-indicator";
-import axiosInstance from "../common/axios-instance";
+import { useState } from "react";
 import DefaultLayout from "../layouts/default-layout";
 import Router from "next/router";
 
 export default function Settings() {
-    const [ user, setUser ] = useState();
 
-    const [ isLoading, setIsLoading ] = useState( true );
 
     const [ rounds, setRounds ] = useState( 11 );
 
-    useEffect( () => {
-        const id = JSON.parse( sessionStorage.getItem( "User" ) )?.id;
-        axiosInstance.get( `/user/${ id }` ).then( ( response ) => setUser( response.data ) );
-    }, [] );
-
-    useEffect( () => {
-        if ( user ) {
-            setIsLoading( false );
-        }
-    }, [ user ] );
 
     function handleChange( event ) {
         let rounds = event.target.value;
@@ -37,10 +23,6 @@ export default function Settings() {
                 rounds
             }
         } );
-    }
-
-    if ( isLoading ) {
-        return <LoadingIndicator/>;
     }
 
     return (
