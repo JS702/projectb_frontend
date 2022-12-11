@@ -44,6 +44,30 @@ a {
     text-align: center;
 }
 
+#modeDescriptionContainer {
+    width: 80%;
+    align-content: center;
+    text-align: center;
+}
+
+#casualDescription {
+    width: 30%;
+    margin-left: 3%;
+    float: left;
+}
+
+#roundTimeDescription {
+    width: 30%;
+    margin-left: 2%;
+    float: left;
+}
+
+#totalTimeDescription {
+    width: 30%;
+    margin-left: 2%;
+    float: left;
+}
+
 #buttonCasual {
     background: url("../public/Casual.png") center no-repeat;
     background-size: 100% 100%;

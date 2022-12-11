@@ -67,6 +67,27 @@ export default function Settings() {
                     </button>
 
                 </div>
+
+                <div id="modeDescriptionContainer">
+                    <div id="casualDescription">
+                        Just enjoy a causal game of GeoGuessing.
+                        <br></br>
+                        No time limit, no pressure, no consequences.
+                    </div>
+
+                    <div id="roundTimeDescription">
+                        You got 10 seconds to guess each location.
+                        <br></br>
+                        Hurry up, for each round without guessing 10000m will be added to your total distance.
+                    </div>
+
+                    <div id="totalTimeDescription">
+                        Again 10 seconds per round, but you can distribute them however you like.
+                        <br></br>
+                        For each round left after your time is up, 10000m will be added to your total distance.
+                    </div>
+                </div>
+
                 <div id="sliderContainer">
                     <input
                             type={ "range" }
