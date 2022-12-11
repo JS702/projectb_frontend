@@ -14,7 +14,7 @@ export default function Home() {
 
                 <main className={ styles.main }>
 
-                    <Link href="/profile">
+                    <Link href="/profile/me">
                         <a>Profil</a>
                     </Link>
 

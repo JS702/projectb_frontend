@@ -1,12 +1,12 @@
-import axiosInstance from "../common/axios-instance";
-import styles from "../styles/Home.module.css";
+import axiosInstance from "../../common/axios-instance";
+import styles from "../../styles/Home.module.css";
 import { useEffect, useRef, useState } from "react";
-import LoadingIndicator from "../components/loading-indicator";
+import LoadingIndicator from "../../components/loading-indicator";
 import Image from "next/image";
-import DefaultLayout from "../layouts/default-layout";
+import DefaultLayout from "../../layouts/default-layout";
 import { useForm } from "react-hook-form";
 
-function Profile() {
+export default function Me() {
     const [ user, setUser ] = useState();
 
     const [ profileData, setProfileData ] = useState();
@@ -91,7 +91,7 @@ function Profile() {
                         Click to change image
                     </div>
                     <div id="profileUsername">
-                        {user.username}
+                        { user.username }
                     </div>
                 </div>
                 <input
@@ -99,7 +99,7 @@ function Profile() {
                         id="profilePictureInput" //DONE style="display: none"
                         onInput={ uploadPicture }
                         name="profilePictureInput"
-                        ref={ inputRef }   
+                        ref={ inputRef }
                 />
 
                 <div id="profileBodyContainer">
@@ -185,10 +185,8 @@ function Profile() {
     );
 }
 
-Profile.getLayout = function getLayout( page ) {
+Me.getLayout = function getLayout( page ) {
     return (
             <DefaultLayout>{ page }</DefaultLayout>
     );
 };
-
-export default Profile;
