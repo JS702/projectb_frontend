@@ -35,7 +35,7 @@ export default function Home() {
                             <tr>
                                 <th>Place</th>
                                 <th>Player</th>
-                                <th>Score</th>
+                                <th>Distance</th>
                             </tr>
                             { tableData.map( ( user, idx ) => {
                                 return (

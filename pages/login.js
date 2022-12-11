@@ -43,6 +43,7 @@ export default function Register() {
                         <div>
                             <form onSubmit={ handleSubmit( onSubmit ) }>
                                 <div className={ styles.inputContainer }>
+                                    <div className={ styles.logInRegisterHeader }>Log in</div>
                                     <label>Username / Email</label>
                                     <input
                                             className={ styles.input }
@@ -50,12 +51,12 @@ export default function Register() {
                                             { ...register( "username", {
                                                 required: {
                                                     value: true,
-                                                    message: "Username darf nicht leer sein!"
+                                                    message: "Username must not be empty!"
                                                 },
                                                 minLength: {
                                                     value: 3,
                                                     message:
-                                                            "Username muss mindestens 3 Buchstaben lang sein!"
+                                                            "Username has to be at least 3 characters long!"
                                                 }
                                             } ) }
                                     />
@@ -65,19 +66,19 @@ export default function Register() {
                                 <hr></hr>
 
                                 <div className={ styles.inputContainer }>
-                                    <label>Passwort</label>
+                                    <label>Password</label>
                                     <input
                                             className={ styles.input }
                                             type={ "password" }
                                             { ...register( "password", {
                                                 required: {
                                                     value: true,
-                                                    message: "Passwort darf nicht leer sein!"
+                                                    message: "Password must not be empty!"
                                                 },
                                                 minLength: {
                                                     value: 4,
                                                     message:
-                                                            "Passwort muss mindestens 4 Buchstaben lang sein!"
+                                                            "Password has to be at least 4 characters long!"
                                                 }
                                             } ) }
                                     />

@@ -63,6 +63,7 @@ export default function Register() {
                         <div>
                             <form onSubmit={ handleSubmit( onSubmit ) }>
                                 <div className={ styles.inputContainer }>
+                                    <div className={ styles.logInRegisterHeader }>Register</div>
                                     <label>Username</label>
                                     <input
                                             className={ styles.input }
@@ -70,12 +71,12 @@ export default function Register() {
                                             { ...register( "username", {
                                                 required: {
                                                     value: true,
-                                                    message: "Username darf nicht leer sein!"
+                                                    message: "Username must not be empty!"
                                                 },
                                                 minLength: {
                                                     value: 3,
                                                     message:
-                                                            "Username muss mindestens 3 Buchstaben lang sein!"
+                                                            "Username has to be at least 3 characters long!"
                                                 }
                                             } ) }
                                     />
@@ -92,11 +93,11 @@ export default function Register() {
                                             { ...register( "email", {
                                                 required: {
                                                     value: true,
-                                                    message: "Die Email darf nicht leer sein!"
+                                                    message: "Email must not be empty!"
                                                 },
                                                 pattern: {
                                                     value: /^\S+@\S+$/i,
-                                                    message: "Die Email Adresse ist nicht valide"
+                                                    message: "Email adress is not valid"
                                                 }
                                             } ) }
                                     />
@@ -106,7 +107,7 @@ export default function Register() {
                                 <hr></hr>
 
                                 <div className={ styles.inputContainer }>
-                                    <label>Passwort</label>
+                                    <label>Password</label>
                                     <input
                                             id="password1"
                                             className={ styles.input }
@@ -116,12 +117,12 @@ export default function Register() {
                                             { ...register( "password", {
                                                 required: {
                                                     value: true,
-                                                    message: "Passwort darf nicht leer sein!"
+                                                    message: "Password must not be empty!"
                                                 },
                                                 minLength: {
                                                     value: 4,
                                                     message:
-                                                            "Passwort muss mindestens 4 Buchstaben lang sein!"
+                                                            "Password has to be at least 4 characters long!"
                                                 }
                                             } ) }
                                     />
@@ -131,7 +132,7 @@ export default function Register() {
                                 <hr></hr>
 
                                 <div className={ styles.inputContainer }>
-                                    <label id="password2Label">Bestätige Passwort</label>
+                                    <label id="password2Label">Confirm password</label>
                                     <input
                                             id="password2"
                                             className={ styles.input }
@@ -141,12 +142,12 @@ export default function Register() {
                                             { ...register( "password2", {
                                                 required: {
                                                     value: true,
-                                                    message: "Passwort darf nicht leer sein!"
+                                                    message: "Password must not be empty!"
                                                 },
                                                 minLength: {
                                                     value: 4,
                                                     message:
-                                                            "Passwort muss mindestens 4 Buchstaben lang sein!"
+                                                            "Password has to be at least 4 characters long!"
                                                 }
                                             } ) }
                                     />
