@@ -305,15 +305,13 @@ export default function Game() {
                         <p id="roundOutput">Round 1 / { game.rounds.length }</p>
                         <p id="distanceOutput">Distance: 0m</p>
                         <p id="totalDistanceOutput">Total Distance: { totalDistance }m</p>
-                        <p id="timeOutput">Remaining time { ( () => {
+                        <p id="timeOutput"> { ( () => {
                             if ( mode === "ROUNDTIME" ) {
-                                return "(round): " + time;
+                                return "Remaining time (round): " + time + " seconds";
                             } else if ( mode === "TOTALTIME" ) {
-                                return "(total): " + totalTime;
-                            } else {
-                                return "infinite";
+                                return "Remaining time (total): " + totalTime + " seconds";
                             }
-                        } )() } seconds</p>
+                        } )() } </p>
                         <div>
                             <Image
                                     id="locationImage"
