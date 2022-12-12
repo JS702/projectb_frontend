@@ -65,9 +65,6 @@ export default function ProfileView() {
                             width={ 200 }
                             height={ 200 }
                     />
-                    <div id="profilePictureText">
-                        Click to change image
-                    </div>
                     <div id="profileUsername">
                         { user.username }
                     </div>
