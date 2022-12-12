@@ -76,8 +76,7 @@ export default function Register() {
                                                 },
                                                 minLength: {
                                                     value: 3,
-                                                    message:
-                                                            "Username has to be at least 3 characters long!"
+                                                    message: "Username has to be at least 3 characters long!"
                                                 }
                                             } ) }
                                     />

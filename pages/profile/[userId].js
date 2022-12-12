@@ -20,9 +20,9 @@ export default function ProfileView() {
 
     useEffect( () => {
         if ( router.isReady ) {
-            setUserId( router.query );
+            setUserId( router.query.userId );
         }
-    }, [ router.isReady ] );
+    }, [ router.isReady, router.query ] );
 
 
     const keys = [ "Casual Score: ", "Roundtime Score: ", "Totaltime Score: ", "Casual Games Played: ", "Roundtime Games Played: ",
