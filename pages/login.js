@@ -44,7 +44,7 @@ export default function Register() {
                             <form onSubmit={ handleSubmit( onSubmit ) }>
                                 <div className={ styles.inputContainer }>
                                     <div className={ styles.logInRegisterHeader }>Log in</div>
-                                    <label>Username / Email</label>
+                                    <label>Username</label>
                                     <input
                                             className={ styles.input }
                                             type={ "text" }
