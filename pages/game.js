@@ -208,7 +208,7 @@ export default function Game() {
         }
     }
 
-    //window.addEventListener( "resize", handleResize );
+    window.addEventListener( "resize", handleResize );
 
     function handleMove( event ) {
         let preview = document.querySelector( "#preview" );
@@ -241,7 +241,7 @@ export default function Game() {
     }
 
 
-    if ( !( game && imagePath && mode ) ) {
+    if ( !game || !imagePath || mode ) {
         return <LoadingIndicator/>;
     }
 
