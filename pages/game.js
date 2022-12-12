@@ -241,7 +241,7 @@ export default function Game() {
     }
 
 
-    if ( !game || !imagePath || mode ) {
+    if ( !game || !imagePath || !mode ) {
         return <LoadingIndicator/>;
     }
 
