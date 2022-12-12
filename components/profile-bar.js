@@ -116,8 +116,17 @@ export default function ProfileBar() {
                         } ) }></input>
                         <button id="searchButton" type={ "submit" }></button>
                     </form>
-                    { searchError && <div> User konnte nicht gefunden werden, sowwy :(</div> }
-
+                    <div style={ { color: "red" } }>
+                    { ( () => {
+                        let button = document.querySelector("#searchButton").style;
+                            if ( searchError) {
+                                button.bottom = "17%";
+                                return "User doesn't exist";
+                            } else {
+                                button.bottom = "1%";
+                            }
+                        } )() }
+                    </div>
                 </div>
             </div>
     );
