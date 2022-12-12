@@ -146,6 +146,8 @@ export default function Game() {
 
                 sendGame( getGame() );
 
+                window.addEventListener( "resize", handleResize );
+
                 setEndScreenSize( document.querySelector( "#mapImage" ).getBoundingClientRect().right -
                         document.querySelector( "#mapImage" ).getBoundingClientRect().left );
                 setEndScreenLeft( document.querySelector( "#mapImage" ).getBoundingClientRect().left );
@@ -208,7 +210,7 @@ export default function Game() {
         }
     }
 
-    window.addEventListener( "resize", handleResize );
+    //window.addEventListener( "resize", handleResize );
 
     function handleMove( event ) {
         let preview = document.querySelector( "#preview" );
