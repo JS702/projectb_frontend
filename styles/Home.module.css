@@ -191,3 +191,8 @@
     font-size: 500%;
     margin-bottom: 10%;
 }
+
+.logInRegisterLink {
+    text-align: center;
+    text-decoration: underline;
+}

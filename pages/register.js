@@ -5,6 +5,7 @@ import axiosInstance from "../common/axios-instance";
 import { useEffect } from "react";
 import { useRouter } from "next/router";
 import Footer from "../components/footer";
+import Link from "next/link";
 
 export default function Register() {
     const router = useRouter();
@@ -156,6 +157,12 @@ export default function Register() {
                                 </div>
 
                                 <hr></hr>
+
+                                <div className= { styles.logInRegisterLink }>
+                                    <Link href="/login">
+                                        <a>Already have an account? Click here to log in</a>
+                                    </Link>
+                                </div>
 
                                 <button id="buttonRegister" type="submit">
                                     Register
