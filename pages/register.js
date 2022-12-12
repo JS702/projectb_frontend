@@ -157,16 +157,17 @@ export default function Register() {
 
                                 <hr></hr>
 
-                                <div className= { styles.logInRegisterLink }>
-                                    <Link href="/login">
-                                        <a>Already have an account? Click here to log in</a>
-                                    </Link>
-                                </div>
-
                                 <button id="buttonRegister" type="submit">
                                     Register
                                 </button>
                             </form>
+
+                            <br/>
+                            <div>
+                                <a>Already have an account? Click { <Link className={ styles.logInRegisterLink } href="/login">
+                                    here </Link>
+                                } to log in</a>
+                            </div>
                         </div>
                     </div>
                 </main>
