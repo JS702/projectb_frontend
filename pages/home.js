@@ -24,6 +24,10 @@ export default function Home() {
         return 0;
     }
 
+    const getGameModeEnum = ( mode ) => {
+        return mode.replace( /\s/g, "" ).toUpperCase();
+    };
+
     useEffect( () => {
         axiosInstance.get( "/game/leaderboard", { params: { gameMode: gameMode } } ).then( ( response ) => {
             setTableData( response.data );
@@ -39,10 +43,11 @@ export default function Home() {
                             <tbody>
                             <tr>
                                 <td colSpan={ "3" }>
-                                    <select className={ styles.tableSelect } onChange={ e => setGameMode( e.target.value ) }>
-                                        <option>CASUAL</option>
-                                        <option>ROUNDTIME</option>
-                                        <option>TOTALTIME</option>
+                                    <select className={ styles.tableSelect }
+                                            onChange={ e => setGameMode( getGameModeEnum( e.target.value ) ) }>
+                                        <option>Casual</option>
+                                        <option>Round Time</option>
+                                        <option>Total Time</option>
                                     </select>
                                 </td>
                             </tr>

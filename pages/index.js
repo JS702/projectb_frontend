@@ -44,7 +44,7 @@ export default function Home() {
                             </a>
                         </Link>
 
-                        <Link href="/profile">
+                        <Link href="/profile/me">
                             <a className={ styles.card }>
                                 <h2>Profile &rarr;</h2>
                                 <p>Change your profile information or just take a look at your own statistics.</p>

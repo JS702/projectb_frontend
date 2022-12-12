@@ -17,8 +17,7 @@ export default function Register() {
 
     const {
         register,
-        handleSubmit,
-        formState: { errors }
+        handleSubmit
     } = useForm();
 
     const onSubmit = async ( data ) => {
@@ -51,17 +50,13 @@ export default function Register() {
                                             type={ "text" }
                                             { ...register( "username", {
                                                 required: {
-                                                    value: true,
-                                                    message: "Username must not be empty!"
+                                                    value: true
                                                 },
                                                 minLength: {
-                                                    value: 3,
-                                                    message:
-                                                            "Username has to be at least 3 characters long!"
+                                                    value: 3
                                                 }
                                             } ) }
                                     />
-                                    { errors.username && <p>{ errors.username.message }</p> }
                                 </div>
 
                                 <hr></hr>
@@ -73,17 +68,13 @@ export default function Register() {
                                             type={ "password" }
                                             { ...register( "password", {
                                                 required: {
-                                                    value: true,
-                                                    message: "Password must not be empty!"
+                                                    value: true
                                                 },
                                                 minLength: {
-                                                    value: 4,
-                                                    message:
-                                                            "Password has to be at least 4 characters long!"
+                                                    value: 4
                                                 }
                                             } ) }
                                     />
-                                    { errors.password && <p>{ errors.password.message }</p> }
                                 </div>
 
                                 <hr></hr>
@@ -95,7 +86,8 @@ export default function Register() {
 
                             <br/>
                             <div>
-                                <a>Don&#39;t have an account? Click </a> <Link href="/register"><a className={ styles.logInRegisterLink }>here</a></Link> <a>to register</a>
+                                <a>Don&#39;t have an account? Click </a> <Link href="/register"><a
+                                    className={ styles.logInRegisterLink }>here</a></Link> <a>to register</a>
                             </div>
                         </div>
                     </div>
