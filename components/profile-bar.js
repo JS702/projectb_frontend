@@ -40,6 +40,20 @@ export default function ProfileBar() {
                 .then( ( response ) => router.push( { pathname: "/profile/[userId]", query: { userId: response.data.id } } ) );
     };
 
+    const logout = () => {
+        sessionStorage.removeItem( "User" );
+        router.push( "/login" );
+    };
+
+    const showBurgerContent = () => {
+        var x = document.getElementById("burgerContent");
+        if (x.style.display === "block") {
+            x.style.display = "none";
+        } else {
+            x.style.display = "block";
+        }
+    }
+
     if ( !user ) {
         return <LoadingIndicator/>;
     }
@@ -65,7 +79,24 @@ export default function ProfileBar() {
                     <Link href="/profile/me">
                         <a id="username">{ user.username }</a>
                     </Link>
-                    <LogoutButton/>
+                    {/* <LogoutButton/> */}
+                    
+                    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"></link>
+
+                    <div id="burgerContent">
+                        <Link href="/home">Home</Link>
+                        <br></br>
+                        <Link href="/settings">Play</Link>
+                        <br></br>
+                        <a id="logOutLink" onClick={ logout }>Log out</a>
+                        <br></br>
+                        <Link href="/admin">Admin</Link> { /** TODO: nur für Admin sichtbar */}
+                    </div>
+                    
+                    <a id="burger"  class="icon" onClick={ showBurgerContent }>
+                        <i class="fa fa-bars"></i>
+                    </a>
+
                 </div>
                 <div>
                     <form onSubmit={ handleSubmit( searchUser ) }>

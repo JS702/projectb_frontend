@@ -24,6 +24,16 @@ a {
         color: white;
         background: black;
     }
+
+    #burger.icon {
+        background: none;
+    }
+}
+
+@media (prefers-color-scheme: light) {
+    #burger.icon {
+        background: #d3d3d3;
+    }
 }
 
 #buttonRegister {
@@ -83,6 +93,7 @@ a {
     background-size: 100% 100%;
 }
 
+/**ProfileBar*/
 #searchUser {
     font-size: 150%;
     width: 100%;
@@ -135,6 +146,7 @@ a {
     text-align: center;
     transform: translateY(-35%);
     display: table-cell;
+    width: 65%;
 }
 
 #logOutButtonContainer {
@@ -146,6 +158,40 @@ a {
 
 #logOutButton {
     margin-right: 10%;
+}
+
+#burger {
+    color:white;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 17px;
+    display: block;
+    
+    margin-right: 2.5%;
+    margin-top: 2.5%;
+}
+
+#burger.icon {
+    display: block;
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+
+#burger:hover {
+    background-color: #ddd;
+    color: black;
+}
+
+#burgerContent {
+    display: none;
+    position: absolute;
+    margin-left: 20%;
+    width: 20%;
+}
+
+#logOutLink:hover {
+    cursor: pointer;
 }
 
 #sliderContainer {
