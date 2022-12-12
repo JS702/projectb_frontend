@@ -95,8 +95,7 @@ export default function Register() {
 
                             <br/>
                             <div>
-                                <a>Don&#39;t have an account? Click { <Link className={ styles.logInRegisterLink }
-                                                                            href="/register">here</Link> } to register</a>
+                                <a>Don&#39;t have an account? Click </a> <Link href="/register"><a className={ styles.logInRegisterLink }>here</a></Link> <a>to register</a>
                             </div>
                         </div>
                     </div>

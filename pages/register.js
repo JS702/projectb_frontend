@@ -163,11 +163,11 @@ export default function Register() {
                             </form>
 
                             <br/>
+
                             <div>
-                                <a>Already have an account? Click { <Link className={ styles.logInRegisterLink } href="/login">
-                                    here </Link>
-                                } to log in</a>
+                                <a>Already have an account? Click </a> <Link href="/login"><a className={ styles.logInRegisterLink }>here</a></Link> <a>to log in</a>
                             </div>
+
                         </div>
                     </div>
                 </main>
