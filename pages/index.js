@@ -14,51 +14,42 @@ export default function Home() {
 
                 <main className={ styles.main }>
 
-                    <Link href="/profile/me">
-                        <a>Profil</a>
-                    </Link>
-
-                    <Link href="/login">
-                        <a>Login</a>
-                    </Link>
-
                     <h1 className={ styles.title }>
-                        Welcome to <a href="https://nextjs.org">Next.js!</a>
+                        Welcome to GeoGamer
                     </h1>
 
                     <p className={ styles.description }>
-                        Get started by editing{ " " }
-                        <code className={ styles.code }>pages/index.js</code>
+                        Guess locations from your favorite games in multiple modes!
                     </p>
 
                     <div className={ styles.grid }>
-                        <a href="https://nextjs.org/docs" className={ styles.card }>
-                            <h2>Documentation &rarr;</h2>
-                            <p>Find in-depth information about Next.js features and API.</p>
-                        </a>
+                        <Link href="/login">
+                            <a className={ styles.card }>
+                                <h2>Log in &rarr;</h2>
+                                <p>Log in to play games, edit your profile and and look at the global statistics.</p>
+                            </a>
+                        </Link>
 
-                        <a href="https://nextjs.org/learn" className={ styles.card }>
-                            <h2>Learn &rarr;</h2>
-                            <p>Learn about Next.js in an interactive course with quizzes!</p>
-                        </a>
+                        <Link href="/register">
+                            <a className={ styles.card }>
+                                <h2>Register &rarr;</h2>
+                                <p>Register a new account for free to use GeoGamer and have fun.</p>
+                            </a>
+                        </Link>
 
-                        <a
-                                href="https://github.com/vercel/next.js/tree/canary/examples"
-                                className={ styles.card }
-                        >
-                            <h2>Examples &rarr;</h2>
-                            <p>Discover and deploy boilerplate example Next.js projects.</p>
-                        </a>
+                        <Link href="/settings">
+                            <a className={ styles.card }>
+                                <h2>Play &rarr;</h2>
+                                <p>Get right in the game and reach a new highscore to make your friends jealous.</p>
+                            </a>
+                        </Link>
 
-                        <a
-                                href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-                                className={ styles.card }
-                        >
-                            <h2>Deploy &rarr;</h2>
-                            <p>
-                                Instantly deploy your Next.js site to a public URL with Vercel.
-                            </p>
-                        </a>
+                        <Link href="/profile">
+                            <a className={ styles.card }>
+                                <h2>Profile &rarr;</h2>
+                                <p>Change your profile information or just take a look at your own statistics.</p>
+                            </a>
+                        </Link>
                     </div>
                 </main>
 
