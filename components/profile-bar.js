@@ -1,4 +1,3 @@
-import LogoutButton from "./logout-button";
 import Link from "next/link";
 import Image from "next/image";
 import axiosInstance from "../common/axios-instance";
@@ -13,6 +12,8 @@ export default function ProfileBar() {
     const [ user, setUser ] = useState();
 
     const [ picture, setPicture ] = useState( { path: "/pepe.jpg" } );
+
+    const [ searchError, setSearchError ] = useState( false );
 
     const router = useRouter();
 
@@ -35,9 +36,13 @@ export default function ProfileBar() {
     }, [ user ] );
 
 
-    const searchUser = ( data ) => {
-        axiosInstance.get( "/user", { params: { userName: data.username } } )
-                .then( ( response ) => router.push( { pathname: "/profile/[userId]", query: { userId: response.data.id } } ) );
+    const searchUser = async ( data ) => {
+        try {
+            const response = await axiosInstance.get( "/user", { params: { userName: data.username } } );
+            await router.push( { pathname: "/profile/[userId]", query: { userId: response.data.id } } );
+        } catch ( e ) {
+            setSearchError( true );
+        }
     };
 
     const logout = () => {
@@ -46,13 +51,13 @@ export default function ProfileBar() {
     };
 
     const showBurgerContent = () => {
-        var x = document.getElementById("burgerContent");
-        if (x.style.display === "block") {
+        var x = document.getElementById( "burgerContent" );
+        if ( x.style.display === "block" ) {
             x.style.display = "none";
         } else {
             x.style.display = "block";
         }
-    }
+    };
 
     if ( !user ) {
         return <LoadingIndicator/>;
@@ -79,8 +84,8 @@ export default function ProfileBar() {
                     <Link href="/profile/me">
                         <a id="username">{ user.username }</a>
                     </Link>
-                    {/* <LogoutButton/> */}
-                    
+                    {/* <LogoutButton/> */ }
+
                     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"></link>
 
                     <div id="burgerContent">
@@ -89,18 +94,19 @@ export default function ProfileBar() {
                         <Link href="/settings">Play</Link>
                         <br></br>
                         <a id="logOutLink" onClick={ logout }>Log out</a>
-                        <br></br>
-                        <Link href="/admin">Admin</Link> { /** TODO: nur für Admin sichtbar */}
+                        <br/>
+                        { user.type === "ADMIN" && <Link href="/admin/round-data">Admin</Link> }
                     </div>
-                    
-                    <a id="burger"  class="icon" onClick={ showBurgerContent }>
-                        <i class="fa fa-bars"></i>
+
+                    <a id="burger" className="icon" onClick={ showBurgerContent }>
+                        <i className="fa fa-bars"></i>
                     </a>
 
                 </div>
                 <div>
                     <form onSubmit={ handleSubmit( searchUser ) }>
-                        <input id="searchUser" type={ "text" } placeholder="Find user" { ...register( "username", {
+                        <input id="searchUser" type={ "text" } onInput={ () => setSearchError( false ) }
+                               placeholder="Find user" { ...register( "username", {
                             required: {
                                 value: true
                             },
@@ -110,6 +116,8 @@ export default function ProfileBar() {
                         } ) }></input>
                         <button id="searchButton" type={ "submit" }></button>
                     </form>
+                    { searchError && <div> User konnte nicht gefunden werden, sowwy :(</div> }
+
                 </div>
             </div>
     );
