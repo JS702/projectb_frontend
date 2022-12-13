@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import axiosInstance from "../common/axios-instance";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import LoadingIndicator from "./loading-indicator";
 import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
@@ -42,6 +42,7 @@ export default function ProfileBar() {
             await router.push( { pathname: "/profile/[userId]", query: { userId: response.data.id } } );
         } catch ( e ) {
             setSearchError( true );
+            handleSearchError(true);
         }
     };
 
@@ -57,6 +58,20 @@ export default function ProfileBar() {
         } else {
             x.style.display = "block";
         }
+    };
+
+    const handleSearchError = (searchError) => {
+        
+        let button = document.querySelector("#searchButton").style;
+                            
+        if ( searchError) {
+            button.bottom = "17%";
+            return "User doesn't exist";
+        } else {
+            button.bottom = "1%";
+        }
+        setSearchError(searchError);                   
+        
     };
 
     if ( !user ) {
@@ -84,7 +99,6 @@ export default function ProfileBar() {
                     <Link href="/profile/me">
                         <a id="username">{ user.username }</a>
                     </Link>
-                    {/* <LogoutButton/> */ }
 
                     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"></link>
 
@@ -105,7 +119,7 @@ export default function ProfileBar() {
                 </div>
                 <div>
                     <form onSubmit={ handleSubmit( searchUser ) }>
-                        <input id="searchUser" type={ "text" } onInput={ () => setSearchError( false ) }
+                        <input id="searchUser" type={ "text" } onInput={ () => handleSearchError(false) }
                                placeholder="Find user" { ...register( "username", {
                             required: {
                                 value: true
@@ -116,17 +130,7 @@ export default function ProfileBar() {
                         } ) }></input>
                         <button id="searchButton" type={ "submit" }></button>
                     </form>
-                    <div style={ { color: "red" } }>
-                    { ( () => {
-                        let button = document.querySelector("#searchButton").style;
-                            if ( searchError) {
-                                button.bottom = "17%";
-                                return "User doesn't exist";
-                            } else {
-                                button.bottom = "1%";
-                            }
-                        } )() }
-                    </div>
+                    { searchError && <div style={ { color: "red" } }> User does not exist</div> }
                 </div>
             </div>
     );
