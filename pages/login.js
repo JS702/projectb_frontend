@@ -85,7 +85,7 @@ export default function Register() {
                             </form>
 
                             <br/>
-                            <div>
+                            <div style={ { textAlign: "center" } }>
                                 <a>Don&#39;t have an account? Click </a> <Link href="/register"><a
                                     className={ styles.logInRegisterLink }>here</a></Link> <a>to register</a>
                             </div>
