@@ -104,6 +104,7 @@ export default function Me() {
 
                 <div id="profileBodyContainer">
                     <hr/>
+                    <div id="personalDataContainer">
                     <form onSubmit={ handleSubmit( onSubmit ) }>
                         <div className={ styles.inputContainer }>
                             <label>Username</label>
@@ -151,7 +152,7 @@ export default function Me() {
                         <hr></hr>
 
                         <div id="profileDescriptionContainer">
-                            <label id="descriptionLabel">Beschreibung</label>
+                            <label id="descriptionLabel">Description</label>
                             <textarea
                                     id="description"
                                     className={ styles.input }
@@ -167,9 +168,11 @@ export default function Me() {
                             Save
                         </button>
                     </form>
+                    </div>
 
 
                     <div id="listContainer">
+                    <div style={ { fontSize: "150%" , marginBottom: "3%" } }>Game Data</div>
                         { Object.entries( profileData ).map( ( [ key, value ], idx ) => {
                             if ( !value ) {
                                 value = "No Data";
@@ -178,7 +181,6 @@ export default function Me() {
                                     <li className={ styles.profileList } key={ idx }>{ keys[ idx ] + value }</li>
                             );
                         } ) }
-                        <br/>
                     </div>
                 </div>
             </>
