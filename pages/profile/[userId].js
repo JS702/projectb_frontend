@@ -72,6 +72,9 @@ export default function ProfileView() {
 
                 <div id="profileBodyContainer">
                     <hr/>
+
+                    <div id="personalDataContainer">
+
                     <label>Username</label>
                     <p>{ user.username }</p>
                     <hr/>
@@ -81,13 +84,15 @@ export default function ProfileView() {
 
                     <hr/>
 
-                    <label id="descriptionLabel">Beschreibung</label>
+                    <label id="descriptionLabel">Description</label>
                     <p>{ user.description }</p>
 
                     <hr/>
 
+                    </div>
 
                     <div id="listContainer">
+                        <div style={ { fontSize: "150%" , marginBottom: "3%" } }>Game Data</div>
                         { Object.entries( profileData ).map( ( [ key, value ], idx ) => {
                             if ( !value ) {
                                 value = "No Data";
@@ -96,7 +101,6 @@ export default function ProfileView() {
                                     <li className={ styles.profileList } key={ idx }>{ keys[ idx ] + value }</li>
                             );
                         } ) }
-                        <br/>
                     </div>
                 </div>
             </>
