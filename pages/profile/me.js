@@ -5,6 +5,7 @@ import LoadingIndicator from "../../components/loading-indicator";
 import Image from "next/image";
 import DefaultLayout from "../../layouts/default-layout";
 import { useForm } from "react-hook-form";
+import { router } from "next/client";
 
 export default function Me() {
     const [ user, setUser ] = useState();
@@ -66,6 +67,12 @@ export default function Me() {
         }
     };
 
+    const deleteUser = async () => {
+        sessionStorage.removeItem( "User" );
+        await axiosInstance.delete( "/user/" + user.id );
+        await router.push( "/login" );
+    };
+
     if ( !user ) {
         return <LoadingIndicator/>;
     }
@@ -93,6 +100,8 @@ export default function Me() {
                     <div id="profileUsername">
                         { user.username }
                     </div>
+                    <button type={ "button" } onClick={ deleteUser }>Delete User</button>
+
                 </div>
                 <input
                         type={ "file" }
@@ -105,74 +114,74 @@ export default function Me() {
                 <div id="profileBodyContainer">
                     <hr/>
                     <div id="personalDataContainer">
-                    <form onSubmit={ handleSubmit( onSubmit ) }>
-                        <div className={ styles.inputContainer }>
-                            <label>Username</label>
-                            <input
-                                    className={ styles.input }
-                                    type={ "text" }
-                                    defaultValue={ user.username }
-                                    { ...register( "username", {
-                                        required: {
-                                            value: true,
-                                            message: "Username darf nicht leer sein!"
-                                        },
-                                        minLength: {
-                                            value: 3,
-                                            message:
-                                                    "Username muss mindestens 3 Buchstaben lang sein!"
-                                        }
-                                    } ) }
-                            />
-                            { errors.username && <p>{ errors.username.message }</p> }
-                        </div>
+                        <form onSubmit={ handleSubmit( onSubmit ) }>
+                            <div className={ styles.inputContainer }>
+                                <label>Username</label>
+                                <input
+                                        className={ styles.input }
+                                        type={ "text" }
+                                        defaultValue={ user.username }
+                                        { ...register( "username", {
+                                            required: {
+                                                value: true,
+                                                message: "Username darf nicht leer sein!"
+                                            },
+                                            minLength: {
+                                                value: 3,
+                                                message:
+                                                        "Username muss mindestens 3 Buchstaben lang sein!"
+                                            }
+                                        } ) }
+                                />
+                                { errors.username && <p>{ errors.username.message }</p> }
+                            </div>
 
-                        <hr></hr>
+                            <hr></hr>
 
-                        <div className={ styles.inputContainer }>
-                            <label>Email</label>
-                            <input
-                                    className={ styles.input }
-                                    type={ "text" }
-                                    defaultValue={ user.email }
-                                    { ...register( "email", {
-                                        required: {
-                                            value: true,
-                                            message: "Die Email darf nicht leer sein!"
-                                        },
-                                        pattern: {
-                                            value: /^\S+@\S+$/i,
-                                            message: "Die Email Adresse ist nicht valide"
-                                        }
-                                    } ) }
-                            />
-                            { errors.email && <p>{ errors.email.message }</p> }
-                        </div>
+                            <div className={ styles.inputContainer }>
+                                <label>Email</label>
+                                <input
+                                        className={ styles.input }
+                                        type={ "text" }
+                                        defaultValue={ user.email }
+                                        { ...register( "email", {
+                                            required: {
+                                                value: true,
+                                                message: "Die Email darf nicht leer sein!"
+                                            },
+                                            pattern: {
+                                                value: /^\S+@\S+$/i,
+                                                message: "Die Email Adresse ist nicht valide"
+                                            }
+                                        } ) }
+                                />
+                                { errors.email && <p>{ errors.email.message }</p> }
+                            </div>
 
-                        <hr></hr>
+                            <hr></hr>
 
-                        <div id="profileDescriptionContainer">
-                            <label id="descriptionLabel">Description</label>
-                            <textarea
-                                    id="description"
-                                    className={ styles.input }
-                                    rows={ 4 }
-                                    defaultValue={ user.description }
-                                    { ...register( "description" ) }
-                            />
-                        </div>
+                            <div id="profileDescriptionContainer">
+                                <label id="descriptionLabel">Description</label>
+                                <textarea
+                                        id="description"
+                                        className={ styles.input }
+                                        rows={ 4 }
+                                        defaultValue={ user.description }
+                                        { ...register( "description" ) }
+                                />
+                            </div>
 
-                        <hr></hr>
+                            <hr></hr>
 
-                        <button id="buttonRegister" type="submit">
-                            Save
-                        </button>
-                    </form>
+                            <button id="buttonRegister" type="submit">
+                                Save
+                            </button>
+                        </form>
                     </div>
 
 
                     <div id="listContainer">
-                    <div style={ { fontSize: "150%" , marginBottom: "3%" } }>Game Data</div>
+                        <div style={ { fontSize: "150%", marginBottom: "3%" } }>Game Data</div>
                         { Object.entries( profileData ).map( ( [ key, value ], idx ) => {
                             if ( !value ) {
                                 value = "No Data";
