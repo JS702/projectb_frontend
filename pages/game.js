@@ -6,6 +6,7 @@ import axiosInstance from "../common/axios-instance";
 import DefaultLayout from "../layouts/default-layout";
 import bg from "../public/map.png";
 import { useRouter } from "next/router";
+import Link from "next/link";
 
 export default function Game() {
     const [ game, setGame ] = useState();
@@ -324,15 +325,21 @@ export default function Game() {
                             />
                         </div>
                         <div id="preview">
-                            <div id="crosshairContainer">
-                                <Image
-                                        id="crosshairImage"
-                                        src={ "/crosshair.png" }
-                                        alt="crosshair"
-                                        width={ 300 }
-                                        height={ 300 }
-                                />
+                        { ( () => {
+                            if ( !gameOver ) {
+                                return <div id="crosshairContainer">
+                                            <Image
+                                                id="crosshairImage"
+                                                src={ "/crosshair.png" }
+                                                alt="crosshair"
+                                                width={ 300 }
+                                                height={ 300 }
+                                            />
                             </div>
+                            } else {
+                                return <Link href="/home"><button id="homeButton">Menu</button></Link>
+                            }
+                        } )() }
                         </div>
                     </div>
                 </div>
