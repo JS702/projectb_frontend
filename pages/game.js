@@ -48,7 +48,7 @@ export default function Game() {
 
     useEffect( () => {
         if ( game ) {
-            setImagePath( game.mediaFiles[ 0 ].path );
+            setImagePath( game.mediaFiles.filter( file => file.id === game.rounds[ 0 ].mediaFileId )[ 0 ].path );
             if ( mode === "TOTALTIME" ) {
                 setTotalTime( time * rounds );
             }
@@ -57,7 +57,7 @@ export default function Game() {
 
     useEffect( () => {
         if ( round > 0 && round < game.rounds.length ) {
-            setImagePath( game.mediaFiles[ round ].path );
+            setImagePath( game.mediaFiles.filter( file => file.id === game.rounds[ round ].mediaFileId )[ 0 ].path );
             document.querySelector( "#roundOutput" ).innerHTML = "Round " + ( round + 1 ) + " / " + game.rounds.length;
         }
     }, [ round, game ] );
@@ -325,21 +325,23 @@ export default function Game() {
                             />
                         </div>
                         <div id="preview">
-                        { ( () => {
-                            if ( !gameOver ) {
-                                return <div id="crosshairContainer">
-                                            <Image
+                            { ( () => {
+                                if ( !gameOver ) {
+                                    return <div id="crosshairContainer">
+                                        <Image
                                                 id="crosshairImage"
                                                 src={ "/crosshair.png" }
                                                 alt="crosshair"
                                                 width={ 300 }
                                                 height={ 300 }
-                                            />
-                            </div>
-                            } else {
-                                return <Link href="/home"><button id="homeButton">Menu</button></Link>
-                            }
-                        } )() }
+                                        />
+                                    </div>;
+                                } else {
+                                    return <Link href="/home">
+                                        <button id="homeButton">Menu</button>
+                                    </Link>;
+                                }
+                            } )() }
                         </div>
                     </div>
                 </div>
