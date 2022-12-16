@@ -100,7 +100,6 @@ export default function Me() {
                     <div id="profileUsername">
                         { user.username }
                     </div>
-                    <button type={ "button" } onClick={ deleteUser }>Delete User</button>
 
                 </div>
                 <input
@@ -173,9 +172,9 @@ export default function Me() {
 
                             <hr></hr>
 
-                            <button id="buttonRegister" type="submit">
-                                Save
-                            </button>
+                            <button id="buttonRegister" type="submit">Save</button>
+
+                            <button id="deleteButton" type={ "button" } onClick={ deleteUser }>Delete User</button>
                         </form>
                     </div>
 

@@ -278,9 +278,12 @@ a {
 }
 
 #deleteButton {
-    position: absolute;
-    bottom: 4%;
-    right: 10%;
+    margin-top: 1.5em;
+    font-size: 150%;
+    width: 100%;
+    color: red;
+    border-color: red;
+    border-radius: 5px;
 }
 
 #profileBodyContainer {
