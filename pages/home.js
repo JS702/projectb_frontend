@@ -10,15 +10,29 @@ export default function Home() {
 
     const [ tableData, setTableData ] = useState( [] );
 
-    const getGamesBoard = () => {
-        return tableData.sort( compare );
+    const getScoreBoard = () => {
+        return tableData.sort( compareScore );
     };
 
-    function compare( a, b ) {
+    const getGamesBoard = () => {
+        return tableData.sort( compareGamesPlayed );
+    };
+
+    function compareGamesPlayed( a, b ) {
         if ( a.gamesPlayed < b.gamesPlayed ) {
             return 1;
         }
         if ( a.gamesPlayed > b.gamesPlayed ) {
+            return -1;
+        }
+        return 0;
+    }
+
+    function compareScore( a, b ) {
+        if ( a.score > b.score ) {
+            return 1;
+        }
+        if ( a.score < b.score ) {
             return -1;
         }
         return 0;
@@ -56,7 +70,7 @@ export default function Home() {
                                 <th>Player</th>
                                 <th>Distance</th>
                             </tr>
-                            { tableData.map( ( user, idx ) => {
+                            { getScoreBoard().map( ( user, idx ) => {
                                 return (
                                         <tr key={ idx }>
                                             <td>{ idx + 1 }</td>
