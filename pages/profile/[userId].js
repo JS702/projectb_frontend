@@ -68,7 +68,7 @@ export default function ProfileView() {
                     </div>
 
                     { JSON.parse( sessionStorage.getItem( "User" ) ).type === "ADMIN" &&
-                            <button type={ "button" } onClick={ deleteUser }>Delete User</button> }
+                            <button id="deleteButton" type={ "button" } onClick={ deleteUser }>Delete User</button> }
                 </div>
 
                 <div id="profileBodyContainer">
